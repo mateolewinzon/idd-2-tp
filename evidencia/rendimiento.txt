@@ -1,0 +1,84 @@
+################################################################################
+# EVIDENCIA DE ANALISIS DE RENDIMIENTO - 2026-09-04 19:46:45 UTC
+################################################################################
+
+================================================================================
+PUNTO 5: ANALISIS DE RENDIMIENTO
+Consulta critica: Buscar jugadores por club ('Real Madrid') ordenados por fecha
+                  de nacimiento (fecha_nacimiento: 1).
+================================================================================
+
+--- PASO 1: explain('executionStats') ANTES de indexar (sin indice en club) ---
+{
+  "queryPlanner": {
+    "winningPlan": {
+      "stage": "SORT",
+      "sortPattern": {
+        "fecha_nacimiento": 1
+      },
+      "memLimit": 104857600,
+      "type": "simple",
+      "inputStage": {
+        "stage": "COLLSCAN",
+        "filter": {
+          "club": {
+            "$eq": "Real Madrid"
+          }
+        },
+        "direction": "forward"
+      }
+    }
+  },
+  "executionStats": {
+    "executionSuccess": true,
+    "nReturned": 35,
+    "executionTimeMillis": 0,
+    "totalKeysExamined": 0,
+    "totalDocsExamined": 1664
+  }
+}
+
+--- PASO 2: Creacion de indice compuesto optimizador con createIndex() ---
+Indice creado: idx_jugadores_club_nacimiento
+
+--- PASO 3: explain('executionStats') DESPUES de crear el indice ---
+{
+  "queryPlanner": {
+    "winningPlan": {
+      "stage": "FETCH",
+      "inputStage": {
+        "stage": "IXSCAN",
+        "keyPattern": {
+          "club": 1,
+          "fecha_nacimiento": 1
+        },
+        "indexName": "idx_jugadores_club_nacimiento",
+        "isMultiKey": false,
+        "multiKeyPaths": {
+          "club": [],
+          "fecha_nacimiento": []
+        },
+        "isUnique": false,
+        "isSparse": false,
+        "isPartial": false,
+        "indexVersion": 2,
+        "direction": "forward",
+        "indexBounds": {
+          "club": [
+            "[\"Real Madrid\", \"Real Madrid\"]"
+          ],
+          "fecha_nacimiento": [
+            "[MinKey, MaxKey]"
+          ]
+        }
+      }
+    }
+  },
+  "executionStats": {
+    "executionSuccess": true,
+    "nReturned": 35,
+    "executionTimeMillis": 0,
+    "totalKeysExamined": 35,
+    "totalDocsExamined": 35
+  }
+}

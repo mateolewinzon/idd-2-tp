@@ -1,0 +1,33 @@
+Ejecutado: 2026-09-04 18:05:01 UTC
+
+=== Evidencia del ambiente de ejecucion =====================
+
+1. Estado del contenedor
+fixture2030-mongo | mongo:7.0 | Up 10 seconds (healthy)
+
+2. Volumen persistente
+fixture2030_fixture2030_data | driver: local
+  punto de montaje: /data/db  (301M en disco)
+
+3. MongoDB responde
+  ping:      1
+  version:   7.0.40
+  uptime:    11 s
+  bases:     admin, config, fixture2030, local
+
+4. Persistencia de los datos ante un reinicio (RF2)
+
+  Antes del reinicio:
+  equipos:   64
+  jugadores: 1664
+
+  Reiniciando el contenedor...
+  Contenedor nuevamente healthy.
+
+  Despues del reinicio:
+  equipos:   64
+  jugadores: 1664
+
+  -> Los datos sobrevivieron: estan en el volumen, no en el contenedor.
+
+-------------------------------------------------------------

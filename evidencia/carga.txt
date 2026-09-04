@@ -1,0 +1,192 @@
+
+#############################################################
+# Corrida del 2026-09-04 18:04:58 UTC
+#############################################################
+
+=== 01 — Setup de colecciones ===============================
+
+Base de datos: fixture2030
+
+Colecciones y validadores:
+  [+] Coleccion "equipos" creada con validador $jsonSchema.
+  [+] Coleccion "jugadores" creada con validador $jsonSchema.
+
+Indices:
+  [i] equipos.idx_equipos_nombre_unico
+  [i] equipos.idx_equipos_confederacion_ranking
+  [i] equipos.idx_equipos_grupo
+  [i] jugadores.idx_jugadores_equipo_dorsal_unico
+  [i] jugadores.idx_jugadores_equipo_posicion
+  [i] jugadores.idx_jugadores_apellido_nombre
+
+Setup completo.
+
+
+=== 02 — Carga de equipos ===================================
+
+Dataset validado: 64 equipos, 16 grupos de 4.
+
+Resultado del bulkWrite (upsert por codigo FIFA):
+  Documentos encontrados (matched):  0
+  Documentos insertados (upserted):  64
+  Documentos modificados (modified): 0
+
+Total de equipos en la coleccion: 64
+
+Reparto por confederacion:
+  UEFA       22
+  CAF        13
+  AFC        11
+  CONMEBOL    9
+  CONCACAF    7
+  OFC         2
+
+
+=== 03 — Carga de jugadores =================================
+
+Equipos leidos desde la base: 64
+Documentos generados: 1664 (26 por equipo)
+
+Resultado del bulkWrite (upsert por <codigo FIFA>-<dorsal>):
+  Documentos encontrados (matched):  0
+  Documentos insertados (upserted):  1664
+  Documentos modificados (modified): 0
+
+Total de jugadores en la coleccion: 1664
+
+Reparto por posicion:
+  Mediocampista    576
+  Defensor         512
+  Delantero        384
+  Arquero          192
+
+
+#############################################################
+# Corrida del 2026-09-04 18:04:59 UTC
+#############################################################
+
+=== 01 — Setup de colecciones ===============================
+
+Base de datos: fixture2030
+
+Colecciones y validadores:
+  [=] Coleccion "equipos" ya existia — validador actualizado con collMod.
+  [=] Coleccion "jugadores" ya existia — validador actualizado con collMod.
+
+Indices:
+  [i] equipos.idx_equipos_nombre_unico
+  [i] equipos.idx_equipos_confederacion_ranking
+  [i] equipos.idx_equipos_grupo
+  [i] jugadores.idx_jugadores_equipo_dorsal_unico
+  [i] jugadores.idx_jugadores_equipo_posicion
+  [i] jugadores.idx_jugadores_apellido_nombre
+
+Setup completo.
+
+
+=== 02 — Carga de equipos ===================================
+
+Dataset validado: 64 equipos, 16 grupos de 4.
+
+Resultado del bulkWrite (upsert por codigo FIFA):
+  Documentos encontrados (matched):  64
+  Documentos insertados (upserted):  0
+  Documentos modificados (modified): 0
+
+  -> Sin cambios: la base ya estaba en el estado esperado.
+     Esta es la evidencia de idempotencia que pide RF8.
+
+Total de equipos en la coleccion: 64
+
+Reparto por confederacion:
+  UEFA       22
+  CAF        13
+  AFC        11
+  CONMEBOL    9
+  CONCACAF    7
+  OFC         2
+
+
+=== 03 — Carga de jugadores =================================
+
+Equipos leidos desde la base: 64
+Documentos generados: 1664 (26 por equipo)
+
+Resultado del bulkWrite (upsert por <codigo FIFA>-<dorsal>):
+  Documentos encontrados (matched):  1664
+  Documentos insertados (upserted):  0
+  Documentos modificados (modified): 0
+
+  -> Sin cambios: la base ya estaba en el estado esperado.
+     Esta es la evidencia de idempotencia que pide RF8.
+
+Total de jugadores en la coleccion: 1664
+
+Reparto por posicion:
+  Mediocampista    576
+  Defensor         512
+  Delantero        384
+  Arquero          192
+
+
+#############################################################
+# Corrida del 2026-09-04 19:08:20 UTC
+#############################################################
+
+=== 01 — Setup de colecciones ===============================
+
+Base de datos: fixture2030
+
+Colecciones y validadores:
+  [+] Coleccion "equipos" creada con validador $jsonSchema.
+  [+] Coleccion "jugadores" creada con validador $jsonSchema.
+
+Indices:
+  [i] equipos.idx_equipos_nombre_unico
+  [i] equipos.idx_equipos_confederacion_ranking
+  [i] equipos.idx_equipos_grupo
+  [i] jugadores.idx_jugadores_equipo_dorsal_unico
+  [i] jugadores.idx_jugadores_equipo_posicion
+  [i] jugadores.idx_jugadores_apellido_nombre
+
+Setup completo.
+
+
+=== 02 — Carga de equipos ===================================
+
+Dataset validado: 64 equipos, 16 grupos de 4.
+
+Resultado del bulkWrite (upsert por codigo FIFA):
+  Documentos encontrados (matched):  0
+  Documentos insertados (upserted):  64
+  Documentos modificados (modified): 0
+
+Total de equipos en la coleccion: 64
+
+Reparto por confederacion:
+  UEFA       22
+  CAF        13
+  AFC        11
+  CONMEBOL    9
+  CONCACAF    7
+  OFC         2
+
+
+=== 03 — Carga de jugadores =================================
+
+Equipos leidos desde la base: 64
+Documentos generados: 1664 (26 por equipo)
+
+Resultado del bulkWrite (upsert por <codigo FIFA>-<dorsal>):
+  Documentos encontrados (matched):  0
+  Documentos insertados (upserted):  1664
+  Documentos modificados (modified): 0
+
+Total de jugadores en la coleccion: 1664
+
+Reparto por posicion:
+  Mediocampista    576
+  Defensor         512
+  Delantero        384
+  Arquero          192
+

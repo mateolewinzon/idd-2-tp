@@ -1,23 +1,26 @@
+# Nombre de proyecto fijo: sin esto Compose lo deriva del nombre del directorio,
+# y renombrar la carpeta dejaria huerfano el volumen con los datos.
+name: fixture2030
+
 services:
-  mongodb:
-     image: mongo:7.0
-     container_name: fixture2030-mongodb
-     restart: always
-     ports:
-       - "27017:27017"
-     environment:
-       MONGO_INITDB_ROOT_USERNAME: admin
-       MONGO_INITDB_ROOT_PASSWORD: password123
-       MONGO_INITDB_DATABASE: fixture2030
-     volumes:
-       - mongodb_data:/data/db
-       - ./init-scripts:/docker-entrypoint-initdb.d
-     networks:
-       - mongodb-network
+  mongo:
+    image: mongo:7.0
+    container_name: fixture2030-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - fixture2030_data:/data/db
+      # No se usa /docker-entrypoint-initdb.d: solo se ejecuta cuando el volumen
+      # esta vacio, asi que no permitiria demostrar que la carga es repetible.
+      - ./mongo:/scripts:ro
+      - ./datos:/datos:ro
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
 
 volumes:
-  mongodb_data:
-
-networks:
-  mongodb-network:
-    driver: bridge
+  fixture2030_data:

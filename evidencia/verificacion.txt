@@ -1,0 +1,47 @@
+Ejecutado: 2026-09-04 19:08:27 UTC
+
+=== 04 — Verificacion de integridad =========================
+
+RNF2 — Volumen minimo
+  [OK  ] 64 equipos persistidos (RF4)
+          encontrados: 64
+  [OK  ] Al menos 1.000 jugadores persistidos (RF5)
+          encontrados: 1664
+  [OK  ] Mas de 1.500 jugadores, segun la cifra del escenario del Hito 4
+          encontrados: 1664
+
+RNF3 — Identificadores sin duplicados
+  [OK  ] Ningun nombre de seleccion repetido
+          protegido por idx_equipos_nombre_unico
+  [OK  ] Ningun dorsal repetido dentro de un mismo plantel
+          protegido por idx_jugadores_equipo_dorsal_unico
+
+RNF3 — Relacion equipo-jugador valida en el 100% de los casos
+  [OK  ] Ningun jugador huerfano (equipo._id inexistente)
+          jugadores con referencia rota: 0
+  [OK  ] Ningun equipo sin jugadores
+  [OK  ] Snapshot desnormalizado sincronizado con el documento del equipo
+          jugadores con snapshot desfasado: 0
+
+RNF3 — Campos criticos presentes
+  [OK  ] Ningun equipo con campos criticos ausentes
+          equipos incompletos: 0
+  [OK  ] Ningun jugador con campos criticos ausentes
+          jugadores incompletos: 0
+
+Coherencia de los planteles
+  [OK  ] Todos los planteles tienen 26 jugadores y exactamente 1 capitan
+
+Configuracion de las colecciones
+  [OK  ] Coleccion "equipos" con validador $jsonSchema activo
+          validationAction: error
+  [OK  ] Coleccion "jugadores" con validador $jsonSchema activo
+          validationAction: error
+  [info ] Indices en "equipos": _id_, idx_equipos_nombre_unico, idx_equipos_confederacion_ranking, idx_equipos_grupo
+  [info ] Indices en "jugadores": _id_, idx_jugadores_equipo_dorsal_unico, idx_jugadores_equipo_posicion, idx_jugadores_apellido_nombre
+
+-------------------------------------------------------------
+  RESULTADO: todas las verificaciones pasaron.
+  64 equipos | 1664 jugadores | 0 huerfanos
+-------------------------------------------------------------
+

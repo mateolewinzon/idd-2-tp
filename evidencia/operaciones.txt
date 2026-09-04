@@ -1,0 +1,506 @@
+################################################################################
+# EVIDENCIA DE OPERACIONES Y CONSULTAS - 2026-09-04 19:46:36 UTC
+################################################################################
+
+================================================================================
+OPERACION 1: INSERCION
+Objetivo: Insertar un equipo y un jugador validando esquema $jsonSchema estricto.
+Condiciones: _id de 3 letras FIFA para equipo e Int32; _id compuesto para jugador
+             con dorsal Int32, fecha Date y snapshot desnormalizado de equipo.
+================================================================================
+
+--- Resultado de insercion en 'equipos' ---
+{
+  "acknowledged": true,
+  "insertedId": "NZL"
+}
+
+--- Documento insertado en 'equipos' ---
+{
+  "_id": "NZL",
+  "nombre": "Nueva Zelanda",
+  "confederacion": "OFC",
+  "grupo": "P",
+  "ranking_fifa": 85,
+  "participaciones_mundiales": 3,
+  "director_tecnico": "Darren Bazeley",
+  "anfitrion": false
+}
+
+--- Resultado de insercion en 'jugadores' ---
+{
+  "acknowledged": true,
+  "insertedId": "NZL-9"
+}
+
+--- Documento insertado en 'jugadores' ---
+{
+  "_id": "NZL-9",
+  "nombre": "Chris",
+  "apellido": "Wood",
+  "dorsal": 9,
+  "posicion": "Delantero",
+  "pie_habil": "Derecho",
+  "fecha_nacimiento": {
+    "$date": "1991-12-07T00:00:00Z"
+  },
+  "altura_cm": 191,
+  "peso_kg": 84,
+  "club": "Nottingham Forest",
+  "capitan": true,
+  "equipo": {
+    "_id": "NZL",
+    "nombre": "Nueva Zelanda",
+    "confederacion": "OFC"
+  }
+}
+
+================================================================================
+OPERACION 2: RECUPERACION POR IDENTIFICADOR
+Objetivo: Recuperacion en tiempo O(1) de una seleccion y un jugador por clave natural.
+Condiciones: _id == 'ARG' en equipos y _id == 'ARG-10' en jugadores.
+================================================================================
+
+--- Documento de equipo obtenido por _id: 'ARG' ---
+{
+  "_id": "ARG",
+  "anfitrion": true,
+  "confederacion": "CONMEBOL",
+  "director_tecnico": "Lionel Scaloni (Renovado)",
+  "grupo": "J",
+  "nombre": "Argentina",
+  "participaciones_mundiales": 21,
+  "ranking_fifa": 1
+}
+
+--- Documento de jugador obtenido por _id: 'ARG-10' ---
+{
+  "_id": "ARG-10",
+  "altura_cm": 186,
+  "apellido": "Bustos",
+  "capitan": true,
+  "club": "Inter Miami CF",
+  "dorsal": 10,
+  "equipo": {
+    "_id": "ARG",
+    "nombre": "Argentina",
+    "confederacion": "CONMEBOL"
+  },
+  "fecha_nacimiento": {
+    "$date": "2007-07-07T00:00:00Z"
+  },
+  "nombre": "Nahuel",
+  "peso_kg": 72,
+  "pie_habil": "Derecho",
+  "posicion": "Mediocampista"
+}
+
+================================================================================
+OPERACION 3: RECUPERACION FILTRADA
+Objetivo: Filtrar entidades aplicando condiciones de negocio compuestas.
+Condiciones: a) Equipos CONMEBOL con ranking_fifa <= 15 (cabezas de serie).
+             b) Delanteros UEFA con altura_cm >= 188 (porte fisico).
+================================================================================
+
+--- Equipos CONMEBOL en top 15 ranking FIFA ---
+[
+  {
+    "_id": "ARG",
+    "anfitrion": true,
+    "confederacion": "CONMEBOL",
+    "director_tecnico": "Lionel Scaloni (Renovado)",
+    "grupo": "J",
+    "nombre": "Argentina",
+    "participaciones_mundiales": 21,
+    "ranking_fifa": 1
+  },
+  {
+    "_id": "BRA",
+    "anfitrion": false,
+    "confederacion": "CONMEBOL",
+    "director_tecnico": "Carlo Ancelotti",
+    "grupo": "C",
+    "nombre": "Brasil",
+    "participaciones_mundiales": 22,
+    "ranking_fifa": 5
+  },
+  {
+    "_id": "COL",
+    "anfitrion": false,
+    "confederacion": "CONMEBOL",
+    "director_tecnico": "Nestor Lorenzo",
+    "grupo": "K",
+    "nombre": "Colombia",
+    "participaciones_mundiales": 6,
+    "ranking_fifa": 13
+  },
+  {
+    "_id": "URU",
+    "anfitrion": true,
+    "confederacion": "CONMEBOL",
+    "director_tecnico": "Marcelo Bielsa",
+    "grupo": "H",
+    "nombre": "Uruguay",
+    "participaciones_mundiales": 14,
+    "ranking_fifa": 14
+  }
+]
+
+--- Delanteros UEFA con altura >= 188 cm (muestra de 3 documentos) ---
+[
+  {
+    "_id": "AUT-22",
+    "altura_cm": 192,
+    "apellido": "Andersen",
+    "capitan": false,
+    "club": "Al Hilal",
+    "dorsal": 22,
+    "equipo": {
+      "_id": "AUT",
+      "nombre": "Austria",
+      "confederacion": "UEFA"
+    },
+    "fecha_nacimiento": {
+      "$date": "2004-05-10T00:00:00Z"
+    },
+    "nombre": "Jonas",
+    "peso_kg": 76,
+    "pie_habil": "Izquierdo",
+    "posicion": "Delantero"
+  },
+  {
+    "_id": "BIH-21",
+    "altura_cm": 192,
+    "apellido": "Duarte",
+    "capitan": false,
+    "club": "Feyenoord",
+    "dorsal": 21,
+    "equipo": {
+      "_id": "BIH",
+      "nombre": "Bosnia y Herzegovina",
+      "confederacion": "UEFA"
+    },
+    "fecha_nacimiento": {
+      "$date": "1994-03-21T00:00:00Z"
+    },
+    "nombre": "Pavel",
+    "peso_kg": 70,
+    "pie_habil": "Derecho",
+    "posicion": "Delantero"
+  },
+  {
+    "_id": "CRO-21",
+    "altura_cm": 192,
+    "apellido": "Bianchi",
+    "capitan": false,
+    "club": "Urawa Red Diamonds",
+    "dorsal": 21,
+    "equipo": {
+      "_id": "CRO",
+      "nombre": "Croacia",
+      "confederacion": "UEFA"
+    },
+    "fecha_nacimiento": {
+      "$date": "1992-07-28T00:00:00Z"
+    },
+    "nombre": "Andreas",
+    "peso_kg": 80,
+    "pie_habil": "Derecho",
+    "posicion": "Delantero"
+  }
+]
+
+================================================================================
+OPERACION 4: PROYECCION
+Objetivo: Reducir sobrecarga de red devolviendo solo campos para tarjetas de alineacion.
+Condiciones: Delanteros de 'ARG' proyectando dorsal, nombre, apellido, club y
+             equipo.nombre, excluyendo explicitamente _id (0).
+================================================================================
+
+--- Documentos proyectados (sin _id ni atributos fisicos no visibles) ---
+[
+  {
+    "apellido": "Rojas",
+    "club": "Palmeiras",
+    "dorsal": 20,
+    "equipo": {
+      "nombre": "Argentina"
+    },
+    "nombre": "Alvaro"
+  },
+  {
+    "apellido": "Ocampo",
+    "club": "Juventus",
+    "dorsal": 21,
+    "equipo": {
+      "nombre": "Argentina"
+    },
+    "nombre": "Rodrigo"
+  },
+  {
+    "apellido": "Villalba",
+    "club": "Aston Villa",
+    "dorsal": 22,
+    "equipo": {
+      "nombre": "Argentina"
+    },
+    "nombre": "Ignacio"
+  },
+  {
+    "apellido": "Barrios",
+    "club": "RB Leipzig",
+    "dorsal": 24,
+    "equipo": {
+      "nombre": "Argentina"
+    },
+    "nombre": "Emiliano"
+  },
+  {
+    "apellido": "Villalba",
+    "club": "Flamengo",
+    "dorsal": 25,
+    "equipo": {
+      "nombre": "Argentina"
+    },
+    "nombre": "Bruno"
+  },
+  {
+    "apellido": "Ferreira",
+    "club": "Newcastle United",
+    "dorsal": 26,
+    "equipo": {
+      "nombre": "Argentina"
+    },
+    "nombre": "Diego"
+  }
+]
+
+================================================================================
+OPERACION 5: ORDENAMIENTO Y PAGINACION
+Objetivo: Paginacion determinista para interfaces graficas (UI) con gran volumen.
+Condiciones: Orden por { apellido: 1, nombre: 1 }, pagina 2 con tamanio 5
+             (skip: 5, limit: 5), servida mediante indice preexistente.
+================================================================================
+
+--- Documentos de la Pagina 2 del Directorio de Jugadores ---
+[
+  {
+    "_id": "AUS-26",
+    "altura_cm": 178,
+    "apellido": "Abbas",
+    "capitan": false,
+    "club": "Fenerbahce",
+    "dorsal": 26,
+    "equipo": {
+      "_id": "AUS",
+      "nombre": "Australia",
+      "confederacion": "AFC"
+    },
+    "fecha_nacimiento": {
+      "$date": "2000-09-10T00:00:00Z"
+    },
+    "nombre": "Karim",
+    "peso_kg": 82,
+    "pie_habil": "Derecho",
+    "posicion": "Delantero"
+  },
+  {
+    "_id": "IRN-11",
+    "altura_cm": 172,
+    "apellido": "Abbas",
+    "capitan": false,
+    "club": "Club America",
+    "dorsal": 11,
+    "equipo": {
+      "_id": "IRN",
+      "nombre": "Iran",
+      "confederacion": "AFC"
+    },
+    "fecha_nacimiento": {
+      "$date": "1993-08-15T00:00:00Z"
+    },
+    "nombre": "Kenta",
+    "peso_kg": 74,
+    "pie_habil": "Izquierdo",
+    "posicion": "Mediocampista"
+  },
+  {
+    "_id": "IRQ-14",
+    "altura_cm": 184,
+    "apellido": "Abbas",
+    "capitan": false,
+    "club": "PSV Eindhoven",
+    "dorsal": 14,
+    "equipo": {
+      "_id": "IRQ",
+      "nombre": "Irak",
+      "confederacion": "AFC"
+    },
+    "fecha_nacimiento": {
+      "$date": "2007-02-22T00:00:00Z"
+    },
+    "nombre": "Kenta",
+    "peso_kg": 75,
+    "pie_habil": "Derecho",
+    "posicion": "Mediocampista"
+  },
+  {
+    "_id": "QAT-19",
+    "altura_cm": 172,
+    "apellido": "Abbas",
+    "capitan": false,
+    "club": "FC Barcelona",
+    "dorsal": 19,
+    "equipo": {
+      "_id": "QAT",
+      "nombre": "Catar",
+      "confederacion": "AFC"
+    },
+    "fecha_nacimiento": {
+      "$date": "2010-08-24T00:00:00Z"
+    },
+    "nombre": "Kenta",
+    "peso_kg": 77,
+    "pie_habil": "Derecho",
+    "posicion": "Mediocampista"
+  },
+  {
+    "_id": "CHN-4",
+    "altura_cm": 192,
+    "apellido": "Abbas",
+    "capitan": false,
+    "club": "Ulsan HD",
+    "dorsal": 4,
+    "equipo": {
+      "_id": "CHN",
+      "nombre": "China",
+      "confederacion": "AFC"
+    },
+    "fecha_nacimiento": {
+      "$date": "2009-02-26T00:00:00Z"
+    },
+    "nombre": "Minjun",
+    "peso_kg": 80,
+    "pie_habil": "Derecho",
+    "posicion": "Defensor"
+  }
+]
+
+================================================================================
+OPERACION 6: ACTUALIZACION
+Objetivo: Actualizacion atomica preservando validador e integridad referencial.
+Condiciones: a) Equipos: $set en director_tecnico e $inc en participaciones_mundiales.
+             b) Jugadores: $set en club y peso_kg sin alterar subdocumento equipo.
+================================================================================
+
+--- Resultado updateOne en 'equipos' ---
+{
+  "acknowledged": true,
+  "insertedId": null,
+  "matchedCount": 1,
+  "modifiedCount": 1,
+  "upsertedCount": 0
+}
+
+--- Documento de equipo luego del update ---
+{
+  "_id": "ARG",
+  "anfitrion": true,
+  "confederacion": "CONMEBOL",
+  "director_tecnico": "Lionel Scaloni (Renovado)",
+  "grupo": "J",
+  "nombre": "Argentina",
+  "participaciones_mundiales": 22,
+  "ranking_fifa": 1
+}
+
+--- Resultado updateOne en 'jugadores' ---
+{
+  "acknowledged": true,
+  "insertedId": null,
+  "matchedCount": 1,
+  "modifiedCount": 0,
+  "upsertedCount": 0
+}
+
+--- Documento de jugador luego del update ---
+{
+  "_id": "ARG-10",
+  "altura_cm": 186,
+  "apellido": "Bustos",
+  "capitan": true,
+  "club": "Inter Miami CF",
+  "dorsal": 10,
+  "equipo": {
+    "_id": "ARG",
+    "nombre": "Argentina",
+    "confederacion": "CONMEBOL"
+  },
+  "fecha_nacimiento": {
+    "$date": "2007-07-07T00:00:00Z"
+  },
+  "nombre": "Nahuel",
+  "peso_kg": 72,
+  "pie_habil": "Derecho",
+  "posicion": "Mediocampista"
+}
+
+================================================================================
+OPERACION 7: AGREGACION
+Objetivo: Pipeline analitico consolidado cruzando ambas colecciones.
+Etapas: $match anfitriones -> $lookup con jugadores -> $unwind plantel ->
+        $group por seleccion y confederacion con $sum y $avg ->
+        $project con $round -> $sort por altura desc -> $limit 6.
+================================================================================
+
+--- Salida del pipeline de agregacion (BSON/JSON crudo) ---
+[
+  {
+    "total_convocados": 26,
+    "codigo": "POR",
+    "pais": "Portugal",
+    "confederacion": "UEFA",
+    "promedio_altura_cm": 183.27,
+    "promedio_peso_kg": 77.5
+  },
+  {
+    "total_convocados": 26,
+    "codigo": "PAR",
+    "pais": "Paraguay",
+    "confederacion": "CONMEBOL",
+    "promedio_altura_cm": 182.85,
+    "promedio_peso_kg": 77.81
+  },
+  {
+    "total_convocados": 26,
+    "codigo": "ARG",
+    "pais": "Argentina",
+    "confederacion": "CONMEBOL",
+    "promedio_altura_cm": 182.85,
+    "promedio_peso_kg": 77.62
+  },
+  {
+    "total_convocados": 26,
+    "codigo": "ESP",
+    "pais": "Espana",
+    "confederacion": "UEFA",
+    "promedio_altura_cm": 182.73,
+    "promedio_peso_kg": 76.96
+  },
+  {
+    "total_convocados": 26,
+    "codigo": "MAR",
+    "pais": "Marruecos",
+    "confederacion": "CAF",
+    "promedio_altura_cm": 182.31,
+    "promedio_peso_kg": 78.65
+  },
+  {
+    "total_convocados": 26,
+    "codigo": "URU",
+    "pais": "Uruguay",
+    "confederacion": "CONMEBOL",
+    "promedio_altura_cm": 181.85,
+    "promedio_peso_kg": 76.88
+  }
+]
