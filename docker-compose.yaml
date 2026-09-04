@@ -1,0 +1,23 @@
+services:
+  mongodb:
+     image: mongo:7.0
+     container_name: fixture2030-mongodb
+     restart: always
+     ports:
+       - "27017:27017"
+     environment:
+       MONGO_INITDB_ROOT_USERNAME: admin
+       MONGO_INITDB_ROOT_PASSWORD: password123
+       MONGO_INITDB_DATABASE: fixture2030
+     volumes:
+       - mongodb_data:/data/db
+       - ./init-scripts:/docker-entrypoint-initdb.d
+     networks:
+       - mongodb-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  mongodb-network:
+    driver: bridge
