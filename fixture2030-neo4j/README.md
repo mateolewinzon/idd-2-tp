@@ -62,7 +62,7 @@ Los volúmenes `neo4j_data` y `neo4j_logs` resguardan los datos fuera del ciclo 
 ├── README.md                        Este archivo
 │
 ├── docs/
-│   └── modelo_grafo.md              Problema relacional, inventario de nodos, propiedades y relaciones
+│   └── modelo_grafo.md              Problema relacional, nodos, relaciones, diagrama y decisiones de integridad
 │
 ├── queries/                         Scripts Cypher de definición y consulta
 │   ├── estructura.cypher            Constraints de unicidad e índices para nodos
@@ -74,7 +74,7 @@ Los volúmenes `neo4j_data` y `neo4j_logs` resguardan los datos fuera del ciclo 
 │   ├── levantarDocker.sh            Levanta Neo4j y espera disponibilidad de cypher-shell
 │   └── estructura.sh                Ejecuta queries/estructura.cypher contra Neo4j
 │
-├── import/                          Directorio mapeado al volumen /var/lib/neo4j/import para LOAD CSV
+├── import/                          CSV de carga; carpeta local montada en /var/lib/neo4j/import para LOAD CSV (encontrado en documentación Neo4j Docs)
 │
 └── evidencia/                       Salidas de ejecución y resultados de las corridas
     └── estructura.txt               Log de ejecución de restricciones e índices
@@ -87,10 +87,10 @@ Los volúmenes `neo4j_data` y `neo4j_logs` resguardan los datos fuera del ciclo 
 El modelo vincula entidades provenientes de la etapa documental previa con las entidades de competencia y desarrollo del torneo:
 
 - **Nodos:**
-  - `(:Equipo {id, nombre})`
-  - `(:Jugador {id, apellido})`
-  - `(:Partido {id, fase, fecha})`
-  - `(:Sede {id, nombre, ciudad})`
+  - `(:Equipo {id, nombre, confederacion, grupo})` — `id` = `_id` del equipo en MongoDB (ej. `"ARG"`)
+  - `(:Jugador {id, nombre, apellido, posicion})` — `id` = `_id` del jugador en MongoDB (ej. `"ARG-10"`)
+  - `(:Partido {id, fase, grupo, fecha})`
+  - `(:Sede {id, nombre, ciudad, pais})`
   - `(:Evento {id, tipo, minuto})`
 
 - **Relaciones principales:**
@@ -98,6 +98,7 @@ El modelo vincula entidades provenientes de la etapa documental previa con las e
   - `(:Equipo)-[:PARTICIPA_EN {condicion}]->(:Partido)`
   - `(:Partido)-[:SE_DISPUTA_EN]->(:Sede)`
   - `(:Evento)-[:OCURRE_EN]->(:Partido)`
-  - `(:Jugador)-[:PROTAGONIZA]->(:Evento)`
+  - `(:Jugador)-[:PROTAGONIZA {rol}]->(:Evento)`
+  - `(:Jugador)-[:ALINEADO_EN {titular}]->(:Partido)`
 
 Para un detalle exhaustivo con justificaciones de cardinalidad y requerimientos funcionales, consultar [`docs/modelo_grafo.md`](./docs/modelo_grafo.md).

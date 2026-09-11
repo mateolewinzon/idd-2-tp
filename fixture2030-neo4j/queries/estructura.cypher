@@ -17,12 +17,16 @@ CREATE CONSTRAINT evento_id_unique IF NOT EXISTS
 FOR (ev:Evento)
 REQUIRE ev.id IS UNIQUE;
 
-// Acelera las búsquedas cuando filtras por "Gol", "Tarjeta Roja", etc.
+// CREATE INDEX: encontrado en documentación Neo4j Docs (Cypher Manual, sección Indexes).
+// En clase solo se vio CREATE CONSTRAINT; la justificación de cada índice está en
+// docs/modelo_grafo.md §5.3.
+
+// Para las consultas que filtran eventos por tipo ("Gol", "Tarjeta Roja", etc.; preguntas 1 a 4 de docs/modelo_grafo.md)
 CREATE INDEX evento_tipo_idx IF NOT EXISTS
 FOR (ev:Evento)
 ON (ev.tipo);
 
-// Acelera las consultas que agrupan o filtran por etapa del torneo
+// Para las consultas que filtran por etapa del torneo (pregunta 5 de docs/modelo_grafo.md)
 CREATE INDEX partido_fase_idx IF NOT EXISTS
 FOR (p:Partido)
 ON (p.fase);

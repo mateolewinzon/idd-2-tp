@@ -9,7 +9,9 @@ mkdir -p evidencia
 
 echo "==> Aplicando restricciones e índices en Neo4j..."
 
-# Ejecutar el archivo Cypher a través de cypher-shell y registrar el catálogo resultante como evidencia
+# Ejecutar el archivo Cypher a través de cypher-shell y registrar el catálogo resultante como evidencia.
+# SHOW INDEXES y la cláusula YIELD: encontrado en documentación Neo4j Docs (Cypher Manual).
+# En clase solo se vio SHOW CONSTRAINTS.
 {
   echo "============================================================"
   echo " Evidencia de Estructura - $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
