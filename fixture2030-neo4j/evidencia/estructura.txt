@@ -1,0 +1,26 @@
+============================================================
+ Evidencia de Estructura - 2026-09-11 02:31:19 UTC
+============================================================
+
+==> 1. Aplicando queries/estructura.cypher...
+OK.
+
+==> 2. Constraints creados en el grafo:
+name, type, entityType, labelsOrTypes, properties
+"equipo_id_unique", "NODE_PROPERTY_UNIQUENESS", "NODE", ["Equipo"], ["id"]
+"evento_id_unique", "NODE_PROPERTY_UNIQUENESS", "NODE", ["Evento"], ["id"]
+"jugador_id_unique", "NODE_PROPERTY_UNIQUENESS", "NODE", ["Jugador"], ["id"]
+"partido_id_unique", "NODE_PROPERTY_UNIQUENESS", "NODE", ["Partido"], ["id"]
+"sede_id_unique", "NODE_PROPERTY_UNIQUENESS", "NODE", ["Sede"], ["id"]
+
+==> 3. Índices activos en el grafo:
+name, state, type, entityType, labelsOrTypes, properties
+"equipo_id_unique", "ONLINE", "RANGE", "NODE", ["Equipo"], ["id"]
+"evento_id_unique", "ONLINE", "RANGE", "NODE", ["Evento"], ["id"]
+"evento_tipo_idx", "ONLINE", "RANGE", "NODE", ["Evento"], ["tipo"]
+"index_1b9dcc97", "ONLINE", "LOOKUP", "RELATIONSHIP", NULL, NULL
+"index_460996c0", "ONLINE", "LOOKUP", "NODE", NULL, NULL
+"jugador_id_unique", "ONLINE", "RANGE", "NODE", ["Jugador"], ["id"]
+"partido_fase_idx", "ONLINE", "RANGE", "NODE", ["Partido"], ["fase"]
+"partido_id_unique", "ONLINE", "RANGE", "NODE", ["Partido"], ["id"]
+"sede_id_unique", "ONLINE", "RANGE", "NODE", ["Sede"], ["id"]
