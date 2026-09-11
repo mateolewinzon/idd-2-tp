@@ -134,3 +134,86 @@ Coinciden exactamente con las filas de cada CSV (§1.1): cada fila generó un no
 una relación, sin duplicados. Los cinco controles de coherencia (jugadores sin
 equipo, partidos sin sede, partidos sin equipos, eventos sin partido, eventos sin
 protagonista) dieron 0 antes y después de repetir la carga.
+
+## 3. Operaciones CRUD
+
+`queries/crud.cypher` demuestra las cuatro operaciones pedidas sobre una sede y un
+partido de prueba: los crea con `MERGE`, recupera el patrón, actualiza el nombre de
+la sede, elimina la relación y finalmente elimina los dos nodos. Los identificadores
+`DEMO-SEDE` y `DEMO-PARTIDO` están reservados para esta prueba.
+
+El borrado es deliberadamente seguro: tanto la relación como los nodos se buscan
+por sus identificadores exactos. No se usa un patrón general como
+`MATCH (n) DETACH DELETE n`, que borraría el grafo completo. Al terminar, dos
+consultas de control devuelven cero relaciones y cero nodos de demostración.
+
+## 4. Preguntas de grafo y valor para el sistema
+
+`queries/consultas_grafo.cypher` contiene cinco consultas:
+
+1. **Máximos goleadores de Argentina.** Recorre
+   `Equipo <- Jugador -> Evento` y agrupa los goles por jugador.
+2. **Jugadores de CONMEBOL que anotaron en el Bernabeu.** Recorre
+   `Equipo <- Jugador -> Evento -> Partido -> Sede`, filtrando los extremos del
+   recorrido por confederación y sede.
+3. **Titulares asistidos por un suplente.** Une autor, asistente, gol, partido,
+   alineaciones y equipo para comprobar que fueron compañeros y que el autor fue
+   titular mientras el asistente ingresó desde el banco.
+4. **Programación de la final.** Recupera los dos participantes, la fecha y la sede
+   de un partido mediante sus relaciones.
+5. **Conectividad de sedes.** Ordena las sedes por cantidad de equipos distintos
+   conectados a través de los partidos que recibieron.
+
+Las consultas 1, 2 y 3 satisfacen el requisito de múltiples saltos (RF8). La quinta
+es el análisis de conectividad (RF9): identifica qué estadios concentran mayor
+diversidad de participantes. Ese dato aporta al negocio porque permite priorizar
+capacidad operativa, transporte, seguridad, atención al público y acciones
+comerciales en los puntos de encuentro más centrales del torneo. No intenta medir
+la importancia deportiva de una sede, sino su alcance dentro del fixture cargado.
+
+El resultado verificable sobre los datos entregados ubica primero al **Gran Estadio
+Hassan II (`S-15`)**, conectado con **14 equipos distintos** mediante **10
+partidos**. Luego aparecen Camp Nou (`S-06`) con 13 equipos y el Estadio da Luz
+(`S-12`) con 12. Estos valores se derivan del fixture generado y pueden cambiar si
+se regeneran los partidos con otros criterios.
+
+Como control contra los CSV entregados, los otros resultados esperados son:
+
+- Argentina: `ARG-4` encabeza con 2 goles; los siguientes jugadores tienen 1.
+- CONMEBOL en el Bernabeu: 4 goles, todos de Brasil, en `P-113` y `P-121`.
+- Titular asistido por un suplente: 28 goles.
+- Final: Inglaterra contra Alemania (`P-127`), el 21/07/2030 en el Bernabeu.
+
+Estos controles no reemplazan la ejecución en Neo4j: sirven para detectar de forma
+simple si una consulta devuelve filas de más, de menos o con relaciones incorrectas.
+
+### 4.1. Por qué estas preguntas justifican un grafo
+
+En MongoDB, equipo, jugador, partido, evento, sede y alineación quedarían en
+documentos o colecciones distintas. Resolver las preguntas 2 y 3 obligaría a hacer
+varios cruces encadenados o a duplicar de antemano los datos de cada relación. En
+Neo4j esos vínculos son parte del modelo: la consulta describe directamente el
+camino que se quiere recorrer.
+
+El beneficio se nota especialmente en la pregunta 3. No basta con buscar goles:
+hay que unir dos protagonistas del mismo evento, verificar la alineación de ambos
+en el mismo partido y comprobar que pertenecen al mismo equipo. En la consulta 5,
+la conectividad tampoco es una propiedad fija de la sede; surge de recorrer
+`Sede <- Partido <- Equipo` y contar vecinos distintos. Si cambia el fixture, el
+resultado cambia sin tener que mantener un contador duplicado dentro de la sede.
+
+MongoDB sigue siendo apropiado para recuperar la ficha completa de un equipo o un
+jugador. Neo4j se usa aquí solo para las preguntas cuyo valor está en navegar las
+relaciones, tal como se trabajó en la Clase 5.
+
+## 5. Evidencia
+
+- `evidencia/carga.txt`: carga repetida y conteos que prueban idempotencia.
+- `evidencia/crud.txt`: lo genera `scripts/crud.sh` con los resultados del CRUD y
+  los controles de borrado.
+- `evidencia/consultas.txt`: lo genera `scripts/consultar.sh` con las salidas
+  tabulares y la representación textual de los caminos de visualización.
+- Para la vista gráfica, el último bloque de `queries/consultas_grafo.cypher`
+  devuelve únicamente el subgrafo de la final. En Neo4j Browser se ejecuta ese
+  bloque y se selecciona la vista **Graph**, evitando una visualización ilegible de
+  todo el grafo.

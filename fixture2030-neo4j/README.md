@@ -25,6 +25,8 @@ Comandos principales desde este directorio:
 ./scripts/levantarDocker.sh  # Levanta el contenedor de Neo4j y espera a que esté listo
 ./scripts/estructura.sh      # Aplica constraints de unicidad e índices (queries/estructura.cypher)
 ./scripts/cargar.sh          # Carga el grafo desde import/*.csv (queries/carga.cypher)
+./scripts/crud.sh            # Ejecuta el CRUD de prueba y guarda evidencia
+./scripts/consultar.sh       # Ejecuta las consultas de grafo y guarda evidencia
 ```
 
 `cargar.sh` carga el grafo dos veces seguidas y compara los conteos de nodos y relaciones antes y después de cada corrida: es la evidencia de que la carga es idempotente (RNF4, `evidencia/carga.txt`). Es seguro ejecutarlo más de una vez.
@@ -88,7 +90,9 @@ Los volúmenes `neo4j_data` y `neo4j_logs` resguardan los datos fuera del ciclo 
 │   ├── estructura.sh                Ejecuta queries/estructura.cypher contra Neo4j
 │   ├── cargar.sh                    Ejecuta queries/carga.cypher dos veces; evidencia de idempotencia (RNF4)
 │   ├── generar-csv.sh               Regenera import/*.csv desde MongoDB (opcional)
-│   └── generar-csv.js               Generador determinista que mongosh ejecuta en el contenedor de MongoDB
+│   ├── generar-csv.js               Generador determinista que mongosh ejecuta en el contenedor de MongoDB
+│   ├── crud.sh                       Ejecuta el CRUD y genera evidencia/crud.txt
+│   └── consultar.sh                  Ejecuta las consultas y genera evidencia/consultas.txt
 │
 ├── import/                          CSV de carga; carpeta local montada en /var/lib/neo4j/import para LOAD CSV (encontrado en documentación Neo4j Docs)
 │   ├── equipos.csv, jugadores.csv   Exportados de MongoDB (Hito 4)
@@ -97,7 +101,9 @@ Los volúmenes `neo4j_data` y `neo4j_logs` resguardan los datos fuera del ciclo 
 └── evidencia/                       Salidas de ejecución y resultados de las corridas
     ├── estructura.txt               Log de ejecución de restricciones e índices
     ├── generacion.txt               Filas por CSV y comprobación de determinismo (dos pasadas)
-    └── carga.txt                    Conteos antes/después de cargar y de repetir la carga (RNF4)
+    ├── carga.txt                    Conteos antes/después de cargar y de repetir la carga (RNF4)
+    ├── crud.txt                     Se genera con scripts/crud.sh
+    └── consultas.txt                Se genera con scripts/consultar.sh
 ```
 
 ---
@@ -122,3 +128,17 @@ El modelo vincula entidades provenientes de la etapa documental previa con las e
   - `(:Jugador)-[:ALINEADO_EN {titular}]->(:Partido)`
 
 Para un detalle exhaustivo con justificaciones de cardinalidad y requerimientos funcionales, consultar [`docs/modelo_grafo.md`](./docs/modelo_grafo.md).
+
+---
+
+## 6. Consultas y evidencia visual
+
+`queries/consultas_grafo.cypher` incluye tres recorridos de múltiples saltos, una
+consulta del fixture, un ranking de conectividad de sedes y un bloque final pensado
+para visualizar el subgrafo de la final.
+
+Para obtener la evidencia visual, abrir Neo4j Browser, copiar solamente el bloque
+**Visualizacion** al final del archivo y ejecutarlo. En el resultado seleccionar
+**Graph**; el patrón devuelve los dos equipos finalistas, el partido y la sede. Las
+salidas reproducibles por consola quedan en `evidencia/` al ejecutar los scripts
+indicados en la sección 2.
