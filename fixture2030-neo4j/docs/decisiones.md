@@ -89,3 +89,48 @@ interpretar las consultas:
   rojas y 1.032 sustituciones.
 - 28 goles de un titular asistido por un compañero que ingresó desde el banco: la
   pregunta 3 tiene resultados que verificar.
+
+## 2. Carga en Neo4j
+
+### 2.1. Método
+
+`queries/carga.cypher` recorre cada CSV con `LOAD CSV WITH HEADERS FROM ... AS fila`
+(encontrado en documentación Neo4j Docs) y, por cada fila, hace `MERGE` sobre el
+`id` del nodo o sobre los dos nodos de la relación, y `SET` para el resto de las
+propiedades — el mismo patrón que `docs/modelo_grafo.md` §5.2 documenta y justifica.
+Los nodos se cargan primero (uno por archivo) y las relaciones después, cada una en
+su propia sentencia `LOAD CSV`, así que un archivo con relaciones nunca se procesa
+antes de que existan los dos nodos que conecta.
+
+Dos conversiones de tipo, porque `LOAD CSV` entrega todo como texto:
+
+- `fecha` se convierte con `date()` (Clase 5).
+- `minuto` se convierte con `toInteger()` (encontrado en documentación Neo4j Docs),
+  para poder compararlo y ordenarlo como número.
+- `titular` se resuelve comparando el texto contra `'true'`, sin una función de
+  conversión adicional.
+
+### 2.2. Evidencia de idempotencia (RNF4)
+
+`scripts/cargar.sh` ejecuta `queries/verificacion.cypher` antes de cargar, después
+de la primera carga y después de repetirla, y compara las dos últimas salidas. La
+corrida quedó en `evidencia/carga.txt`:
+
+| Elemento | Conteo |
+| -------- | -----: |
+| `Equipo` | 64 |
+| `Jugador` | 1.664 |
+| `Sede` | 20 |
+| `Partido` | 127 |
+| `Evento` | 1.869 |
+| `PERTENECE_A` | 1.664 |
+| `SE_DISPUTA_EN` | 127 |
+| `PARTICIPA_EN` | 254 |
+| `ALINEADO_EN` | 3.826 |
+| `OCURRE_EN` | 1.869 |
+| `PROTAGONIZA` | 3.155 |
+
+Coinciden exactamente con las filas de cada CSV (§1.1): cada fila generó un nodo o
+una relación, sin duplicados. Los cinco controles de coherencia (jugadores sin
+equipo, partidos sin sede, partidos sin equipos, eventos sin partido, eventos sin
+protagonista) dieron 0 antes y después de repetir la carga.

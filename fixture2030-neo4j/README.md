@@ -13,6 +13,7 @@ Las decisiones de modelado del grafo, el inventario de entidades y sus relacione
 - **Docker Desktop** (o instalación de Docker con Docker Compose v2).
 - Nada más. No hace falta instalar Neo4j localmente ni drivers adicionales: todo se ejecuta dentro del contenedor.
 - Los puertos **7474** (HTTP / Neo4j Browser) y **7687** (Bolt) deben estar libres. Si ya tenés una instancia local de Neo4j en ejecución, detenela o modificá el mapeo de puertos en `docker-compose.yaml`.
+- `docker-compose.yaml` usa `neo4j:latest`. Esta entrega se probó contra la versión **2026.07.1** de Neo4j, obtenida el **11/09/2026**. Si `docker pull` trae una versión posterior y algo de lo documentado deja de funcionar, es un cambio incompatible de la imagen, no del módulo.
 
 ---
 
@@ -23,7 +24,10 @@ Comandos principales desde este directorio:
 ```bash
 ./scripts/levantarDocker.sh  # Levanta el contenedor de Neo4j y espera a que esté listo
 ./scripts/estructura.sh      # Aplica constraints de unicidad e índices (queries/estructura.cypher)
+./scripts/cargar.sh          # Carga el grafo desde import/*.csv (queries/carga.cypher)
 ```
+
+`cargar.sh` carga el grafo dos veces seguidas y compara los conteos de nodos y relaciones antes y después de cada corrida: es la evidencia de que la carga es idempotente (RNF4, `evidencia/carga.txt`). Es seguro ejecutarlo más de una vez.
 
 Los CSV de `import/` ya vienen generados. Solo hace falta regenerarlos si cambian los datos del Hito 4; requiere el módulo `fixture2030-mongo` levantado y cargado:
 
@@ -74,13 +78,15 @@ Los volúmenes `neo4j_data` y `neo4j_logs` resguardan los datos fuera del ciclo 
 │
 ├── queries/                         Scripts Cypher de definición y consulta
 │   ├── estructura.cypher            Constraints de unicidad e índices para nodos
-│   ├── carga.cypher                 Carga e importación de nodos y relaciones
+│   ├── carga.cypher                 LOAD CSV + MERGE: carga nodos y relaciones desde import/
+│   ├── verificacion.cypher          Conteos por etiqueta/tipo y controles de coherencia (usado por cargar.sh)
 │   ├── crud.cypher                  Operaciones CRUD sobre el grafo
 │   └── consultas_grafo.cypher       Consultas analíticas de patrones y caminos
 │
 ├── scripts/                         Scripts envoltorios ejecutables desde el host
 │   ├── levantarDocker.sh            Levanta Neo4j y espera disponibilidad de cypher-shell
 │   ├── estructura.sh                Ejecuta queries/estructura.cypher contra Neo4j
+│   ├── cargar.sh                    Ejecuta queries/carga.cypher dos veces; evidencia de idempotencia (RNF4)
 │   ├── generar-csv.sh               Regenera import/*.csv desde MongoDB (opcional)
 │   └── generar-csv.js               Generador determinista que mongosh ejecuta en el contenedor de MongoDB
 │
@@ -90,7 +96,8 @@ Los volúmenes `neo4j_data` y `neo4j_logs` resguardan los datos fuera del ciclo 
 │
 └── evidencia/                       Salidas de ejecución y resultados de las corridas
     ├── estructura.txt               Log de ejecución de restricciones e índices
-    └── generacion.txt               Filas por CSV y comprobación de determinismo (dos pasadas)
+    ├── generacion.txt               Filas por CSV y comprobación de determinismo (dos pasadas)
+    └── carga.txt                    Conteos antes/después de cargar y de repetir la carga (RNF4)
 ```
 
 ---
