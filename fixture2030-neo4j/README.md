@@ -25,12 +25,19 @@ Comandos principales desde este directorio:
 ./scripts/estructura.sh      # Aplica constraints de unicidad e índices (queries/estructura.cypher)
 ```
 
+Los CSV de `import/` ya vienen generados. Solo hace falta regenerarlos si cambian los datos del Hito 4; requiere el módulo `fixture2030-mongo` levantado y cargado:
+
+```bash
+./scripts/generar-csv.sh     # Regenera import/*.csv desde MongoDB (salida en evidencia/generacion.txt)
+```
+
 ### Acceso y visualización del grafo
 
 - **Neo4j Browser (Web UI):** [http://localhost:7474](http://localhost:7474)
   - **Usuario:** `neo4j`
   - **Contraseña:** `password123`
   - **URL de conexión:** `bolt://localhost:7687`
+  - Las credenciales se definen en la variable de entorno `NEO4J_AUTH` de `docker-compose.yaml`, como en la Clase 5. Son credenciales de desarrollo local, no un secreto real: no reutilizar contraseñas personales (RNF8).
 
 - **Acceso interactivo por CLI (`cypher-shell`):**
   ```bash
@@ -62,7 +69,8 @@ Los volúmenes `neo4j_data` y `neo4j_logs` resguardan los datos fuera del ciclo 
 ├── README.md                        Este archivo
 │
 ├── docs/
-│   └── modelo_grafo.md              Problema relacional, nodos, relaciones, diagrama y decisiones de integridad
+│   ├── modelo_grafo.md              Problema relacional, nodos, relaciones, diagrama y decisiones de integridad
+│   └── decisiones.md                Datos cargados: origen, criterios de generación y controles de coherencia
 │
 ├── queries/                         Scripts Cypher de definición y consulta
 │   ├── estructura.cypher            Constraints de unicidad e índices para nodos
@@ -72,12 +80,17 @@ Los volúmenes `neo4j_data` y `neo4j_logs` resguardan los datos fuera del ciclo 
 │
 ├── scripts/                         Scripts envoltorios ejecutables desde el host
 │   ├── levantarDocker.sh            Levanta Neo4j y espera disponibilidad de cypher-shell
-│   └── estructura.sh                Ejecuta queries/estructura.cypher contra Neo4j
+│   ├── estructura.sh                Ejecuta queries/estructura.cypher contra Neo4j
+│   ├── generar-csv.sh               Regenera import/*.csv desde MongoDB (opcional)
+│   └── generar-csv.js               Generador determinista que mongosh ejecuta en el contenedor de MongoDB
 │
 ├── import/                          CSV de carga; carpeta local montada en /var/lib/neo4j/import para LOAD CSV (encontrado en documentación Neo4j Docs)
+│   ├── equipos.csv, jugadores.csv   Exportados de MongoDB (Hito 4)
+│   └── sedes.csv, partidos.csv, participaciones.csv, alineaciones.csv, eventos.csv, protagonistas.csv
 │
 └── evidencia/                       Salidas de ejecución y resultados de las corridas
-    └── estructura.txt               Log de ejecución de restricciones e índices
+    ├── estructura.txt               Log de ejecución de restricciones e índices
+    └── generacion.txt               Filas por CSV y comprobación de determinismo (dos pasadas)
 ```
 
 ---

@@ -1,0 +1,21 @@
+id,nombre,ciudad,pais
+S-01,Estadio Centenario,Montevideo,Uruguay
+S-02,Estadio Monumental,Buenos Aires,Argentina
+S-03,Estadio Defensores del Chaco,Asuncion,Paraguay
+S-04,Estadio Santiago Bernabeu,Madrid,Espana
+S-05,Estadio Metropolitano,Madrid,Espana
+S-06,Estadio Camp Nou,Barcelona,Espana
+S-07,Estadio La Cartuja,Sevilla,Espana
+S-08,Estadio San Mames,Bilbao,Espana
+S-09,Estadio Anoeta,San Sebastian,Espana
+S-10,Estadio Riazor,A Coruna,Espana
+S-11,Estadio de Gran Canaria,Las Palmas,Espana
+S-12,Estadio da Luz,Lisboa,Portugal
+S-13,Estadio Jose Alvalade,Lisboa,Portugal
+S-14,Estadio do Dragao,Porto,Portugal
+S-15,Gran Estadio Hassan II,Casablanca,Marruecos
+S-16,Estadio Principe Moulay Abdellah,Rabat,Marruecos
+S-17,Estadio Ibn Batouta,Tanger,Marruecos
+S-18,Gran Estadio de Marrakech,Marrakech,Marruecos
+S-19,Gran Estadio de Agadir,Agadir,Marruecos
+S-20,Gran Estadio de Fez,Fez,Marruecos

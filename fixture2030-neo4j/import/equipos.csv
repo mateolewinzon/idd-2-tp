@@ -1,0 +1,65 @@
+id,nombre,confederacion,grupo
+MEX,Mexico,CONCACAF,A
+KOR,Corea del Sur,AFC,A
+RSA,Sudafrica,CAF,A
+CZE,Chequia,UEFA,A
+SUI,Suiza,UEFA,B
+CAN,Canada,CONCACAF,B
+QAT,Catar,AFC,B
+BIH,Bosnia y Herzegovina,UEFA,B
+BRA,Brasil,CONMEBOL,C
+MAR,Marruecos,CAF,C
+SCO,Escocia,UEFA,C
+HAI,Haiti,CONCACAF,C
+USA,Estados Unidos,CONCACAF,D
+TUR,Turquia,UEFA,D
+AUS,Australia,AFC,D
+PAR,Paraguay,CONMEBOL,D
+GER,Alemania,UEFA,E
+ECU,Ecuador,CONMEBOL,E
+CIV,Costa de Marfil,CAF,E
+CUW,Curazao,CONCACAF,E
+NED,Paises Bajos,UEFA,F
+JPN,Japon,AFC,F
+SWE,Suecia,UEFA,F
+TUN,Tunez,CAF,F
+BEL,Belgica,UEFA,G
+IRN,Iran,AFC,G
+EGY,Egipto,CAF,G
+NZL,Nueva Zelanda,OFC,G
+ESP,Espana,UEFA,H
+URU,Uruguay,CONMEBOL,H
+KSA,Arabia Saudita,AFC,H
+CPV,Cabo Verde,CAF,H
+FRA,Francia,UEFA,I
+SEN,Senegal,CAF,I
+NOR,Noruega,UEFA,I
+IRQ,Irak,AFC,I
+ARG,Argentina,CONMEBOL,J
+AUT,Austria,UEFA,J
+ALG,Argelia,CAF,J
+JOR,Jordania,AFC,J
+POR,Portugal,UEFA,K
+COL,Colombia,CONMEBOL,K
+UZB,Uzbekistan,AFC,K
+COD,RD Congo,CAF,K
+ENG,Inglaterra,UEFA,L
+CRO,Croacia,UEFA,L
+PAN,Panama,CONCACAF,L
+GHA,Ghana,CAF,L
+ITA,Italia,UEFA,M
+CHI,Chile,CONMEBOL,M
+NGA,Nigeria,CAF,M
+CHN,China,AFC,M
+DEN,Dinamarca,UEFA,N
+WAL,Gales,UEFA,N
+PER,Peru,CONMEBOL,N
+CMR,Camerun,CAF,N
+POL,Polonia,UEFA,O
+VEN,Venezuela,CONMEBOL,O
+CRC,Costa Rica,CONCACAF,O
+MLI,Mali,CAF,O
+UKR,Ucrania,UEFA,P
+SRB,Serbia,UEFA,P
+OMA,Oman,AFC,P
+NCL,Nueva Caledonia,OFC,P

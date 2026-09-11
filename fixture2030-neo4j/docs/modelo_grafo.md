@@ -37,7 +37,7 @@ consecutivas (RF8); la 6 es la consulta de conectividad (RF9).
 | `Jugador` | `<código FIFA>-<dorsal>`, ej. `"ARG-10"` | `nombre`, `apellido`, `posicion` | Colección `jugadores` de MongoDB (Hito 4) | 1.664 (26 por equipo) |
 | `Partido` | `P-XXX`, ej. `"P-001"` | `fase`, `grupo` (solo en fase de grupos), `fecha` | Generado para este hito | 127 |
 | `Sede` | `S-XX`, ej. `"S-01"` | `nombre`, `ciudad`, `pais` | Generado: estadios de los seis países anfitriones | 20 |
-| `Evento` | `E-XXXX`, ej. `"E-0001"` | `tipo` (`Gol`, `Tarjeta Amarilla`, `Tarjeta Roja`, `Sustitución`), `minuto` | Generado: muestra por partido | ≈15 por partido (≈1.900) |
+| `Evento` | `E-XXXX`, ej. `"E-0001"` | `tipo` (`Gol`, `Tarjeta Amarilla`, `Tarjeta Roja`, `Sustitución`), `minuto` | Generado: muestra por partido | ≈15 por partido (1.869) |
 
 Decisiones sobre los nodos:
 
@@ -67,14 +67,16 @@ Decisiones sobre los nodos:
   grupo) y 31 de eliminación directa (dieciseisavos 16, octavos 8, cuartos 4,
   semifinales 2, final 1), sin partido por el tercer puesto. Es la cifra de la
   cátedra y corrige los ~175 del Hito 1, como ya se indicó en el Hito 4.
+  La propiedad `fase` toma los valores `Grupos`, `Dieciseisavos`, `Octavos`,
+  `Cuartos`, `Semifinal` y `Final`.
 - **Sedes:** 20 estadios de los seis países anfitriones: uno en cada país
   sudamericano (Uruguay, Argentina y Paraguay) y 17 entre España, Portugal y
   Marruecos. Ejemplo: `S-01`, Estadio Centenario,
-  Montevideo, Uruguay. La asignación de partidos a sedes la fija el generador con un
-  criterio que se documenta junto con la carga, y el resultado de la pregunta 6 se
+  Montevideo, Uruguay. La asignación de partidos a sedes la fija el generador con el
+  criterio de `docs/decisiones.md` (§1.2), y el resultado de la pregunta 6 se
   interpreta sobre esa asignación.
-- **Eventos:** se carga una muestra de goles, tarjetas y sustituciones, alrededor de
-  15 por partido; el número exacto queda en la evidencia de la carga. Pases, tiros o
+- **Eventos:** se carga una muestra de goles, tarjetas y sustituciones: 1.869
+  eventos, alrededor de 15 por partido (detalle en `docs/decisiones.md`). Pases, tiros o
   recuperaciones no se modelan: sumarían volumen sin agregar relaciones que usen las
   preguntas de la sección 1. La cifra vigente para el torneo completo es de 1.000+
   eventos por partido, como registra el documento del Hito 4 al corregir los 5.000 a
