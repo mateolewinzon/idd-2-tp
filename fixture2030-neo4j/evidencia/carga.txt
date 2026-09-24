@@ -1,5 +1,5 @@
 ============================================================
- Evidencia de Carga - 2026-09-11 17:48:48 UTC
+ Evidencia de Carga - 2026-09-24 14:03:22 UTC
 ============================================================
 
 ==> 1. Conteos antes de cargar (queries/verificacion.cypher)
