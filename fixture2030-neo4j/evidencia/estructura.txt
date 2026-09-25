@@ -1,5 +1,5 @@
 ============================================================
- Evidencia de Estructura - 2026-09-11 21:40:20 UTC
+ Evidencia de Estructura - 2026-09-24 14:02:55 UTC
 ============================================================
 
 ==> 1. Aplicando queries/estructura.cypher...

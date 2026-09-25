@@ -1,3 +1,68 @@
 ============================================================
- Evidencia de Consultas - 2026-09-11 21:40:20 UTC
-============================================================
+ Evidencia de Consultas - 2026-09-24 14:03:53 UTC
+seccion
+"Consulta 1 - maximos goleadores de Argentina"
+jugador_id, jugador, goles
+"ARG-4", "Ignacio Maldonado", 2
+"ARG-20", "Alvaro Rojas", 1
+"ARG-22", "Ignacio Villalba", 1
+"ARG-24", "Emiliano Barrios", 1
+"ARG-26", "Diego Ferreira", 1
+seccion
+"Consulta 2 - goles CONMEBOL en el Bernabeu"
+jugador_id, jugador, equipo, partido, minuto, sede
+"BRA-10", "Matias Ferreira", "Brasil", "P-113", 24, "Estadio Santiago Bernabeu"
+"BRA-20", "Thiago Ocampo", "Brasil", "P-113", 39, "Estadio Santiago Bernabeu"
+"BRA-21", "Thiago Ferreira", "Brasil", "P-113", 81, "Estadio Santiago Bernabeu"
+"BRA-26", "Ezequiel Peralta", "Brasil", "P-121", 64, "Estadio Santiago Bernabeu"
+seccion
+"Consulta 3 - titular asistido por suplente"
+partido, equipo, autor, asistente, minuto
+"P-002", "Argentina", "Emiliano Barrios", "Franco Bermudez", 89
+"P-005", "Corea del Sur", "Yusuf Tanaka", "Bilal Saito", 87
+"P-006", "Bosnia y Herzegovina", "Pavel Duarte", "Stefan Muller", 77
+"P-010", "Australia", "Sora Al Harbi", "Karim Abbas", 76
+"P-013", "Paises Bajos", "Leon Silva", "Robin Hansen", 77
+"P-015", "Belgica", "Kristian Fischer", "Rafael Nowak", 88
+"P-021", "Portugal", "Sergio Silva", "Robin Fischer", 68
+"P-033", "Sudafrica", "Sipho Dube", "Idrissa Mokoena", 61
+"P-035", "Suiza", "Kristian Horvat", "Rafael Rossi", 71
+"P-036", "Bosnia y Herzegovina", "Stefan Novak", "Daniel Horvat", 83
+"P-038", "Marruecos", "Bakary Diallo", "Idrissa Diallo", 68
+"P-047", "Espana", "Daniel Vidal", "Lucas Kaminski", 88
+"P-057", "Italia", "Daniel Muller", "Stefan Larsson", 74
+"P-062", "Venezuela", "Julio Bermudez", "Diego Cabrera", 63
+"P-072", "Paraguay", "Emiliano Castillo", "Maximiliano Zambrano", 65
+"P-076", "Tunez", "Rachid Osei", "Hicham Toure", 78
+"P-080", "Cabo Verde", "Rachid Haddad", "Tarek Boateng", 69
+"P-090", "China", "Omar Shin", "Bilal Al Harbi", 63
+"P-092", "Peru", "Santiago Bustos", "Ezequiel Zambrano", 81
+"P-093", "Venezuela", "Emiliano Rojas", "Bruno Cabrera", 52
+"P-095", "Serbia", "Julian Hansen", "Daniel Larsson", 82
+"P-103", "Gales", "Robin Andersen", "Andreas Bakker", 66
+"P-107", "Ecuador", "Rodrigo Meireles", "Renato Bermudez", 84
+"P-107", "Paises Bajos", "Rafael Moreau", "Sergio Horvat", 87
+"P-108", "Espana", "Julian Andersen", "Mateo Muller", 119
+"P-113", "Brasil", "Thiago Ferreira", "Facundo Maldonado", 81
+"P-119", "Inglaterra", "Kristian Weber", "Nicolas Kaminski", 76
+"P-119", "Inglaterra", "Antoine Horvat", "Nicolas Kaminski", 90
+seccion
+"Consulta 4 - programacion de la final"
+partido, fecha, local, visitante, sede, ciudad
+"P-127", 2030-07-21, "Inglaterra", "Alemania", "Estadio Santiago Bernabeu", "Madrid"
+seccion
+"Consulta 5 - conectividad de sedes"
+sede_id, sede, equipos_conectados, partidos
+"S-15", "Gran Estadio Hassan II", 14, 10
+"S-06", "Estadio Camp Nou", 13, 10
+"S-12", "Estadio da Luz", 12, 9
+"S-04", "Estadio Santiago Bernabeu", 11, 9
+"S-14", "Estadio do Dragao", 11, 8
+"S-18", "Gran Estadio de Marrakech", 10, 8
+"S-16", "Estadio Principe Moulay Abdellah", 9, 8
+"S-05", "Estadio Metropolitano", 9, 7
+"S-07", "Estadio La Cartuja", 9, 7
+"S-08", "Estadio San Mames", 9, 7
+seccion, camino
+"Visualizacion - subgrafo de la final", (:Equipo {grupo: "E", id: "GER", confederacion: "UEFA", nombre: "Alemania"})-[:PARTICIPA_EN {condicion: "Visitante"}]->(:Partido {fecha: 2030-07-21, fase: "Final", id: "P-127"})-[:SE_DISPUTA_EN]->(:Sede {id: "S-04", nombre: "Estadio Santiago Bernabeu", ciudad: "Madrid", pais: "Espana"})
+"Visualizacion - subgrafo de la final", (:Equipo {grupo: "L", id: "ENG", confederacion: "UEFA", nombre: "Inglaterra"})-[:PARTICIPA_EN {condicion: "Local"}]->(:Partido {fecha: 2030-07-21, fase: "Final", id: "P-127"})-[:SE_DISPUTA_EN]->(:Sede {id: "S-04", nombre: "Estadio Santiago Bernabeu", ciudad: "Madrid", pais: "Espana"})
