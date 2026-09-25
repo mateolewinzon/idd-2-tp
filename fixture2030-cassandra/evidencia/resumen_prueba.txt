@@ -1,0 +1,13 @@
+Op rate                   :    6,860 op/s  [insert: 6,860 op/s]
+Partition rate            :    6,860 pk/s  [insert: 6,860 pk/s]
+Row rate                  :    9,381 row/s [insert: 9,381 row/s]
+Latency mean              :    5.4 ms [insert: 5.4 ms]
+Latency median            :    1.9 ms [insert: 1.9 ms]
+Latency 95th percentile   :   24.7 ms [insert: 24.7 ms]
+Latency 99th percentile   :   54.3 ms [insert: 54.3 ms]
+Latency 99.9th percentile :  156.2 ms [insert: 156.2 ms]
+Latency max               :  633.9 ms [insert: 633.9 ms]
+Total partitions          :  1,000,000 [insert: 1,000,000]
+Total errors              :          0 [insert: 0]
+Total operation time      : 00:02:25
+Peak interval rate        :   10,757 op/s (intervalo de 5 segundos)

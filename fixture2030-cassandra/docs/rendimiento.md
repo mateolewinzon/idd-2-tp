@@ -31,14 +31,16 @@ En consonancia con las buenas prácticas implementadas en el Hito 4 (MongoDB) y 
 2. **Distribución Temporal y Ventanas de Bloque:**
    - Los instantes de emisión abarcan una ventana simulada de 150 minutos por encuentro. Los timestamps se generan de forma continua y se agrupan en ventanas discretas de 5 minutos, garantizando que el generador distribuya la carga sobre múltiples particiones temporales rotativas a lo largo del tiempo.
 3. **Distribución Lingüística Informativa:**
-   - La columna regular `idioma` replica la curva de mercado asumida en la plataforma (Español 40%, Inglés 30%, Portugués 15%, Francés 10%, Árabe 5%). Al no ser parte de la clave primaria, se demuestra empíricamente la viabilidad de recuperar el feed global y resolver el filtrado lingüístico en la capa de consumo.
+   - El perfil de estrés genera cinco valores sintéticos distintos para `idioma`. La carga de rendimiento mide cardinalidad y tamaño de los datos, no reproduce etiquetas literales ni porcentajes de negocio. La carga exacta posterior sí aplica la distribución 40/30/15/10/5; `carga_muestra.cql` valida además las etiquetas literales.
 4. **Estados de Moderación:**
-   - La gran mayoría de los mensajes se inicializan en estado `'VISIBLE'` (98%), reservando un 1,5% para estado `'PENDIENTE'` y un 0,5% para estado `'REPORTADO'` para habilitar la verificación de la cola de moderación.
+   - El perfil genera tres valores sintéticos con una distribución sesgada. La carga exacta aplica 98% `'VISIBLE'`, 1,5% `'PENDIENTE'` y 0,5% `'REPORTADO'`; sus operaciones se verifican con la carga de muestra. El benchmark evita agregar lógica de aplicación que distorsione la medición de escritura.
+
+La materialización final se realiza con `generar_millon.py` y `carga_millon.sh`. A diferencia del perfil de estrés, este generador produce exactamente 1.000.000 de claves `timeuuid` distintas, conserva siete partidos y treinta bloques de cinco minutos por partido, y aplica explícitamente las proporciones de audiencia, idioma y moderación descriptas arriba.
 
 ### 2.2. Valor Metodológico de la Muestra Sesgada
 Esta estructura de datos permite demostrar empíricamente:
 - Que las particiones temporales de 5 minutos en partidos calientes absorben el flujo masivo de escrituras rotando los tokens periódicamente en el anillo.
-- Que el hash Murmur3 reparte uniformemente los tokens generados por `((partido_id, bloque_temporal))` entre los diferentes nodos del cluster.
+- Que se generan 210 particiones diferentes para `((partido_id, bloque_temporal))`. En el laboratorio mononodo todas pertenecen al mismo nodo; la distribución física entre nodos sólo puede validarse en una topología multinodo.
 - Que la consulta de feed responde con latencia uniforme sin sufrir contención entre partidos de distinta envergadura ni requerir consultas distribuidas por idioma.
 
 ---
@@ -47,10 +49,15 @@ Esta estructura de datos permite demostrar empíricamente:
 
 La prueba se ejecuta mediante el script de estrés (`scripts/rendimiento.sh`) que interactúa contra el nodo Cassandra expuesto en el puerto 9042, utilizando una herramienta de benchmarking estándar (como `cassandra-stress` nativo de la imagen oficial o un cliente concurrente en Python/Go con el driver DataStax).
 
+Se separan dos mediciones para no confundir semánticas:
+
+1. **Benchmark online:** `rendimiento.sh` ejecuta un millón de operaciones preparadas de una fila con `cassandra-stress` y registra throughput y percentiles de latencia. Debido a la selección aleatoria de claves, algunas operaciones son upserts sobre una clave ya visitada.
+2. **Carga física exacta:** `carga_millon.sh` genera un CSV determinista, lo importa mediante `COPY FROM` y reexporta solamente las claves primarias para comprobar que quedaron exactamente 1.000.000 de comentarios diferentes. Esta ruta mide throughput batch y no informa percentiles por fila.
+
 ### Parámetros de Configuración del Benchmark:
 - **Concurrencia de Clientes:** Múltiples hilos concurrentes (ej. 50 a 200 workers simultáneos).
 - **Mecanismo de Conexión:** Protocolo nativo binario CQL v4/v5 con multiplexación de canales.
-- **Preparación previa:** Calentamiento previo de la JVM (*warmup*) de 30 segundos para permitir la compilación JIT y el llenado de buffers.
+- **Preparación previa:** 50.000 operaciones de calentamiento, descartadas mediante `TRUNCATE` antes de la medición, para permitir la compilación JIT y el llenado de buffers.
 - **Medición efectiva:** Ingestión sostenida registrando throughput (ops/seg) y latencias percentilares (p50, p95, p99).
 
 ---
@@ -58,28 +65,39 @@ La prueba se ejecuta mediante el script de estrés (`scripts/rendimiento.sh`) qu
 ## 4. Registro de Evidencia Empírica de Rendimiento
 
 > **Instrucciones para el Evaluador y el Equipo:**
-> Los campos delimitados con corchetes `[ ... ]` corresponden a los registros que deben completarse con la salida real obtenida tras ejecutar `./scripts/rendimiento.sh` en la máquina anfitriona. No se introducen valores simulados para no falsear la medición técnica.
+> Los valores siguientes provienen de la ejecución real de `./scripts/rendimiento.sh`.
+> La salida completa, sin valores simulados, se conserva en `evidencia/`.
 
 ### 4.1. Ficha Técnica del Entorno de Prueba
-- **Fecha y Hora de Ejecución:** `[ Registrar fecha y hora exacta, ej: 2026-09-24 11:30:00 ]`
-- **Versión Observada de Cassandra (`SHOW VERSION`):** `[ Registrar salida exacta de versión, ej: Cassandra 5.0.0 / CQL spec 3.4.7 / Native protocol v5 ]`
-- **Sistema Operativo Host:** `[ Registrar OS host, ej: macOS 15.0 Apple Silicon M-Series / Linux Kernel 6.x ]`
+- **Fecha y Hora de Ejecución:** 2026-09-25, de 17:17:46 a 17:20:16 (ART, UTC-03).
+- **Versión Observada de Cassandra (`SHOW VERSION`):** Cassandra 5.0.9, `cqlsh` 6.2.0, CQL spec 3.4.7 y Native protocol v5.
+- **Sistema Operativo Host:** macOS 26.5.2 sobre arquitectura ARM64.
 - **Recursos Asignados al Contenedor Docker:**
-  - CPUs asignadas: `[ ej: 4 vCPUs ]`
-  - Memoria RAM asignada: `[ ej: 6 GB RAM ]`
-  - Parámetros de JVM Heap (MAX_HEAP_SIZE): `[ ej: 2048M ]`
-  - Tipo de Almacenamiento: `[ ej: SSD NVMe local sobre ~/docker/data/cassandra ]`
+  - CPUs asignadas: 10 CPU lógicas.
+  - Memoria RAM asignada: 8.321.712.128 bytes (aprox. 7,75 GiB).
+  - Parámetros de JVM Heap: máximo observado de 3.968 MB.
+  - Memoria RAM del host: 17.179.869.184 bytes (16 GiB).
+  - Tipo de almacenamiento: bind mount de Docker Desktop sobre `~/docker/data/cassandra`.
+  - Imagen: `cassandra:latest`, ID local `sha256:ee178b38a2746a8e15a115bd038ad1f864391d04a84162a018cb0dd79511709a`.
+  - Generador: `cassandra-stress`, 100 threads, 50.000 operaciones de calentamiento y consistencia `LOCAL_ONE`.
 
 ### 4.2. Resultados Obtenidos de Throughput y Latencia
 
 | Métrica Evaluada | Objetivo Teórico | Resultado Observado en el Ambiente | Cumplimiento |
 | :--- | :--- | :--- | :--- |
-| **Throughput de Escritura (Promedio)** | **10.000 ops/seg** | `[ COMPLETAR: ej. XXXX ops/seg ]` | `[ SÍ / PARCIAL / LIMITADO POR HARDWARE ]` |
-| **Throughput Pico Registrado** | N/A | `[ COMPLETAR: ej. XXXX ops/seg ]` | N/A |
-| **Latencia Percentil 50 (Mediana)** | $< 5\text{ ms}$ | `[ COMPLETAR: ej. X.X ms ]` | `[ COMPLETAR ]` |
-| **Latencia Percentil 95 (p95)** | $< 15\text{ ms}$ | `[ COMPLETAR: ej. X.X ms ]` | `[ COMPLETAR ]` |
-| **Latencia Percentil 99 (p99)** | $< 30\text{ ms}$ | `[ COMPLETAR: ej. X.X ms ]` | `[ COMPLETAR ]` |
-| **Tasa de Errores / Timeouts** | $0\%$ | `[ COMPLETAR: ej. 0.0% ]` | `[ COMPLETAR ]` |
+| **Throughput online promedio (`cassandra-stress`)** | **10.000 ops/seg** | **6.860 ops/seg** | **PARCIAL / limitado por el entorno local** |
+| **Throughput Pico Registrado** | N/A | **10.757 ops/seg** en un intervalo de 5 segundos | Objetivo alcanzado en ráfaga, no sostenido |
+| **Carga batch exacta (`COPY FROM`)** | **10.000 filas/seg** | **97.942 filas/seg**, 1.000.000 importadas y 0 omitidas | **SÍ** |
+| **Latencia Percentil 50 (Mediana)** | $< 5\text{ ms}$ | **1,9 ms** | **SÍ** |
+| **Latencia Percentil 95 (p95)** | $< 15\text{ ms}$ | **24,7 ms** | **NO** |
+| **Latencia Percentil 99 (p99)** | $< 30\text{ ms}$ | **54,3 ms** | **NO** |
+| **Tasa de Errores / Timeouts** | $0\%$ | **0 errores sobre 1.000.000 de operaciones (0%)** | **SÍ** |
+
+El benchmark online completó **1.000.000 de operaciones de inserción** en **2 minutos y 25 segundos**. `cassandra-stress` informó 1.000.000 de particiones operadas y cero errores. La selección aleatoria dejó 633.146 claves físicas distintas; por eso ese resultado se interpreta como un millón de escrituras/upserts, no como el conteo final de comentarios únicos.
+
+La carga exacta posterior comenzó a las 17:25:01 ART y terminó a las 17:25:11 ART. Importó **1.000.000 de comentarios únicos en 10,210 segundos**, sin omisiones. Una exportación paginada posterior contó exactamente **1.000.000 de claves primarias**. Luego del `flush`, `nodetool tablestats` confirmó 210 particiones físicas y aproximadamente 24,8 MB de espacio vivo comprimido.
+
+La verificación inicial mediante `COUNT(*)` global excedió el `read_request_timeout` del servidor. Esto confirma que un agregado global sin clave de partición no es un patrón de acceso adecuado para Cassandra. La verificación definitiva se hizo con `COPY TO` paginado, que sí recorrió las filas sin bloquear al coordinador. Ambas evidencias se conservan en `evidencia/conteo_final.txt` y `evidencia/verificacion_millon.txt`.
 
 ---
 

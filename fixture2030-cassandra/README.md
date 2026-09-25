@@ -41,6 +41,9 @@ Para iniciar el ambiente y validar su funcionamiento, se utilizan los scripts en
 
 # 5. Ejecutar la prueba de estrés de escritura masiva
 ./scripts/rendimiento.sh
+
+# 6. Dejar materializados y verificar exactamente 1.000.000 de comentarios únicos
+./scripts/carga_millon.sh
 ```
 
 ### Verificación del estado del nodo
@@ -125,13 +128,23 @@ fixture2030-cassandra/
 │   ├── estructura.sh                Aplicación del DDL (keyspace, tablas CQRS e índices)
 │   ├── cargar.sh                    Poblado de datos sintéticos sesgados
 │   ├── consultar.sh                 Ejecución de validación de patrones de acceso
-│   └── rendimiento.sh               Lanzador del benchmark y registro de telemetría
+│   ├── generar_millon.py            Generador determinista de timeuuid y comentarios únicos
+│   ├── carga_millon.sh              Importación y verificación del millón físico exacto
+│   ├── stress-comentarios.yaml      Perfil de cassandra-stress para comentarios_feed
+│   └── rendimiento.sh               Benchmark de 1.000.000 de operaciones y registro de telemetría
 └── evidencia/                       Registros de ejecución obligatorios para evaluación
     ├── nodetool_status.txt          Captura de salida del estado del anillo y nodo activo
     ├── cql_version.txt              Salida de SHOW VERSION (fecha y versión de imagen latest)
     ├── estructura.txt               Salida de la creación del keyspace y esquemas tabulares
     ├── consultas.txt                Logs con resultados de las queries representativas
-    └── prueba_carga.txt             Métricas de latencia (p50, p95, p99) y throughput de escritura
+    ├── ambiente.txt                 Recursos reales del host, Docker y JVM
+    ├── prueba_carga.txt             Salida íntegra del millón de operaciones
+    ├── resumen_prueba.txt           Throughput, latencias, total y errores
+    ├── tablestats.txt               Estado físico de comentarios_feed luego del flush
+    ├── conteo_final.txt             Evidencia del timeout de COUNT(*) global y su diagnóstico
+    ├── carga_millon.txt             Importación exacta: filas, tasa y omisiones
+    ├── verificacion_millon.txt      Reexportación paginada y conteo físico exacto
+    └── tablestats_carga_millon.txt  Estado final de la tabla con el millón materializado
 ```
 
 ### Contenido obligatorio esperado en `evidencia/` por el evaluador:
@@ -140,3 +153,4 @@ fixture2030-cassandra/
 - **`estructura.txt`**: Evidencia de la ejecución sin errores de las sentencias DDL.
 - **`consultas.txt`**: Registro de respuestas a los patrones de acceso definidos, demostrando que ninguna consulta requirió `ALLOW FILTERING`.
 - **`prueba_carga.txt`**: Log consolidado del benchmark local donde se reportan las escrituras por segundo alcanzadas, latencias percentilares y limitaciones observadas del entorno host.
+- **`carga_millon.txt` y `verificacion_millon.txt`**: Demuestran que se importaron, sin omitir, y se volvieron a contar exactamente 1.000.000 de comentarios físicos diferentes.

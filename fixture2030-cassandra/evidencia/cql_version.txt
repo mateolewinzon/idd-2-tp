@@ -1,0 +1,5 @@
+
+Warning: Using a password on the command line interface can be insecure.
+Recommendation: use the credentials file to securely provide the password.
+
+[cqlsh 6.2.0 | Cassandra 5.0.9 | CQL spec 3.4.7 | Native protocol v5]
