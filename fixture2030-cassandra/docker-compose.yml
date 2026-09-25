@@ -1,0 +1,20 @@
+services:
+  cassandra:
+    # Entorno didáctico: usa la imagen oficial actual de Apache Cassandra.
+    image: cassandra:latest
+    container_name: fixture2030-cassandra
+    restart: unless-stopped
+    environment:
+      CASSANDRA_CLUSTER_NAME: Fixture2030_Cassandra
+      CASSANDRA_DC: datacenter1
+      CASSANDRA_RACK: rack1
+      CASSANDRA_ENDPOINT_SNITCH: GossipingPropertyFileSnitch
+    ports:
+      # Puerto nativo CQL para clientes y drivers.
+      - "9042:9042"
+    volumes:
+      # Datos persistentes en la notebook, según la convención de la materia.
+      - ~/docker/data/cassandra:/var/lib/cassandra
+      # Permite ejecutar scripts de práctica desde cqlsh sin copiarlos al contenedor.
+      - ./scripts:/scripts:ro
+

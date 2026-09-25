@@ -1,6 +1,5 @@
 ============================================================
  Evidencia de CRUD - 2026-09-24 14:03:45 UTC
-============================================================
 partido, fase, relacion, sede, nombre_sede
 "DEMO-PARTIDO", "Amistoso", "SE_DISPUTA_EN", "DEMO-SEDE", "Estadio de prueba"
 sede, nombre_actualizado
