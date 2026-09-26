@@ -1,5 +1,6 @@
 ============================================================
  Evidencia de Consultas - 2026-09-24 14:03:53 UTC
+============================================================
 seccion
 "Consulta 1 - maximos goleadores de Argentina"
 jugador_id, jugador, goles
