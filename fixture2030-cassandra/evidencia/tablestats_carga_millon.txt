@@ -1,0 +1,50 @@
+Total number of tables: 1
+----------------
+Keyspace: fixture2030_comentarios
+	Read Count: 0
+	Read Latency: NaN ms
+	Write Count: 1111420
+	Write Latency: 0.056141925644670784 ms
+	Pending Flushes: 0
+		Table: comentarios_feed
+		SSTable count: 3
+		Old SSTable count: 0
+		Max SSTable size: 9.891MiB
+		SSTables Time Window: 1 DAYS, max duration: 4 seconds
+		Space used (live): 24773987
+		Space used (total): 24773987
+		Space used by snapshots (total): 148835513
+		Off heap memory used (total): 48964
+		SSTable Compression Ratio: 0.24790
+		Number of partitions (estimate): 210
+		Memtable cell count: 0
+		Memtable data size: 0
+		Memtable off heap memory used: 0
+		Memtable switch count: 11
+		Speculative retries: 0
+		Local read count: 0
+		Local read latency: NaN ms
+		Local write count: 1111420
+		Local write latency: 0.290 ms
+		Local read/write ratio: 0.00000
+		Pending flushes: 0
+		Percent repaired: 0.0
+		Bytes repaired: 0B
+		Bytes unrepaired: 94.717MiB
+		Bytes pending repair: 0B
+		Bloom filter false positives: 0
+		Bloom filter false ratio: 0.00000
+		Bloom filter space used: 320
+		Bloom filter off heap memory used: 296
+		Index summary off heap memory used: 164
+		Compression metadata off heap memory used: 48504
+		Compacted partition minimum bytes: 73458
+		Compacted partition maximum bytes: 1955666
+		Compacted partition mean bytes: 529558
+		Average live cells per slice (last five minutes): 976.3532219570405
+		Maximum live cells per slice (last five minutes): 1109
+		Average tombstones per slice (last five minutes): 1.0
+		Maximum tombstones per slice (last five minutes): 1
+		Droppable tombstone ratio: 0.00000
+
+----------------
