@@ -1,9 +1,0 @@
-
-Warning: Using a password on the command line interface can be insecure.
-Recommendation: use the credentials file to securely provide the password.
-
-<stdin>:1:ReadTimeout: Error from server: code=1200 [Coordinator node timed out waiting for replica nodes' responses] message="Operation timed out - received only 0 responses." info={'consistency': 'ONE', 'required_responses': 1, 'received_responses': 0}
-
-NOTA: el COUNT(*) global excedió el read_request_timeout del servidor.
-La cantidad contractual se verifica con "Total partitions" y "Total errors"
-en prueba_carga.txt; COUNT(*) global no es un patrón recomendado en Cassandra.
