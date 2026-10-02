@@ -1,0 +1,48 @@
+Cinco sesiones con TTL de 30 minutos
+OK
+QUEUED
+QUEUED
+10
+1
+OK
+QUEUED
+QUEUED
+10
+1
+OK
+QUEUED
+QUEUED
+10
+1
+OK
+QUEUED
+QUEUED
+10
+1
+OK
+QUEUED
+QUEUED
+10
+1
+Dos fichas provenientes de Neo4j
+OK
+OK
+Dos ventanas cerradas provenientes de Cassandra
+OK
+OK
+Dos planteles representativos provenientes de MongoDB
+OK
+OK
+Contadores de visitas propios de Redis
+OK
+QUEUED
+QUEUED
+1250
+1
+OK
+QUEUED
+QUEUED
+430
+1
+Cantidad total de claves
+13

@@ -1,0 +1,10 @@
+ECHO "Reinicio controlado de la base de laboratorio"
+FLUSHDB
+CONFIG SET maxmemory 268435456
+CONFIG SET maxmemory-policy volatile-ttl
+ECHO "Configuracion efectiva"
+CONFIG GET maxmemory
+CONFIG GET maxmemory-policy
+CONFIG GET appendonly
+PING
+DBSIZE

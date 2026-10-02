@@ -86,10 +86,10 @@ de menor valor.
 | `allkeys-lfu` | "Puede ser razonable si pocos partidos o perfiles concentran gran parte del tráfico" | Eso ocurre (la final recibe 3–5 M de comentarios frente a 50–200 mil en partidos menores, doc de Cassandra §1.1), pero trata igual a sesiones inactivas y a copias. |
 | `volatile-lru` | "Considera solo claves que ya tienen expiración" | Ordena por último uso, no por TTL; no permite expresar el orden feed < sesión < ficha. |
 
-**Configuración:** `maxmemory` y la política se fijan con `CONFIG SET`. En el laboratorio se aplica
-`CONFIG SET maxmemory-policy volatile-ttl` en `scripts/inicializacion.redis`. El valor
-de `maxmemory` del laboratorio es 256 mb: no está dimensionado
-para 2–3 millones de sesiones. Cómo conservar el ajuste después de un reinicio se resuelve en la fase de scripts.
+**Configuración:** `maxmemory` y la política se declaran en `docker-compose.yml`, para
+que sobrevivan a la recreación del contenedor, y se aplican y verifican también con
+`CONFIG SET`/`CONFIG GET` en `scripts/inicializacion.redis`. El valor de `maxmemory` del
+laboratorio es 256 MiB: no está dimensionado para 2–3 millones de sesiones.
 
 ---
 

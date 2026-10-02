@@ -1,0 +1,16 @@
+ECHO "Cantidad de claves y memoria"
+DBSIZE
+INFO memory
+ECHO "Persistencia"
+INFO persistence
+ECHO "Operaciones y conexiones"
+INFO stats
+ECHO "Configuracion de memoria"
+CONFIG GET maxmemory
+CONFIG GET maxmemory-policy
+ECHO "TTL de una clave por categoria"
+TTL sesion:SES-0001
+TTL cache:partido:P-001
+TTL cache:feed:ARG-ESP-20300624:20300624T2000
+TTL cache:plantel:ARG
+TTL partido:P-001:visitas:2030-06-08

@@ -1,0 +1,4 @@
+Valor antes del reinicio: datos-conservados
+Valor despues del reinicio: datos-conservados
+TTL despues del reinicio: 299
+OK: el valor y su TTL sobrevivieron al reinicio del contenedor.

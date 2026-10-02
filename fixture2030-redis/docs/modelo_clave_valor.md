@@ -95,7 +95,9 @@ fuente, no un contrato de otro módulo.
   módulo) con los campos de Q1 de Cassandra: `comentario_id`, `usuario_id`, `nombre_usuario`,
   `idioma`, `texto`, `estado_moderacion`.
 - **Plantel** (`cache:plantel:ARG`): el equipo (`_id`, `nombre`, `confederacion`,
-  `grupo`) y sus 26 jugadores (`_id`, `nombre`, `apellido`, `dorsal`, `posicion`).
+  `grupo`) y sus 26 jugadores (`_id`, `nombre`, `apellido`, `dorsal`, `posicion`) en
+  producción. La carga del laboratorio incluye solo una muestra representativa de
+  jugadores para comprobar la estructura sin duplicar el dataset de MongoDB.
 
 ---
 

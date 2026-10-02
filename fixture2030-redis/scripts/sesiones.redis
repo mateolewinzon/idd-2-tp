@@ -1,0 +1,20 @@
+ECHO "CREATE: sesion y TTL nacen en una transaccion"
+MULTI
+HSET sesion:SES-DEMO usuario_id U099 nombre_usuario demo rol fan idioma es ultimo_acceso 2030-06-08T20:00:00Z acciones 0 ubicacion AR dispositivo notebook ip_publica 192.0.2.99 tipo_conexion wifi
+EXPIRE sesion:SES-DEMO 1800
+EXEC
+ECHO "READ: validar y consultar vencimiento"
+HGETALL sesion:SES-DEMO
+TTL sesion:SES-DEMO
+ECHO "UPDATE: renovar por una accion"
+MULTI
+HSET sesion:SES-DEMO ultimo_acceso 2030-06-08T20:05:00Z
+HINCRBY sesion:SES-DEMO acciones 1
+EXPIRE sesion:SES-DEMO 1800
+EXEC
+HGETALL sesion:SES-DEMO
+TTL sesion:SES-DEMO
+ECHO "DELETE: cierre explicito"
+DEL sesion:SES-DEMO
+EXISTS sesion:SES-DEMO
+TTL sesion:SES-DEMO

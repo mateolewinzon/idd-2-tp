@@ -1,0 +1,23 @@
+HIT de ficha
+{"partido_id":"P-001","fase":"Grupos","grupo":"A","fecha":"2030-06-08T18:00:00Z","sede":{"id":"S-001","nombre":"Estadio Centenario","ciudad":"Montevideo"},"local":{"id":"ARG","goles":1},"visitante":{"id":"URU","goles":0}}
+3600
+MISS de ficha inexistente
+
+Carga posterior al miss, simulando la lectura de Neo4j
+OK
+{"partido_id":"P-999","fase":"Final","local":{"id":"ARG","goles":0},"visitante":{"id":"BRA","goles":0}}
+3600
+Invalidacion posterior a actualizar la fuente
+1
+0
+Ventana actual del feed: copia de vida corta
+OK
+[{"comentario_id":"C004","texto":"Gol","estado_moderacion":"visible"}]
+5
+Invalidacion inmediata por moderacion
+1
+0
+Invalidacion del plantel posterior a una baja en MongoDB
+1
+1
+0
