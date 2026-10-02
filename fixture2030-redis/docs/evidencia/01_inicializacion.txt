@@ -1,0 +1,13 @@
+Reinicio controlado de la base de laboratorio
+OK
+OK
+OK
+Configuracion efectiva
+maxmemory
+268435456
+maxmemory-policy
+volatile-ttl
+appendonly
+yes
+PONG
+0

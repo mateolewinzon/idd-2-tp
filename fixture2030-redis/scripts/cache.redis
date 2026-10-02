@@ -1,0 +1,23 @@
+ECHO "HIT de ficha"
+GET cache:partido:P-001
+TTL cache:partido:P-001
+ECHO "MISS de ficha inexistente"
+GET cache:partido:P-999
+ECHO "Carga posterior al miss, simulando la lectura de Neo4j"
+SET cache:partido:P-999 "{\"partido_id\":\"P-999\",\"fase\":\"Final\",\"local\":{\"id\":\"ARG\",\"goles\":0},\"visitante\":{\"id\":\"BRA\",\"goles\":0}}" EX 3600
+GET cache:partido:P-999
+TTL cache:partido:P-999
+ECHO "Invalidacion posterior a actualizar la fuente"
+DEL cache:partido:P-999
+EXISTS cache:partido:P-999
+ECHO "Ventana actual del feed: copia de vida corta"
+SET cache:feed:ARG-ESP-20300624:20300624T2005 "[{\"comentario_id\":\"C004\",\"texto\":\"Gol\",\"estado_moderacion\":\"visible\"}]" EX 5
+GET cache:feed:ARG-ESP-20300624:20300624T2005
+TTL cache:feed:ARG-ESP-20300624:20300624T2005
+ECHO "Invalidacion inmediata por moderacion"
+DEL cache:feed:ARG-ESP-20300624:20300624T2005
+EXISTS cache:feed:ARG-ESP-20300624:20300624T2005
+ECHO "Invalidacion del plantel posterior a una baja en MongoDB"
+EXISTS cache:plantel:BRA
+DEL cache:plantel:BRA
+EXISTS cache:plantel:BRA

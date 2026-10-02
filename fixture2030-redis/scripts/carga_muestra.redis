@@ -1,0 +1,41 @@
+ECHO "Cinco sesiones con TTL de 30 minutos"
+MULTI
+HSET sesion:SES-0001 usuario_id U001 nombre_usuario ana rol fan idioma es ultimo_acceso 2030-06-08T18:00:00Z acciones 3 ubicacion AR dispositivo movil ip_publica 192.0.2.10 tipo_conexion wifi
+EXPIRE sesion:SES-0001 1800
+EXEC
+MULTI
+HSET sesion:SES-0002 usuario_id U002 nombre_usuario bruno rol fan idioma pt ultimo_acceso 2030-06-08T18:01:00Z acciones 1 ubicacion BR dispositivo tablet ip_publica 192.0.2.11 tipo_conexion movil
+EXPIRE sesion:SES-0002 1800
+EXEC
+MULTI
+HSET sesion:SES-0003 usuario_id U003 nombre_usuario clara rol moderador idioma es ultimo_acceso 2030-06-08T18:02:00Z acciones 8 ubicacion UY dispositivo notebook ip_publica 192.0.2.12 tipo_conexion fibra
+EXPIRE sesion:SES-0003 1800
+EXEC
+MULTI
+HSET sesion:SES-0004 usuario_id U004 nombre_usuario diego rol fan idioma en ultimo_acceso 2030-06-08T18:03:00Z acciones 0 ubicacion ES dispositivo movil ip_publica 192.0.2.13 tipo_conexion movil
+EXPIRE sesion:SES-0004 1800
+EXEC
+MULTI
+HSET sesion:SES-0005 usuario_id U005 nombre_usuario emma rol fan idioma fr ultimo_acceso 2030-06-08T18:04:00Z acciones 2 ubicacion FR dispositivo smart_tv ip_publica 192.0.2.14 tipo_conexion fibra
+EXPIRE sesion:SES-0005 1800
+EXEC
+ECHO "Dos fichas provenientes de Neo4j"
+SET cache:partido:P-001 "{\"partido_id\":\"P-001\",\"fase\":\"Grupos\",\"grupo\":\"A\",\"fecha\":\"2030-06-08T18:00:00Z\",\"sede\":{\"id\":\"S-001\",\"nombre\":\"Estadio Centenario\",\"ciudad\":\"Montevideo\"},\"local\":{\"id\":\"ARG\",\"goles\":1},\"visitante\":{\"id\":\"URU\",\"goles\":0}}" EX 3600
+SET cache:partido:P-002 "{\"partido_id\":\"P-002\",\"fase\":\"Grupos\",\"grupo\":\"A\",\"fecha\":\"2030-06-08T21:00:00Z\",\"sede\":{\"id\":\"S-002\",\"nombre\":\"Monumental\",\"ciudad\":\"Buenos Aires\"},\"local\":{\"id\":\"ESP\",\"goles\":0},\"visitante\":{\"id\":\"POR\",\"goles\":0}}" EX 3600
+ECHO "Dos ventanas cerradas provenientes de Cassandra"
+SET cache:feed:ARG-ESP-20300624:20300624T2000 "[{\"comentario_id\":\"C001\",\"usuario_id\":\"U001\",\"nombre_usuario\":\"ana\",\"idioma\":\"es\",\"texto\":\"Gran partido\",\"estado_moderacion\":\"visible\"},{\"comentario_id\":\"C002\",\"usuario_id\":\"U002\",\"nombre_usuario\":\"bruno\",\"idioma\":\"pt\",\"texto\":\"Vamos\",\"estado_moderacion\":\"visible\"}]" EX 300
+SET cache:feed:BRA-FRA-20300625:20300625T1700 "[{\"comentario_id\":\"C003\",\"usuario_id\":\"U005\",\"nombre_usuario\":\"emma\",\"idioma\":\"fr\",\"texto\":\"Beau match\",\"estado_moderacion\":\"visible\"}]" EX 300
+ECHO "Dos planteles representativos provenientes de MongoDB"
+SET cache:plantel:ARG "{\"equipo\":{\"_id\":\"ARG\",\"nombre\":\"Argentina\",\"confederacion\":\"CONMEBOL\",\"grupo\":\"A\"},\"jugadores\":[{\"_id\":\"ARG-10\",\"nombre\":\"Mateo\",\"apellido\":\"Alvarez\",\"dorsal\":10,\"posicion\":\"delantero\"},{\"_id\":\"ARG-01\",\"nombre\":\"Tomas\",\"apellido\":\"Suarez\",\"dorsal\":1,\"posicion\":\"arquero\"}]}" EX 3600
+SET cache:plantel:BRA "{\"equipo\":{\"_id\":\"BRA\",\"nombre\":\"Brasil\",\"confederacion\":\"CONMEBOL\",\"grupo\":\"B\"},\"jugadores\":[{\"_id\":\"BRA-09\",\"nombre\":\"Lucas\",\"apellido\":\"Silva\",\"dorsal\":9,\"posicion\":\"delantero\"}]}" EX 3600
+ECHO "Contadores de visitas propios de Redis"
+MULTI
+INCRBY partido:P-001:visitas:2030-06-08 1250
+EXPIRE partido:P-001:visitas:2030-06-08 604800
+EXEC
+MULTI
+INCRBY partido:P-002:visitas:2030-06-08 430
+EXPIRE partido:P-002:visitas:2030-06-08 604800
+EXEC
+ECHO "Cantidad total de claves"
+DBSIZE

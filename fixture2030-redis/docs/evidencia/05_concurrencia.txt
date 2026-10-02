@@ -1,0 +1,6 @@
+Clientes concurrentes: 20
+Operaciones por cliente: 100
+Resultado esperado: 2000
+Resultado obtenido: 2000
+OK: INCR preservo todas las actualizaciones concurrentes.
+TTL del contador: 604800
