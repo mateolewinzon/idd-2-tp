@@ -1,0 +1,72 @@
+04_agregaciones.txt — Agregaciones y downsampling
+==============================================================================
+Fecha de ejecucion: 2026-10-07 (corrida final, 13:14-13:15 -03)
+Entorno: Apple M1 Pro, 8 nucleos, 16 GB RAM, macOS 15.7.3; Docker 27.4.0 (Compose v2.31.0-desktop.2);
+         contenedor unico fixture2030-influxdb (imagen influxdb:3-core), InfluxDB 3 Core 3.12.0
+         (revision 3ba97c65f1ee4e1f127a8266517d4d2083b7ea39); disco local con 173 GiB libres.
+Script que lo produjo: scripts/agregaciones.sh
+Volumen procesado: agregaciones sobre P-001; downsampling de 1 s a 1 min: 1.980 puntos escritos en tracking_resumen_minuto (22 titulares x 90 min)
+Resultado interpretable: AVG/MAX para muestras, MAX y diferencia de ventana para contadores, SUM solo para pases por intervalo. El downsampling escribio 1.980 puntos (HTTP 204) y se leyeron de la base resumen.
+Nota: valores ficticios generados con semilla fija; sin token ni datos reales.
+==============================================================================
+
+Alcance: el downsampling se ejecuto solo para P-001, no para los 127 partidos. No reemplaza la expiracion de los puntos originales.
+
+==============================================================================
+CATALOGO DE AGREGACIONES TEMPORALES POR SEMANTICA (RF5, RF9)
+==============================================================================
+
+=== [1/4] Agregacion de Muestras (AVG y MAX en velocidad) ===
+Justificacion: Las muestras instantaneas no se suman (SUM distorsionaria la magnitud fisica).
++------------+------------------+----------------+
+| jugador_id | vel_promedio_kmh | vel_maxima_kmh |
++------------+------------------+----------------+
+| URU-6      | 15.73            | 31.5           |
+| URU-21     | 15.53            | 31.5           |
+| KSA-3      | 15.63            | 31.5           |
+| KSA-10     | 15.56            | 31.5           |
+| KSA-15     | 15.61            | 31.49          |
++------------+------------------+----------------+
+
+=== [2/4] Agregacion de Contadores Acumulados (MAX y delta de ventana) ===
+Justificacion: distancia_acum_m y tiros_acumulados son contadores monotonos; SUM inflaria exponencialmente.
++------------+-------------------------------+--------------------------+
+| jugador_id | distancia_recorrida_ventana_m | odometro_total_partido_m |
++------------+-------------------------------+--------------------------+
+| URU-1      | 7903.48                       | 7906.21                  |
+| URU-5      | 7927.2                        | 7931.02                  |
+| URU-10     | 7986.74                       | 7994.03                  |
+| URU-11     | 7900.98                       | 7908.7                   |
+| URU-16     | 7880.51                       | 7888.22                  |
++------------+-------------------------------+--------------------------+
+
+=== [3/4] Agregacion de Intervalos (SUM pases) ===
+Justificacion: pases_intervalo es un delta de 5s (SUM acumula el total); usuarios es un gauge instantaneo.
++-----------+-----------------------------+
+| equipo_id | pases_totales_primer_tiempo |
++-----------+-----------------------------+
+| KSA       | 2944                        |
+| URU       | 2986                        |
++-----------+-----------------------------+
+
+==============================================================================
+PROCESO DE DOWNSAMPLING (fixture2030_en_vivo -> fixture2030_resumen)
+==============================================================================
+Extrayendo agregados por minuto de tracking_jugador para el partido P-001...
+Transformando agregados a Line Protocol para fixture2030_resumen...
+Puntos agregados generados para downsampling: 1980
+Ingestando tracking_resumen_minuto en la base fixture2030_resumen...
+Respuesta HTTP ingesta downsampling: 204
+
+Verificando puntos persistidos en la tabla downsampleada 'tracking_resumen_minuto' (base resumen):
++---------------------+------------+----------------+---------------+--------------------+
+| time                | jugador_id | velocidad_prom | velocidad_max | distancia_minuto_m |
++---------------------+------------+----------------+---------------+--------------------+
+| 2030-06-08T13:00:00 | URU-1      | 13.79          | 31.44         | 227.03             |
+| 2030-06-08T13:00:00 | URU-1      | 13.79          | 31.44         | 227.03             |
+| 2030-06-08T13:01:00 | URU-1      | 15.76          | 29.38         | 260.25             |
+| 2030-06-08T13:01:00 | URU-1      | 15.76          | 29.38         | 260.25             |
+| 2030-06-08T13:02:00 | URU-1      | 16.57          | 30.43         | 275.16             |
++---------------------+------------+----------------+---------------+--------------------+
+
+=== Agregaciones y Downsampling completados con exito ===

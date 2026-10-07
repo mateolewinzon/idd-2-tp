@@ -200,7 +200,7 @@ def generar_line_protocol():
                 pases_eq1 = random.randint(2, 9)
                 pases_eq2 = random.randint(2, 9)
 
-                # Enteros con 'i' segun sintaxis estricta de Line Protocol (Clase 9)
+                # Enteros con 'i' segun sintaxis de Line Protocol
                 f_est.write(
                     f"estadisticas_partido,partido_id={pid},equipo_id={eq1},sede_id={sede_id} "
                     f"posesion_pct={pos_eq1:.1f},tiros_acumulados={tiros_eq1}i,pases_intervalo={pases_eq1}i {t_sec}\n"

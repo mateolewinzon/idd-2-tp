@@ -2,7 +2,7 @@
 # ==============================================================================
 # Script: scripts/consultas_temporales.sh
 # Proposito: Ejecutar el catalogo de consultas temporales analiticas en SQL
-#            nativo sobre InfluxDB 3 Core (Arrow DataFusion). Todas las consultas
+#            nativo sobre InfluxDB 3 Core. Todas las consultas
 #            acotan estrictamente su rango temporal y dimensiones (RNF8).
 #            Incluye validacion de casos de borde: partido sin puntos y dato tardio (RF8).
 # Requisitos: InfluxDB 3 en ejecucion, datos cargados, token en .influxdb3-token.
@@ -161,27 +161,37 @@ echo "CASOS ESPECIALES DE VALIDACION TEMPORAL (RF8)"
 echo "=============================================================================="
 
 echo "-> Caso A: Consulta sobre partido sin puntos / no disputado (P-999)..."
-ejecutar_sql "fixture2030_en_vivo" "
+RESULTADO_A=$(ejecutar_sql "fixture2030_en_vivo" "
 SELECT count(*) AS puntos_encontrados
 FROM tracking_jugador
 WHERE partido_id = 'P-999';
-"
-echo "Verificacion Caso A: El motor responde con 0 puntos de forma inmediata sin errores."
+")
+echo "${RESULTADO_A}"
+if echo "${RESULTADO_A}" | grep -q '| 0 '; then
+    echo "[OK] Caso A: el partido sin puntos devuelve 0 sin error."
+else
+    echo "[FALLO] Caso A: se esperaba 0 puntos."; exit 1
+fi
 
 echo ""
 echo "-> Caso B: Verificacion de insercion de dato tardio (Late-arriving data)..."
 # Insercion de observacion con marca temporal retrasada (1 segundo previo al inicio formal)
-curl -s -X POST "http://127.0.0.1:8181/api/v2/write?bucket=fixture2030_en_vivo&precision=s" \
-  -H "Authorization: Token ${TOKEN}" \
+curl -s -X POST "http://127.0.0.1:8181/api/v3/write_lp?db=fixture2030_en_vivo&precision=second" \
+  -H "Authorization: Bearer ${TOKEN}" \
   --data-binary "tracking_pelota,partido_id=P-001 x_m=50.0,y_m=30.0,z_m=0.0,velocidad_kmh=15.0 1907153999"
 
-ejecutar_sql "fixture2030_en_vivo" "
+RESULTADO_B=$(ejecutar_sql "fixture2030_en_vivo" "
 SELECT time, partido_id, x_m, y_m, velocidad_kmh
 FROM tracking_pelota
 WHERE partido_id = 'P-001'
   AND time = '2030-06-08T12:59:59';
-"
-echo "Verificacion Caso B: El dato tardio fue incorporado correctamente a la particion sin sobrescribir."
+")
+echo "${RESULTADO_B}"
+if echo "${RESULTADO_B}" | grep -q '2030-06-08T12:59:59'; then
+    echo "[OK] Caso B: el dato tardio quedo consultable en su instante."
+else
+    echo "[FALLO] Caso B: el dato tardio no se recupero."; exit 1
+fi
 
 echo ""
 echo "=== Catalogo de consultas temporales finalizado exitosamente ==="

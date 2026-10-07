@@ -29,26 +29,26 @@
 
 ## Coherencia RF / RNF -> Archivo
 
-| Requisito | Descripción | Archivo destino |
-|---|---|---|
-| RF1 / RF2 | Ingesta de métricas y persistencia temporal | `scripts/carga_lotes.sh`, `docs/carga_y_consultas.md` |
-| RF3 / RF4 | Consultas por rango temporal y filtros dimensionales | `scripts/consultas_temporales.sh`, `docs/patrones_de_acceso.md` |
-| RF5 / RF9 | Agregaciones por ventana y downsampling | `scripts/agregaciones.sh`, `docs/retencion_y_granularidad.md` |
-| RF6 / RNF6 | Precisión temporal explícita (segundos) | `scripts/generacion_puntos.py`, `docs/modelo_multidimensional.md` |
-| RF7 | Generador desacoplado de la carga | `scripts/generacion_puntos.py` |
-| RF8 | Manejo de datos tardíos / ausentes | `scripts/consultas_temporales.sh`, `docs/patrones_de_acceso.md` |
-| RF10 / RF11 | Cardinalidad y estimación de series | `docs/cardinalidad_y_escalabilidad.md` |
-| RF12 | Estrategia de carga y escalabilidad proyectada | `docs/cardinalidad_y_escalabilidad.md`, `scripts/carga_lotes.sh` |
-| RNF1 / RNF2 | Imagen Docker y persistencia en volumen | `docker-compose.yml`, `README.md` |
+| Requisito   | Descripción                                          | Archivo destino                                                           |
+| ----------- | ---------------------------------------------------- | ------------------------------------------------------------------------- |
+| RF1 / RF2   | Ingesta de métricas y persistencia temporal          | `scripts/carga_lotes.sh`, `docs/carga_y_consultas.md`                     |
+| RF3 / RF4   | Consultas por rango temporal y filtros dimensionales | `scripts/consultas_temporales.sh`, `docs/patrones_de_acceso.md`           |
+| RF5 / RF9   | Agregaciones por ventana y downsampling              | `scripts/agregaciones.sh`, `docs/retencion_y_granularidad.md`             |
+| RF6 / RNF6  | Precisión temporal explícita (segundos)              | `scripts/generacion_puntos.py`, `docs/modelo_multidimensional.md`         |
+| RF7         | Generador desacoplado de la carga                    | `scripts/generacion_puntos.py`                                            |
+| RF8         | Manejo de datos tardíos / ausentes                   | `scripts/consultas_temporales.sh`, `docs/patrones_de_acceso.md`           |
+| RF10 / RF11 | Cardinalidad y estimación de series                  | `docs/cardinalidad_y_escalabilidad.md`                                    |
+| RF12        | Estrategia de carga y escalabilidad proyectada       | `docs/cardinalidad_y_escalabilidad.md`, `scripts/carga_lotes.sh`          |
+| RNF1 / RNF2 | Imagen Docker y persistencia en volumen              | `docker-compose.yml`, `README.md`                                         |
 | RNF4 / RNF5 | Modelo guiado por patrones y control de cardinalidad | `docs/modelo_multidimensional.md`, `docs/cardinalidad_y_escalabilidad.md` |
-| RNF8 / RNF9 | Consultas acotadas y scripts reproducibles | `scripts/*.sh`, `docs/carga_y_consultas.md` |
-| RNF10 | Evidencia verificable | `docs/evidencia/*.txt` |
+| RNF8 / RNF9 | Consultas acotadas y scripts reproducibles           | `scripts/*.sh`, `docs/carga_y_consultas.md`                               |
+| RNF10       | Evidencia verificable                                | `docs/evidencia/*.txt`                                                    |
 
 ## Riesgos y mitigaciones
 
 1. **Versión de InfluxDB (`influxdb:latest`)**: `influxdb:latest` en Docker Hub descarga InfluxDB v2.9.1 (CLI `influx`, Flux/InfluxQL, puerto 8086, buckets, orgs), mientras que InfluxDB 3 Core (puerto 8181, SQL, binario `influxdb3`) está en `influxdb:3-core`. Si se mantiene `latest`, se debe definir si se usa v2.9.1 o si se ajusta a `influxdb:3-core` según lo estipulado en la Clase 9.
 2. **Timestamps 2030 vs Políticas de Retención**: Los timestamps son del año 2030 (futuros). Las políticas de retención descartan datos cuyo timestamp `t < now() - retencion`. Los datos de 2030 no son purgados al entrar; sin embargo, al hacer agregaciones relativas o pruebas en tiempo presente se debe verificar el comportamiento exacto de retención.
-3. **Volumen de 10M+ puntos**: El volumen total calculado para los 127 partidos es de **16.637.000 puntos** (~1,5 GB en disco en formato line protocol). Se requiere verificar tiempos de ingesta en el hardware local (Apple M5, 16 GB RAM).
+3. **Volumen de 10M+ puntos**: El volumen total calculado para los 127 partidos es de **16.870.680 puntos** (medido: 2,2 GB en formato line protocol; 458 MB en disco tras la carga). Se requiere verificar tiempos de ingesta en el hardware local (Apple M1 Pro, 16 GB RAM).
 
 ## Plan por fases
 
@@ -58,3 +58,21 @@
 - **Fase 3**: Ensayo integrado completo desde cero y persistencia.
 - **Fase 4**: Generación y registro de evidencia en `docs/evidencia/`.
 - **Fase 5**: Cierre, revisión final, trazabilidad RF/RNF y entrega.
+
+Fase 3 — Ensayo Integrado y Limpieza
+Precondición: Se limpia el directorio local ${HOME}/docker/data/influxdb y el token local para simular la experiencia de un usuario o docente que clona el repo desde cero.
+Se corre la secuencia completa de corrido: inicializacion $\to$ generacion_puntos $\to$ carga_lotes $\to$ validacion $\to$ consultas_temporales $\to$ agregaciones $\to$ validacion.
+Se reinicia el contenedor (docker compose stop y up -d) para verificar y certificar empíricamente que los datos persisten en disco (RNF2).
+Fase 4 — Registro de Evidencia (docs/evidencia/)
+Guardar las salidas de terminal crudas y verificables en archivos de texto con encabezados de entorno, fecha, versión de InfluxDB 3 y CPU/RAM de la máquina:
+00_ambiente.txt
+01_generacion_y_carga.txt
+02_validacion.txt
+03_consultas.txt
+04_agregaciones.txt
+05_retencion_y_persistencia.txt
+Fase 5 — Cierre y Documentación Final
+Actualizar README.md final enlazando todas las evidencias y detallando la guía de ejecución paso a paso.
+Completar la matriz de trazabilidad RF/RNF (verificando que ningún requerimiento quede sin respaldo).
+Revisión de seguridad (sin tokens reales, sin .DS_Store, sin archivos pesados en git).
+Sugerencia de commit y preparación para PR de entrega.

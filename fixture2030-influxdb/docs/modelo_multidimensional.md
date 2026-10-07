@@ -113,14 +113,16 @@ En los Hitos 1 y 2, InfluxDB se perfiló inicialmente para el *"tracking de juga
 Esta ampliación respeta íntegramente el principio de que InfluxDB **solo almacena series numéricas temporales** y no sustituye el rol de catálogo de Mongo ni las relaciones de Neo4j.
 
 ### 4.2 Elección de Motor: InfluxDB 3 Core vs InfluxDB 2.x
-El enunciado (RNF1) menciona `influxdb:latest`. Sin embargo, la verificación empírica de la Fase 0 constató que `influxdb:latest` en Docker Hub descarga la rama v2.9.1 (puerto 8086, lenguaje Flux/InfluxQL y motor TSM antiguo).
+El enunciado (RNF1) menciona `influxdb:latest`. Sin embargo, la verificación empírica de la Fase 0 constató que `influxdb:latest` en Docker Hub descarga la rama v2.9.1 (observado en Fase 0). Según Clase 9, `latest` apunta a InfluxDB 2.x, que trabaja con buckets, organizaciones y Flux y no contiene el binario `influxdb3`.
 
 Para alinearse con la **Clase 9 oficial de la cátedra**, se adopta la imagen `influxdb:3-core`:
-- Motor moderno basado en **Apache Arrow**, **DataFusion** y almacenamiento columnar en **Parquet**.
-- Soporte nativo de **SQL estándar** para todas las consultas analíticas temporales (puerto 8181).
-- CLI oficial `influxdb3` y gestión granular de bases de datos y tokens.
+- Puerto 8181, tokens para autorización, line protocol para escritura y SQL para consulta (Clase 9).
+- CLI oficial `influxdb3` dentro del contenedor.
 
 ### 4.3 Manejo de Identificadores (Neo4j vs Cassandra)
 Se constata que el módulo de comentarios en Cassandra utilizó identificadores sintéticos de partido (ej. `'ARG-ESP-20300624'`), mientras que la fuente de verdad del grafo en Neo4j utiliza identificadores canónicos (`'P-001'`, `'P-002'`, etc.).
 - InfluxDB adopta de forma uniforme los **identificadores canónicos de Neo4j (`partido_id = 'P-xxx'`)** y los códigos de jugadores y equipos de Mongo/Neo4j (`'ARG-10'`, `'ARG'`).
 - La discrepancia con los IDs de Cassandra se documenta como limitación del subsistema de comentarios previo, manteniendo consistencia con lo documentado en Redis (`fixture2030-redis/docs/modelo_clave_valor.md §5`).
+
+### 4.4 Valores ficticios
+Todos los valores los produce el generador con una semilla fija y son ficticios; no modelan fútbol real. Por ejemplo, la posesión de cada equipo sale de un sorteo uniforme entre 40 y 60 (su promedio ronda 50 %), el odómetro de un titular llega a unos 24 km por partido y los usuarios conectados de una región llegan a unos 275.000. Sirven para ejercitar el modelo, las agregaciones y el volumen, no para sacar conclusiones deportivas.

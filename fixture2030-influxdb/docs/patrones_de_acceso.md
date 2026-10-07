@@ -51,7 +51,7 @@ Cada patrón de acceso se especifica formalmente con los **7 atributos obligator
 - **Precisión temporal:** Segundos (`s`).
 - **Comportamiento ante ausencia / retraso / dato tardío:**
   - *Ausencia:* Si un sensor pierde la señal por oclusión óptica durante 3 segundos, la visualización interpola linealmente las coordenadas $x, y$.
-  - *Dato tardío:* Si un paquete llega desordenado con timestamp anterior dentro de la ventana de buffer, InfluxDB 3 lo inserta en su partición Arrow/Parquet sin sobrescribir puntos adyacentes válidos.
+  - *Dato tardío:* Un paquete que llega con timestamp anterior se escribe como un punto más en su instante. Observado en el laboratorio (`consultas_temporales.sh`, caso B): el punto de 12:59:59 quedó consultable.
 
 ### Patrón P2: Velocidad máxima y distancia total por jugador y equipo
 - **Quién genera / consulta:**

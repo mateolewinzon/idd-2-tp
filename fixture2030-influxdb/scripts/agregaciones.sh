@@ -44,7 +44,7 @@ echo "==========================================================================
 # 1. Agregacion de Muestras Instantaneas (AVG, MAX)
 # ------------------------------------------------------------------------------
 echo ""
-echo "=== [1/4] Agregacion de Muestras (AVG y MAX en velocidad y posesion) ==="
+echo "=== [1/4] Agregacion de Muestras (AVG y MAX en velocidad) ==="
 echo "Justificacion: Las muestras instantaneas no se suman (SUM distorsionaria la magnitud fisica)."
 ejecutar_sql "fixture2030_en_vivo" "
 SELECT jugador_id,
@@ -82,7 +82,7 @@ LIMIT 5;
 # 3. Agregacion de Metricas de Intervalo y Gauges
 # ------------------------------------------------------------------------------
 echo ""
-echo "=== [3/4] Agregacion de Intervalos (SUM pases) y Gauges (MAX/AVG usuarios) ==="
+echo "=== [3/4] Agregacion de Intervalos (SUM pases) ==="
 echo "Justificacion: pases_intervalo es un delta de 5s (SUM acumula el total); usuarios es un gauge instantaneo."
 ejecutar_sql "fixture2030_resumen" "
 SELECT equipo_id,
@@ -151,8 +151,8 @@ with open(csv_in, 'r', encoding='utf-8') as f_in, open(lp_out, 'w', encoding='ut
 
 echo "Ingestando tracking_resumen_minuto en la base fixture2030_resumen..."
 curl -s -o /dev/null -w "Respuesta HTTP ingesta downsampling: %{http_code}\n" -X POST \
-    "http://127.0.0.1:8181/api/v2/write?bucket=fixture2030_resumen&precision=s" \
-    -H "Authorization: Token ${TOKEN}" \
+    "http://127.0.0.1:8181/api/v3/write_lp?db=fixture2030_resumen&precision=second" \
+    -H "Authorization: Bearer ${TOKEN}" \
     --data-binary @"${TEMP_DOWNSAMPLE_LP}"
 
 echo ""

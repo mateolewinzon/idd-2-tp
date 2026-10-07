@@ -1,0 +1,111 @@
+03_consultas.txt — Consultas temporales
+==============================================================================
+Fecha de ejecucion: 2026-10-07 (corrida final de los scripts, 13:14 -03)
+Entorno: Apple M1 Pro, 8 nucleos, 16 GB RAM, macOS 15.7.3; Docker 27.4.0 (Compose v2.31.0-desktop.2);
+         contenedor unico fixture2030-influxdb (imagen influxdb:3-core), InfluxDB 3 Core 3.12.0
+         (revision 3ba97c65f1ee4e1f127a8266517d4d2083b7ea39); disco local con 173 GiB libres.
+Script que lo produjo: scripts/consultas_temporales.sh
+Volumen procesado: consultas acotadas a P-001 (hasta 90 min), dos sedes y los 127 partidos de dos sedes
+Resultado interpretable: Q1-Q7 devuelven filas; caso A (partido sin puntos) devuelve 0; caso B (dato tardio) queda consultable en su instante y el script verifica ambos y falla si no se cumplen.
+Nota: valores ficticios generados con semilla fija; sin token ni datos reales.
+==============================================================================
+
+Interpretacion: Q1 sigue a un jugador segundo a segundo; Q2 ordena titulares por distancia y velocidad maxima; Q3 muestra la pelota en una ventana de 60 s; Q4 y Q5 comparan posesion, tiros y pases de los dos equipos del partido; Q6 compara dos sedes; Q7 da el pico de usuarios por confederacion. Los valores son ficticios (posesion ~50 %, odometros de ~24 km): sirven para ejercitar las consultas, no para conclusiones deportivas (ver docs/modelo_multidimensional.md §4.4).
+
+==============================================================================
+CATALOGO DE CONSULTAS TEMPORALES ANALITICAS — MUNDIAL 2030 (INFLUXDB 3)
+==============================================================================
+
+=== [Q1] Evolucion cinematica de un jugador en ventana activa de 5 min (P-001, URU-1) ===
++---------------------+------------+-------+-------+---------------+------------------+
+| time                | jugador_id | x_m   | y_m   | velocidad_kmh | distancia_acum_m |
++---------------------+------------+-------+-------+---------------+------------------+
+| 2030-06-08T13:00:00 | URU-1      | 37.27 | 36.68 | 9.82          | 2.73             |
+| 2030-06-08T13:00:01 | URU-1      | 37.6  | 37.22 | 2.81          | 3.51             |
+| 2030-06-08T13:00:02 | URU-1      | 38.0  | 36.97 | 20.41         | 9.18             |
+| 2030-06-08T13:00:03 | URU-1      | 38.16 | 36.42 | 7.88          | 11.37            |
+| 2030-06-08T13:00:04 | URU-1      | 37.47 | 36.41 | 5.57          | 12.91            |
++---------------------+------------+-------+-------+---------------+------------------+
+
+=== [Q2] Ranking de distancia y velocidad maxima de titulares (P-001, URU) ===
++------------+-------------+--------------+
+| jugador_id | vel_max_kmh | dist_total_m |
++------------+-------------+--------------+
+| URU-1      | 31.5        | 23777.5      |
+| URU-5      | 31.5        | 23776.29     |
+| URU-11     | 31.5        | 23737.19     |
+| URU-6      | 31.5        | 23702.65     |
+| URU-10     | 31.49       | 23676.93     |
++------------+-------------+--------------+
+
+=== [Q3] Trayectoria 3D de la pelota en ventana acotada de 60 segundos ===
++---------------------+------------+-------+-------+------+---------------+
+| time                | partido_id | x_m   | y_m   | z_m  | velocidad_kmh |
++---------------------+------------+-------+-------+------+---------------+
+| 2030-06-08T13:10:00 | P-001      | 67.17 | 10.86 | 3.78 | 56.39         |
+| 2030-06-08T13:10:01 | P-001      | 68.14 | 10.67 | 0.0  | 21.51         |
+| 2030-06-08T13:10:02 | P-001      | 69.39 | 9.8   | 0.0  | 90.6          |
+| 2030-06-08T13:10:03 | P-001      | 69.29 | 9.81  | 0.0  | 85.83         |
+| 2030-06-08T13:10:04 | P-001      | 70.45 | 9.19  | 0.0  | 48.87         |
++---------------------+------------+-------+-------+------+---------------+
+
+=== [Q4] Comparativa bilateral de posesion, tiros y pases (P-001: URU vs KSA) ===
++-----------+--------------------+---------------+---------------+
+| equipo_id | posesion_media_pct | tiros_totales | pases_totales |
++-----------+--------------------+---------------+---------------+
+| KSA       | 50.0               | 43            | 5926          |
+| URU       | 50.0               | 40            | 6037          |
++-----------+--------------------+---------------+---------------+
+
+=== [Q5] Ritmo ofensivo: remates por bloque de 5 min con date_bin (P-001, URU) ===
++---------------------+-----------------+
+| bloque_5m           | tiros_en_bloque |
++---------------------+-----------------+
+| 2030-06-08T13:00:00 | 7               |
+| 2030-06-08T13:05:00 | 2               |
+| 2030-06-08T13:10:00 | 1               |
+| 2030-06-08T13:15:00 | 1               |
+| 2030-06-08T13:20:00 | 1               |
+| 2030-06-08T13:25:00 | 3               |
++---------------------+-----------------+
+
+=== [Q6] Comparacion de dinamismo e intensidad entre dos sedes (S-01 vs S-02) ===
++---------+-------------------+--------------------+
+| sede_id | posesion_promedio | pases_totales_sede |
++---------+-------------------+--------------------+
+| S-02    | 50.0              | 11698              |
+| S-01    | 50.0              | 11963              |
++---------+-------------------+--------------------+
+
+=== [Q7] Picos de audiencia y usuarios conectados por confederacion (P-001) ===
++----------+---------------+-----------------+
+| region   | pico_usuarios | audiencia_media |
++----------+---------------+-----------------+
+| CONMEBOL | 274993        | 255215.0        |
+| UEFA     | 274990        | 254880.0        |
+| CONCACAF | 104991        | 84635.0         |
+| OFC      | 104988        | 84789.0         |
+| CAF      | 104986        | 85181.0         |
+| AFC      | 104919        | 85199.0         |
++----------+---------------+-----------------+
+
+==============================================================================
+CASOS ESPECIALES DE VALIDACION TEMPORAL (RF8)
+==============================================================================
+-> Caso A: Consulta sobre partido sin puntos / no disputado (P-999)...
++--------------------+
+| puntos_encontrados |
++--------------------+
+| 0                  |
++--------------------+
+[OK] Caso A: el partido sin puntos devuelve 0 sin error.
+
+-> Caso B: Verificacion de insercion de dato tardio (Late-arriving data)...
++---------------------+------------+------+------+---------------+
+| time                | partido_id | x_m  | y_m  | velocidad_kmh |
++---------------------+------------+------+------+---------------+
+| 2030-06-08T12:59:59 | P-001      | 50.0 | 30.0 | 15.0          |
++---------------------+------------+------+------+---------------+
+[OK] Caso B: el dato tardio quedo consultable en su instante.
+
+=== Catalogo de consultas temporales finalizado exitosamente ===

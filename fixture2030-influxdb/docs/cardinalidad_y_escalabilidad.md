@@ -9,7 +9,7 @@
 La **cardinalidad de series** es el número total de series temporales únicas generadas en una base de datos InfluxDB. Se define como el producto cartesiano de los valores únicos de todas las etiquetas (tags) indexadas:
 $$\text{Cardinalidad Total} = \sum_{\text{tablas}} \left( \prod_{\text{tag} \in \text{Tags}(\text{tabla})} |\text{Valores Únicos de tag}| \right)$$
 
-Una cardinalidad descontrolada (*cardinality explosion*) satura el índice de metadatos en memoria y degrada la velocidad de compactación e ingesta. Por ello, el diseño del Mundial 2030 clasifica estrictamente qué atributos pertenecen al índice de tags y cuáles deben mantenerse exclusivamente como métricas (`fields`).
+Una cardinalidad descontrolada (*cardinality explosion*) aumenta la cantidad de series, que condiciona índice, memoria y desempeño de consultas y escrituras (Clase 9). Por ello, el diseño del Mundial 2030 clasifica estrictamente qué atributos pertenecen al índice de tags y cuáles deben mantenerse exclusivamente como métricas (`fields`).
 
 ### 1.1 Variación Esperada de cada Dimensión (Datos Reales de los CSV)
 A partir de los archivos de importación oficiales (`fixture2030-neo4j/import/`), los valores únicos por dimensión son:
@@ -74,8 +74,8 @@ Se justifican las exclusiones específicas:
 ### Contraste con el Caso Explosivo (Ejemplo ilustrativo de Clase 9)
 Si un diseñador inexperto colocara un identificador único por observación o las coordenadas como tags en `tracking_jugador`:
 - Cardinalidad resultante: $15.087.600 \text{ series}$.
-- Consecuencia técnica: La tabla de símbolos del motor colapsaría por falta de memoria RAM (OOM Crash), la fragmentación de archivos Parquet generaría archivos microscópicos no compactables y las consultas colapsarían.
-- En contraste, con nuestro modelo controlado de **3.937 series**, el motor procesa los 16,6M de puntos con índices ultracompactos y máxima compresión columnar.
+- Consecuencia (Clase 9): la cantidad de series deja de estar acotada por las dimensiones del torneo y se aproxima al volumen total de puntos, con el impacto en índice, memoria y desempeño que la clase describe. No se ejecutó este caso.
+- En contraste, con nuestro modelo controlado de **3.937 series**, la cantidad de series queda acotada por las dimensiones del torneo. Observado en el laboratorio: la carga de 16.870.680 puntos se completó sin líneas rechazadas.
 
 ---
 
@@ -90,15 +90,15 @@ Para ingerir los **16.637.000 puntos** calculados sin degradar el motor, se esta
   tracking_jugador,partido_id=P-001,equipo_id=ARG,jugador_id=ARG-10 x_m=52.3,y_m=34.1,velocidad_kmh=18.4,distancia_acum_m=120.5 1907409600
   ```
 - **Ingesta en lotes fijos (Batching):** Script de carga (`scripts/carga_lotes.sh`) que agrupa las escrituras en bloques fijos de **10.000 líneas** por invocación HTTP/CLI. Esto minimiza el overhead de red y llamadas a sistema.
-- **Precisión temporal declarada:** Precisión explícita en segundos (`--precision s`).
-- **Manejo de errores y reintentos:** Mecanismo simple de reintentos ante saturación transitoria de buffer y volcado de registros anómalos o rechazados a un log de auditoría.
+- **Precisión temporal declarada:** Precisión explícita en segundos (`precision=second`).
+- **Manejo de errores y reintentos:** Mecanismo simple de reintentos ante error de escritura y volcado de registros anómalos o rechazados a un log de auditoría.
 - **Prueba previa de humo:** Ejecución de 1 partido completo previa a la carga masiva total, con el fin de validar sintaxis de Line Protocol, tipos de datos y persistencia.
 
 ### 3.2 Arquitectura Proyectada para Producción (Escala Teórica Mundial)
 En un escenario de despliegue real a gran escala durante un Mundial (PDF8 §5.4):
 - **Ingesta concurrente particionada:** Múltiples procesos o trabajadores independientes ingestando en paralelo la telemetría de los partidos en juego (particionamiento por `partido_id`).
 - **Búfer de desacople:** Un búfer intermedio que absorba las ráfagas de los sensores de estadio antes de persistir en InfluxDB, evitando saturar los puertos de ingesta.
-- **Regulación de flujo (Backpressure):** Mecanismo de control para regular la tasa de envío cuando la base esté compactando datos en disco.
+- **Regulación de flujo (Backpressure):** Mecanismo de control para regular la tasa de envío cuando la base no alcance a absorber la carga.
 
 *Nota:* Esta arquitectura distribuida es únicamente una **proyección teórica de diseño**. En el laboratorio del Hito 8 la carga se ejecuta localmente mediante el script en lotes de 10.000 líneas.
 
@@ -107,9 +107,9 @@ En un escenario de despliegue real a gran escala durante un Mundial (PDF8 §5.4)
 ## 4. Límites del Entorno de Laboratorio
 
 Las mediciones del módulo se realizan sobre el hardware local del equipo:
-- **Procesador:** Apple M5.
+- **Procesador:** Apple M1 Pro (8 núcleos, medido con `sysctl`).
 - **Memoria RAM:** 16 GB.
-- **Almacenamiento:** Disco SSD local APFS (con más de 300 GB disponibles).
+- **Almacenamiento:** Disco SSD local APFS (173 GiB libres al ejecutar la Fase 3).
 - **Restricciones locales:**
   - Ejecución en contenedor Docker mononodo sobre la máquina de desarrollo.
   - La ingesta masiva de 16,6M de puntos se ejecuta secuencialmente en un solo hilo para garantizar trazabilidad y reproducibilidad estricta de la prueba.

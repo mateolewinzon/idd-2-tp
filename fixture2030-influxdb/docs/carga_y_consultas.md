@@ -25,7 +25,7 @@ Este documento describe la especificación técnica de los scripts de ingestión
 
 Conforme a RNF8, todas las consultas analíticas acotan estrictamente su rango temporal mediante cláusulas `WHERE time >= ... AND time <= ...` y aplican filtros por dimensiones (`partido_id`, `equipo_id`, `sede_id`, `region`), evitando escaneos globales no acotados.
 
-Las consultas se implementarán en SQL nativo (soportado por InfluxDB 3 Core sobre Apache Arrow DataFusion):
+Las consultas se implementarán en SQL nativo (Clase 9: InfluxDB 3 Core permite consultas SQL sobre tablas de series temporales):
 
 ### Consulta Q1: Trayectoria y odometría de un futbolista en ventana activa (Patrón P1)
 - **Objetivo:** Recuperar las coordenadas espaciales ($x,y$), la velocidad instantánea y la distancia acumulada de un jugador durante una ventana de 5 minutos de un partido determinado.

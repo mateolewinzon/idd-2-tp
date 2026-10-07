@@ -1,0 +1,69 @@
+05_retencion_y_persistencia.txt — Retencion y persistencia
+==============================================================================
+Fecha de ejecucion: 2026-10-07 (reinicio ~13:15 -03)
+Entorno: Apple M1 Pro, 8 nucleos, 16 GB RAM, macOS 15.7.3; Docker 27.4.0 (Compose v2.31.0-desktop.2);
+         contenedor unico fixture2030-influxdb (imagen influxdb:3-core), InfluxDB 3 Core 3.12.0
+         (revision 3ba97c65f1ee4e1f127a8266517d4d2083b7ea39); disco local con 173 GiB libres.
+Script que lo produjo: scripts/inicializacion.sh (retencion) y scripts/validacion.sh tras docker compose stop / up -d
+Volumen procesado: 16.870.680 puntos + 1 punto tardio + 1.980 puntos de resumen
+Resultado interpretable: Con retencion de 7 dias en fixture2030_en_vivo, los puntos con timestamps de 2030 se aceptaron y se pueden consultar. Tras el reinicio los conteos y el token siguen igual.
+Nota: valores ficticios generados con semilla fija; sin token ni datos reales.
+==============================================================================
+
+Retencion aplicada: fixture2030_en_vivo = 7d; fixture2030_resumen = sin expiracion (fijadas al crear la base).
+Lo observado con timestamps de 2030 (futuros): ninguna escritura fue rechazada (0 lineas rechazadas, ver 01) y las consultas los devuelven. Es lo visto en esta corrida; no se probo que pasa cuando el reloj llegue a esas fechas ni se afirma como regla.
+Tamano en disco de ~/docker/data/influxdb: 458 MB inmediatamente tras la carga completa; 398M medido al final de la corrida. El valor cambio entre mediciones y no se investigo por que.
+Advertencias en los logs del servidor (conteo por mensaje, tal cual aparecen; no se interpretaron):
+  26 fixture2030-influxdb  |   WARN iox_query::physical_optimizer::dedup::split: cannot split dedup operation, fanout too wide n_split=110 max_dedup_split=100
+   6 fixture2030-influxdb  |   WARN iox_query::physical_optimizer::dedup::split: cannot split dedup operation, fanout too wide n_split=125 max_dedup_split=100
+   5 fixture2030-influxdb  |   WARN iox_query::physical_optimizer::dedup::split: cannot split dedup operation, fanout too wide n_split=118 max_dedup_split=100
+   3 fixture2030-influxdb  |   WARN iox_query::physical_optimizer::dedup::split: cannot split dedup operation, fanout too wide n_split=119 max_dedup_split=100
+   3 fixture2030-influxdb  |   WARN iox_query::physical_optimizer::dedup::split: cannot split dedup operation, fanout too wide n_split=111 max_dedup_split=100
+   3 fixture2030-influxdb  |   WARN influxdb3: async triggers (run_asynchronous) currently default to unlimited concurrency; in a future release the default --async-trigger-concurrency-limit will change to
+
+## Validacion tras 'docker compose stop' y 'docker compose up -d' (15 s de espera)
+==============================================================================
+AUDITORIA DE INTEGRIDAD Y VALIDACION — MUNDIAL 2030 (INFLUXDB 3)
+==============================================================================
+
+=== [1/4] Validacion de Puntos Efectivos vs Estimacion ===
+1.1 tracking_jugador (base en_vivo):
+    Observado: 15087600 | Esperado: 15087600
+    [OK] Coincidencia exacta al 100%.
+1.2 tracking_pelota (base en_vivo):
+    Observado: 685801 | Esperado: >= 685800
+    [OK] Puntos completos (incluye validacion de dato tardio y test).
+1.3 estadisticas_partido (base resumen):
+    Observado: 274320 | Esperado: 274320
+    [OK] Coincidencia exacta al 100%.
+1.4 actividad_usuarios (base resumen):
+    Observado: 822960 | Esperado: 822960
+    [OK] Coincidencia exacta al 100%.
+
+Volumen total de observaciones verificado: 16870681 puntos.
+[OK] Volumen total supera con creces el piso de 10 millones de puntos.
+
+=== [2/4] Validacion de Cardinalidad de Series Temporales ===
+2.1 Series tracking_jugador:     2794 (Estimado: 2.794)
+2.2 Series tracking_pelota:      127 (Estimado: 127)
+2.3 Series estadisticas_partido: 254 (Estimado: 254)
+2.4 Series actividad_usuarios:   762 (Estimado: 762)
+[OK] Cardinalidad exacta: 3.937 series del torneo mundial.
+
+=== [3/4] Validacion de Rango Temporal y Cobertura de Partidos ===
+3.1 Primer timestamp registrado: 2030-06-08T13:00:00
+3.2 Ultimo timestamp registrado: 2030-07-21T14:29:55
+3.3 Partidos cubiertos:          127 / 127
+[OK] Cobertura completa del fixture oficial (127 partidos).
+
+=== [4/4] Validacion de Tipos y Rangos Fisicos Plausibles ===
+4.1 Velocidad maxima de jugador observada: 31.5 km/h (esperado: <= 36.0)
+4.2 Odometro maximo acumulado observado:  24318.07 m (esperado: >= 15000 y <= 30000)
+4.3 Altura maxima de pelota observada:     4.0 m (esperado: <= 15.0)
+    [OK] Velocidad maxima dentro de rango.
+    [OK] Odometro maximo dentro de rango.
+    [OK] Altura maxima dentro de rango.
+
+==============================================================================
+RESULTADO FINAL: TODAS LAS VALIDACIONES SUPERADAS EXITOSAMENTE (0 ERRORES)
+==============================================================================

@@ -1,0 +1,46 @@
+01_generacion_y_carga.txt — Generacion y carga
+==============================================================================
+Fecha de ejecucion: 2026-10-07, carga 11:20 a 12:05 -03
+Entorno: Apple M1 Pro, 8 nucleos, 16 GB RAM, macOS 15.7.3; Docker 27.4.0 (Compose v2.31.0-desktop.2);
+         contenedor unico fixture2030-influxdb (imagen influxdb:3-core), InfluxDB 3 Core 3.12.0
+         (revision 3ba97c65f1ee4e1f127a8266517d4d2083b7ea39); disco local con 173 GiB libres.
+Script que lo produjo: scripts/generacion_puntos.py y scripts/carga_lotes.sh
+Volumen procesado: generados 16.870.680 puntos (508 archivos .lp, 2,2 GB); cargados 16.870.680 (ver 02_validacion.txt)
+Resultado interpretable: Generacion 41,7 s. Carga completa 45 min 50 s en un solo hilo, lotes de 10.000 lineas, precision en segundos, endpoint /api/v3/write_lp, 0 lineas rechazadas y 0 reintentos.
+Nota: valores ficticios generados con semilla fija; sin token ni datos reales.
+==============================================================================
+
+Metodo: el generador (Python, biblioteca estandar, semilla 2030) lee los CSV de fixture2030-neo4j/import y escribe un .lp por tabla y partido. La carga prueba primero P-001 y luego los 126 restantes, partiendo cada archivo en lotes de 10.000 lineas (tamano de lote: supuesto de diseño, no medido).
+Limites del laboratorio: un solo equipo, un contenedor, una sola corrida; los tiempos no se extrapolan a otro hardware ni a otro volumen. La concurrencia (RF12) no se ejecuto, solo esta proyectada en docs/cardinalidad_y_escalabilidad.md.
+
+## Generacion
+Iniciando generacion de Line Protocol para 127 partidos...
+
+=== Resumen de Generacion Line Protocol ===
+tracking_jugador:     15,087,600 puntos
+tracking_pelota:      685,800 puntos
+estadisticas_partido: 274,320 puntos
+actividad_usuarios:   822,960 puntos
+TOTAL GENERAL:        16,870,680 puntos
+Directorio de salida: /Users/chiararosavelazco/Documents/facu/idd2/TP/fixture2030-influxdb/data/lp
+python3 scripts/generacion_puntos.py  39.33s user 1.45s system 97% cpu 41.701 total
+
+## Carga (el contador 'Procesando partido N/127' se omite; terminó en 127/127)
+Wed Oct  7 11:20:01 -03 2026
+=== [1/2] Iniciando Prueba de Humo: 1 Partido (P-001) ===
+-> Cargando tracking_pelota_P-001.lp en fixture2030_en_vivo...
+-> Cargando tracking_jugador_P-001.lp en fixture2030_en_vivo...
+-> Cargando estadisticas_partido_P-001.lp en fixture2030_resumen...
+-> Cargando actividad_usuarios_P-001.lp en fixture2030_resumen...
+Prueba de humo completada con exito en 15 s.
+
+=== [2/2] Iniciando Carga Masiva Completa (Torneo Completo) ===
+
+=== Resumen de Ingesta Masiva ===
+Duracion total de carga: 2734 segundos
+Lineas rechazadas: 0 (Carga limpia al 100%)
+
+real	45m49.991s
+user	0m18.001s
+sys	0m51.606s
+Wed Oct  7 12:05:51 -03 2026

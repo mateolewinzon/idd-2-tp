@@ -92,7 +92,7 @@ TOTAL_PUNTOS=$((PUNTOS_JUGADOR + PUNTOS_PELOTA + PUNTOS_ESTADISTICAS + PUNTOS_US
 echo ""
 echo "Volumen total de observaciones verificado: ${TOTAL_PUNTOS} puntos."
 if [ "${TOTAL_PUNTOS}" -lt 10000000 ]; then
-    echo "[FALLO CRITICO] El volumen total es menor al objetivo de 10M del enunciado."
+    echo "[FALLO CRITICO] El volumen total es menor al objetivo de 10M puntos."
     ERRORES=$((ERRORES + 1))
 else
     echo "[OK] Volumen total supera con creces el piso de 10 millones de puntos."
@@ -156,6 +156,20 @@ ALTURA_MAX_PEL=$(consultar_escalar "fixture2030_en_vivo" "SELECT max(z_m) FROM t
 echo "4.1 Velocidad maxima de jugador observada: ${VEL_MAX_JUG} km/h (esperado: <= 36.0)"
 echo "4.2 Odometro maximo acumulado observado:  ${DIST_MAX_JUG} m (esperado: >= 15000 y <= 30000)"
 echo "4.3 Altura maxima de pelota observada:     ${ALTURA_MAX_PEL} m (esperado: <= 15.0)"
+
+# Compara con awk (decimales) y suma un error si el rango no se cumple
+verificar_rango() {
+    local etiqueta="$1" valor="$2" minimo="$3" maximo="$4"
+    if awk -v v="${valor}" -v a="${minimo}" -v b="${maximo}" 'BEGIN{exit !(v>=a && v<=b)}'; then
+        echo "    [OK] ${etiqueta} dentro de rango."
+    else
+        echo "    [FALLO] ${etiqueta} fuera de rango (${valor})."
+        ERRORES=$((ERRORES + 1))
+    fi
+}
+verificar_rango "Velocidad maxima" "${VEL_MAX_JUG}" 0 36
+verificar_rango "Odometro maximo" "${DIST_MAX_JUG}" 15000 30000
+verificar_rango "Altura maxima" "${ALTURA_MAX_PEL}" 0 15
 
 echo ""
 echo "=============================================================================="

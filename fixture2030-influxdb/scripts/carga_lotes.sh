@@ -42,7 +42,7 @@ trap cleanup EXIT
 # ==============================================================================
 # Funcion de Ingesta por Archivo en Lotes de 10.000 Lineas
 # ==============================================================================
-# encontrado en documentacion InfluxDB (escritura de Line Protocol HTTP v2 write API en InfluxDB 3)
+# encontrado en documentacion InfluxDB (endpoint nativo POST /api/v3/write_lp?db=<base>&precision=second)
 cargar_archivo_lp() {
     local archivo="$1"
     local base_destino="$2"
@@ -62,8 +62,8 @@ cargar_archivo_lp() {
         while [ "${intento}" -le "${max_intentos}" ]; do
             # Ingesta HTTP con precision en segundos (s)
             HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
-                "http://127.0.0.1:8181/api/v2/write?bucket=${base_destino}&precision=s" \
-                -H "Authorization: Token ${TOKEN}" \
+                "http://127.0.0.1:8181/api/v3/write_lp?db=${base_destino}&precision=second" \
+                -H "Authorization: Bearer ${TOKEN}" \
                 --data-binary @"${chunk}")
 
             if [ "${HTTP_STATUS}" -eq 204 ]; then

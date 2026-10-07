@@ -10,7 +10,7 @@ En sistemas de telemetría de alta frecuencia, almacenar indefinidamente observa
 
 El ciclo de vida del dato temporal en el Mundial 2030 se estructura en tres etapas:
 1. **Ingesta en Caliente (Granularidad 1 s / 5 s):** Los datos se escriben a máxima frecuencia durante el transcurso del partido para soportar decisiones inmediatas (árbitros VAR, gráficos de transmisión televisiva, control táctico en banco de suplentes y monitoreo de CDN).
-2. **Compactación y Downsampling (Granularidad 1 minuto):** Al finalizar cada ventana o encuentro, los puntos crudos se agregan a resolución de 60 segundos aplicando funciones compatibles con la semántica de cada medida.
+2. **Downsampling (Granularidad 1 minuto):** Al finalizar cada ventana o encuentro, los puntos crudos se agregan a resolución de 60 segundos aplicando funciones compatibles con la semántica de cada medida.
 3. **Expiración de Puntos Crudos:** Cumplido el período de retención, el motor descarta automáticamente las observaciones de alta frecuencia, conservando únicamente las series consolidadas para análisis histórico.
 
 ---
@@ -84,7 +84,7 @@ El **downsampling** es el proceso de transformar una serie temporal de alta frec
 ## 4. Impacto en Almacenamiento, Rendimiento y Costo
 
 1. **Reducción de Volumen:**
-   - La base en vivo almacena transitoriamente 15,77 millones de puntos de tracking (~1,4 GB de line protocol sin comprimir). Al expirar a los 7 días, este espacio es reclamado por el motor columnar de Parquet.
+   - La base en vivo almacena transitoriamente 15,77 millones de puntos de tracking (medido: los archivos `.lp` de todo el torneo pesan 2,2 GB; los datos cargados ocupan 458 MB en disco tras la carga completa, en este equipo). Al expirar a los 7 días los puntos crudos dejan de estar disponibles (Clase 9).
    - El downsampling a 1 minuto genera únicamente 90 puntos por jugador por partido:
      $$127 \text{ partidos} \times 22 \text{ jugadores} \times 90 \text{ minutos} = 251.460 \text{ puntos}$$
      Esto representa una **reducción de volumen del 98,3%** para el almacenamiento permanente, manteniendo intacta la capacidad analítica histórica.
