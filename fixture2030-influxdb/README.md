@@ -41,6 +41,8 @@ InfluxDB **no es fuente de verdad** de entidades maestras ni de relaciones:
 
 ## 4. Guía de Ejecución
 
+Ejecutar desde la raíz del repositorio `idd-2-tp`. Se requiere Docker Compose, Python 3 y los CSV de `fixture2030-neo4j/import/`. Los scripts resuelven sus rutas a partir de su ubicación.
+
 El pipeline de ejecución se compone de los siguientes pasos secuenciales:
 
 1. **Inicialización del entorno:**
@@ -53,7 +55,7 @@ El pipeline de ejecución se compone de los siguientes pasos secuenciales:
    ```bash
    python3 scripts/generacion_puntos.py
    ```
-   Lee los CSV maestros de `fixture2030-neo4j/import/` y genera 16,6M+ puntos en archivos Line Protocol deterministas con semilla fija.
+   Lee los CSV maestros de `fixture2030-neo4j/import/` y genera archivos Line Protocol deterministas con semilla fija. La estimación base es 16.870.680 puntos; las validaciones también contemplan el punto tardío de prueba.
 
 3. **Carga por lotes:**
    ```bash
@@ -79,14 +81,47 @@ El pipeline de ejecución se compone de los siguientes pasos secuenciales:
    ```
    Aplica agregados por minuto y vuelca el resumen consolidado a `fixture2030_resumen`.
 
+7. **Validación final:**
+   ```bash
+   bash scripts/validacion.sh
+   ```
+   Volver a validar al final comprueba los datos consolidados y el estado de ambas bases.
+
+8. **Prueba de persistencia (ya realizada y registrada):**
+   ```bash
+   docker compose -f fixture2030-influxdb/docker-compose.yml stop
+   docker compose -f fixture2030-influxdb/docker-compose.yml up -d
+   sleep 15
+   bash scripts/validacion.sh
+   ```
+   La evidencia está en `docs/evidencia/05_retencion_y_persistencia.txt`. El volumen persistente vive en `${HOME}/docker/data/influxdb`; eliminarlo borra las bases locales.
+
 ---
 
 ## 5. Pruebas y Evidencia (Fase 4)
 
-Los resultados empíricos y salidas crudas de las pruebas de laboratorio se registrarán en `docs/evidencia/`:
-- `00_ambiente.txt`: Estado del contenedor, versión del motor, configuración de bases y recursos del equipo.
-- `01_generacion_y_carga.txt`: Conteo de puntos generados, tiempos medidos de ingesta y límites del laboratorio.
-- `02_validacion.txt`: Auditoría de series y puntos efectivos por tabla.
-- `03_consultas.txt`: Ejecución y resultados interpretados de las consultas temporales.
-- `04_agregaciones.txt`: Evidencia de downsampling y métricas consolidadas.
-- `05_retencion_y_persistencia.txt`: Comprobación de retención y persistencia tras detención y reinicio del contenedor.
+Las salidas de la corrida del 7 de octubre de 2026 están versionadas en [`docs/evidencia/`](./docs/evidencia/):
+
+| Evidencia | Contenido |
+| --- | --- |
+| [00_ambiente.txt](./docs/evidencia/00_ambiente.txt) | Host, Docker, versión de InfluxDB, configuración de bases y recursos disponibles. |
+| [01_generacion_y_carga.txt](./docs/evidencia/01_generacion_y_carga.txt) | Puntos generados, carga por lotes, tiempos y límites del laboratorio. |
+| [02_validacion.txt](./docs/evidencia/02_validacion.txt) | Conteos, cardinalidad, cobertura y plausibilidad física. |
+| [03_consultas.txt](./docs/evidencia/03_consultas.txt) | Consultas temporales y casos de borde. |
+| [04_agregaciones.txt](./docs/evidencia/04_agregaciones.txt) | Agregaciones semánticas y downsampling. |
+| [05_retencion_y_persistencia.txt](./docs/evidencia/05_retencion_y_persistencia.txt) | Retención observada, reinicio, conteos persistidos y advertencias registradas. |
+
+Los resultados representan una corrida concreta; los tiempos y el uso de disco dependen del entorno. La evidencia de retención acredita solo el comportamiento observado con timestamps futuros.
+
+## 6. Trazabilidad y cierre (Fase 5)
+
+La matriz requisito por requisito, su respaldo y el estado (medido, documentado o proyectado) están en [`docs/trazabilidad_rf_rnf.md`](./docs/trazabilidad_rf_rnf.md).
+
+## 7. Revisión de seguridad y entrega
+
+- El token local `.influxdb3-token`, los datos generados y los logs están excluidos por [`.gitignore`](./.gitignore). No incluir ni copiar tokens en evidencias.
+- El puerto del servicio se publica solo en `127.0.0.1`; la configuración está en [`docker-compose.yml`](./docker-compose.yml).
+- Antes de entregar, revisar `git status --short` y confirmar que no aparezcan `.influxdb3-token`, `.DS_Store`, `data/`, archivos `.lp` o logs. Revisar también las evidencias en busca de credenciales.
+- Los datos pesados generados no se versionan; se regeneran siguiendo la sección 4.
+
+Commit sugerido: `docs(influxdb): completa trazabilidad y guía de entrega`.
