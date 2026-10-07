@@ -1,0 +1,22 @@
+services:
+  influxdb:
+    image: influxdb:3-core
+    container_name: fixture2030-influxdb
+    environment:
+      # encontrado en documentacion InfluxDB (variables obligatorias para influxdb3 serve)
+      - INFLUXDB3_NODE_ID=node1
+      - INFLUXDB3_OBJECT_STORE=file
+      - INFLUXDB3_DATA_DIR=/var/lib/influxdb3
+      # Carga del token administrativo generado offline al inicio del servidor
+      - INFLUXDB3_ADMIN_TOKEN_FILE=/var/lib/influxdb3/admin_token.json
+      # encontrado en documentacion InfluxDB (limite de archivos Parquet para consultas analiticas de 16M+ puntos)
+      - INFLUXDB3_QUERY_FILE_LIMIT=50000
+    ports:
+      # Puerto 8181 restringido exclusivamente a 127.0.0.1
+      - "127.0.0.1:8181:8181"
+    volumes:
+      # Directorio de persistencia en host
+      - ${HOME}/docker/data/influxdb:/var/lib/influxdb3
+      # Scripts del modulo montados en modo solo lectura
+      - ./scripts:/scripts:ro
+    restart: unless-stopped

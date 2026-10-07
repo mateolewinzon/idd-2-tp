@@ -1,0 +1,12 @@
+# Archivos de seguridad y tokens locales
+.influxdb3-token
+
+# Archivos de datos generados en Line Protocol (RF7)
+*.lp
+data/
+*.log
+
+# Archivos de sistema operativo y temporales
+.DS_Store
+__pycache__/
+*.pyc

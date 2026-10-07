@@ -1,0 +1,49 @@
+00_ambiente.txt — Ambiente y bases creadas
+==============================================================================
+Fecha de ejecucion: 2026-10-07 (inicializacion 11:19 -03; estado final 13:14 -03)
+Entorno: Apple M1 Pro, 8 nucleos, 16 GB RAM, macOS 15.7.3; Docker 27.4.0 (Compose v2.31.0-desktop.2);
+         contenedor unico fixture2030-influxdb (imagen influxdb:3-core), InfluxDB 3 Core 3.12.0
+         (revision 3ba97c65f1ee4e1f127a8266517d4d2083b7ea39); disco local con 173 GiB libres.
+Script que lo produjo: scripts/inicializacion.sh
+Volumen procesado: sin datos aun (dos bases vacias creadas)
+Resultado interpretable: InfluxDB 3 Core 3.12.0 en influxdb:3-core. Dos bases: fixture2030_en_vivo (retencion 7d) y fixture2030_resumen (sin expiracion). Puerto 8181 solo en 127.0.0.1.
+Nota: valores ficticios generados con semilla fija; sin token ni datos reales.
+==============================================================================
+
+## docker compose ps, version del servidor e imagen
+NAME                   IMAGE             COMMAND                  SERVICE    CREATED       STATUS          PORTS
+fixture2030-influxdb   influxdb:3-core   "/usr/bin/entrypoint…"   influxdb   2 hours ago   Up 54 seconds   127.0.0.1:8181->8181/tcp
+influxdb3 InfluxDB 3 Core, 3.12.0, revision 3ba97c65f1ee4e1f127a8266517d4d2083b7ea39
+influxdb:3-core 683491b16341
+
+## Salida de scripts/inicializacion.sh (la retencion se fija con --retention-period 7d al crear la base; el token no se imprime)
+=== [1/5] Gestionando token administrativo offline ===
+Generando token administrativo offline...
+Token administrativo disponible en .influxdb3-token (protegido fuera de git).
+=== [2/5] Levantando servicio InfluxDB 3 Core con Docker Compose ===
+ Network fixture2030-influxdb_default  Creating
+ Network fixture2030-influxdb_default  Created
+ Container fixture2030-influxdb  Creating
+ Container fixture2030-influxdb  Created
+ Container fixture2030-influxdb  Starting
+ Container fixture2030-influxdb  Started
+=== [3/5] Esperando a que el servicio este listo en el puerto 8181 ===
+Servicio disponible. Version observada:
+influxdb3 InfluxDB 3 Core, 3.12.0, revision 3ba97c65f1ee4e1f127a8266517d4d2083b7ea39
+=== [4/5] Creando base de datos 'fixture2030_en_vivo' (retencion 7d) ===
+Database "fixture2030_en_vivo" created successfully
+Base 'fixture2030_en_vivo' creada exitosamente con retencion de 7 dias.
+=== [5/5] Creando base de datos 'fixture2030_resumen' (sin expiracion) ===
+Database "fixture2030_resumen" created successfully
+Base 'fixture2030_resumen' creada exitosamente sin expiracion.
+
+Bases de datos configuradas en el servidor:
++---------------------+
+| iox::database       |
++---------------------+
+| _internal           |
+| fixture2030_en_vivo |
+| fixture2030_resumen |
++---------------------+
+
+=== Inicializacion completada con exito ===
