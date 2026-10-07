@@ -9,6 +9,8 @@ services:
       - INFLUXDB3_DATA_DIR=/var/lib/influxdb3
       # Carga del token administrativo generado offline al inicio del servidor
       - INFLUXDB3_ADMIN_TOKEN_FILE=/var/lib/influxdb3/admin_token.json
+      # encontrado en documentacion InfluxDB (limite de archivos Parquet para consultas analiticas de 16M+ puntos)
+      - INFLUXDB3_QUERY_FILE_LIMIT=50000
     ports:
       # Puerto 8181 restringido exclusivamente a 127.0.0.1 (Clase 9)
       - "127.0.0.1:8181:8181"
