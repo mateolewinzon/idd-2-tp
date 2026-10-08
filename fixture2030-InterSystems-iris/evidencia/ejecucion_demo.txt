@@ -1,0 +1,53 @@
+Node: 8f5de1fc1b58, Instance: IRIS
+
+USER>
+
+Load of directory started on 10/07/2026 23:58:58 '*.cls'
+
+Loading file /scripts/Fixture.Demo.cls as udl
+Loading file /scripts/Fixture.Persona.cls as udl
+Loading file /scripts/Fixture.Partido.cls as udl
+Loading file /scripts/Fixture.Arbitro.cls as udl
+Loading file /scripts/Fixture.Evento.cls as udl
+Loading file /scripts/Fixture.Jugador.cls as udl
+
+Compilation started on 10/07/2026 23:58:58 with qualifiers 'ck/extensions=cls'
+Compiling 6 classes
+Compiling class Fixture.Demo
+Compiling class Fixture.Partido
+Compiling class Fixture.Persona
+Compiling class Fixture.Jugador
+Compiling class Fixture.Arbitro
+Compiling class Fixture.Evento
+Compiling table Fixture.Arbitro
+Compiling table Fixture.Persona
+Compiling table Fixture.Partido
+Compiling table Fixture.Evento
+Compiling table Fixture.Jugador
+Compiling routine Fixture.Demo.1
+Compiling routine Fixture.Persona.1
+Compiling routine Fixture.Partido.1
+Compiling routine Fixture.Arbitro.1
+Compiling routine Fixture.Jugador.1
+Compiling routine Fixture.Evento.1
+Compilation finished successfully in 0.096s.
+
+Load finished successfully.
+
+USER>
+Guardado de Jugador: 1 — ID 17
+Guardado de Arbitro: 1 — ID 18
+Guardado del Partido con su Evento: 1 — Partido 15
+Evento vinculado: 15||15
+Navegacion Partido a Evento: Gol minuto 15
+Navegacion Evento a Partido: P-001
+Codigo  Estado
+P-001  Finalizado
+
+1 Rows(s) Affected
+Borrado en cascada confirmado para Evento subordinado
+Validacion correcta: evento rechazado para Partido Finalizado
+Validacion requerida al guardar Jugador sin Nombre:
+
+ERROR #5659: Property 'Fixture.Jugador::Nombre(21@Fixture.Jugador,ID=)' required
+USER>

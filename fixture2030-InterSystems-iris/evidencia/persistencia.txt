@@ -1,0 +1,11 @@
+
+Node: 8f5de1fc1b58, Instance: IRIS
+
+USER>
+
+USER>
+Codigo	Estado
+P-001	Finalizado
+
+1 Rows(s) Affected
+USER>
