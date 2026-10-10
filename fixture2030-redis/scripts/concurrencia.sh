@@ -11,7 +11,7 @@ redis() {
 }
 
 redis DEL "$CLAVE_CONTADOR" "$CLAVE_SESION" >/dev/null
-redis HSET "$CLAVE_SESION" usuario_id U-CONC acciones 0 ultimo_acceso 2030-06-08T20:00:00Z >/dev/null
+redis HSET "$CLAVE_SESION" usuario_id U000099 acciones 0 ultimo_acceso 2030-06-08T20:00:00Z >/dev/null
 redis EXPIRE "$CLAVE_SESION" 1800 >/dev/null
 
 worker() {

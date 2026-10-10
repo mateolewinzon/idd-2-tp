@@ -118,7 +118,7 @@ negocio, y no duplica ningún conteo de Cassandra.
 | Dato | Dónde vive | Por qué no está en Redis |
 | ---- | ---------- | ------------------------ |
 | Likes y total de comentarios por partido | Cassandra (`likes_por_comentario`, `contadores_por_partido`, tipo `counter`) | Ya tienen su solución. Moverlos duplicaría la fuente de verdad. |
-| Perfil de usuario | Colección `usuarios` de MongoDB (Hito 2, Hito 3) | **No existe en el módulo MongoDB implementado** (solo `equipos` y `jugadores`): no hay fuente contra la cual demostrar hit, miss o invalidación. La sesión guarda solo los campos mínimos que el resto del sistema usa. |
+| Perfil de usuario | Colección `usuarios` de MongoDB (Hito 2, Hito 3) | La colección existe en el módulo MongoDB, pero este módulo no cachea el perfil: no hay un patrón de acceso que lo requiera. La sesión guarda `usuario_id` (el `_id` de `usuarios`) y los campos mínimos que el resto del sistema usa. |
 | Goleadores | Neo4j | Son datos del grafo. Un conjunto ordenado paralelo sería una segunda verdad. |
 | Ranking de partidos más vistos  | — | Un ranking solo corresponde si los patrones de acceso lo requieren. El equipo **no declara ningún patrón de lista o Top N**: ninguna pregunta de este módulo necesita ordenar partidos. Se justifica por escrito su ausencia en vez de agregar una estructura sin operación que la justifique. |
 | Fixture por fase (programación de partidos) | Neo4j (pregunta 5 del modelo) | Fuera de alcance: aporta poco frente a la ficha y no agrega un patrón nuevo. |

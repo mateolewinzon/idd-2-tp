@@ -54,13 +54,13 @@ la autenticación no forma parte de este módulo.
 
 | Campo | Contenido | Se escribe | Lo modifica la renovación |
 | ----- | --------- | ---------- | ------------------------- |
-| `usuario_id` | Id de usuario con el formato de Cassandra, ej. `U001` | Al crear | No |
-| `nombre_usuario` | Nombre visible (Cassandra lo desnormaliza para evitar lecturas extra) | Al crear | No |
-| `rol` | `fan` o `moderador` (Cassandra Q3 habla de moderadores) | Al crear | No |
-| `idioma` | `es`, `en`, `pt`, `fr`. Cassandra delega el filtro por idioma del feed a la aplicación; la sesión es de donde la aplicación lo toma | Al crear | No |
+| `usuario_id` | `_id` de la colección `usuarios` de MongoDB (`U` + 6 dígitos), ej. `U000001` | Al crear | No |
+| `nombre_usuario` | Nombre visible, copia del de `usuarios` (Cassandra también lo desnormaliza para evitar lecturas extra) | Al crear | No |
+| `rol` | `fan` o `moderador`, copia del de `usuarios` (Cassandra Q3 habla de moderadores) | Al crear | No |
+| `idioma` | Código de 2 letras (ej. `es`), copia del de `usuarios`. Cassandra delega el filtro por idioma del feed a la aplicación; la sesión es de donde la aplicación lo toma | Al crear | No |
 | `ultimo_acceso` | Fecha y hora UTC de la última acción, ej. `2030-06-13T20:15:00Z` | Al crear | **Sí** |
 | `acciones` | Cantidad de acciones del usuario en la sesión | Al crear (0) | **Sí** (`HINCRBY`) |
-| `ubicacion` | Ubicación del cliente al crear la sesión (ficticia) | Al crear | No |
+| `ubicacion` | Ubicación del cliente al crear la sesión (ficticia). En los datos de muestra coincide con el `pais` del usuario en `usuarios` | Al crear | No |
 | `dispositivo` | Dispositivo del cliente (ficticio) | Al crear | No |
 | `ip_publica` | IP del cliente (ficticia, rango de documentación) | Al crear | No |
 | `tipo_conexion` | Tipo de conexión, ej. `wifi`, `móvil` (ficticio) | Al crear | No |

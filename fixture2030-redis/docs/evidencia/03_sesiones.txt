@@ -6,7 +6,7 @@ QUEUED
 1
 READ: validar y consultar vencimiento
 usuario_id
-U099
+U000099
 nombre_usuario
 demo
 rol
@@ -35,7 +35,7 @@ QUEUED
 1
 1
 usuario_id
-U099
+U000099
 nombre_usuario
 demo
 rol

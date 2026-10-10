@@ -1,6 +1,6 @@
 ECHO "CREATE: sesion y TTL nacen en una transaccion"
 MULTI
-HSET sesion:SES-DEMO usuario_id U099 nombre_usuario demo rol fan idioma es ultimo_acceso 2030-06-08T20:00:00Z acciones 0 ubicacion AR dispositivo notebook ip_publica 192.0.2.99 tipo_conexion wifi
+HSET sesion:SES-DEMO usuario_id U000099 nombre_usuario demo rol fan idioma es ultimo_acceso 2030-06-08T20:00:00Z acciones 0 ubicacion AR dispositivo notebook ip_publica 192.0.2.99 tipo_conexion wifi
 EXPIRE sesion:SES-DEMO 1800
 EXEC
 ECHO "READ: validar y consultar vencimiento"
