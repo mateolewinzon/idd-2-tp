@@ -29,7 +29,7 @@ Diseñada para resolver **Q1**: la visualización paginada del feed durante el p
 | `bloque_temporal` | `timestamp` | **Partition Key (Componente 2)** | Marca temporal truncada al inicio de la ventana de 5 minutos. |
 | `comentario_id` | `timeuuid` | **Clustering Column (DESC)** | Identificador único temporal; garantiza orden cronológico inverso y unicidad. |
 | `idioma` | `varchar` | Columna regular | Código de idioma del mensaje (ej. 'es', 'en', 'pt', 'fr', 'ar'). |
-| `usuario_id` | `text` | Columna regular | Identificador del autor en el subsistema de usuarios. |
+| `usuario_id` | `text` | Columna regular | `_id` del autor en la colección `usuarios` de MongoDB (`U` + 6 dígitos, ej. `U000001`). |
 | `nombre_usuario` | `text` | Columna regular | Nombre visible desnormalizado para evitar lookups en lectura. |
 | `texto` | `text` | Columna regular | Mensaje emitido por el usuario (máx. 280 caracteres). |
 | `estado_moderacion` | `text` | Columna regular | Estado de visualización: 'VISIBLE', 'OCULTO', 'PENDIENTE'. |
@@ -53,7 +53,7 @@ Diseñada para resolver **Q5**: consolidación permanente de la totalidad de com
 | `comentario_id` | `timeuuid` | **Clustering Column (ASC)** | Cronología histórica de los eventos del partido desde el inicio. |
 | `bloque_temporal` | `timestamp` | Columna regular | Bloque temporal de origen para trazabilidad con el feed en vivo. |
 | `idioma` | `varchar` | Columna regular | Idioma del mensaje. |
-| `usuario_id` | `text` | Columna regular | Identificador del autor. |
+| `usuario_id` | `text` | Columna regular | `_id` del autor en `usuarios` (`U` + 6 dígitos). |
 | `nombre_usuario` | `text` | Columna regular | Nombre del autor. |
 | `texto` | `text` | Columna regular | Contenido del comentario. |
 | `estado_moderacion` | `text` | Columna regular | Estado final de moderación. |
@@ -73,7 +73,7 @@ Diseñada para resolver **Q2**: permite al usuario explorar cronológicamente to
 
 | Nombre de Columna | Tipo de Dato Cassandra | Rol en la Clave Primaria | Descripción y Semántica |
 | :--- | :--- | :--- | :--- |
-| `usuario_id` | `text` | **Partition Key** | Identificador del usuario que emite el comentario. |
+| `usuario_id` | `text` | **Partition Key** | `_id` del usuario que emite el comentario en `usuarios` (`U` + 6 dígitos). |
 | `comentario_id` | `timeuuid` | **Clustering Column (DESC)** | Identificador temporal; permite ordenar su historial personal. |
 | `partido_id` | `text` | Columna regular | Identificador del partido donde comentó. |
 | `bloque_temporal` | `timestamp` | Columna regular | Bloque temporal de origen. |
@@ -98,7 +98,7 @@ Diseñada para resolver **Q3**: cola de trabajo para los moderadores humanos o s
 | `partido_id` | `text` | Columna regular | Partido al que pertenece el comentario. |
 | `bloque_temporal` | `timestamp` | Columna regular | Bloque temporal en la tabla de feed. |
 | `idioma` | `varchar` | Columna regular | Idioma del comentario. |
-| `usuario_id` | `text` | Columna regular | Identificador del autor reportado. |
+| `usuario_id` | `text` | Columna regular | `_id` del autor reportado en `usuarios` (`U` + 6 dígitos). |
 | `texto` | `text` | Columna regular | Texto sujeto a revisión. |
 | `motivo_reporte` | `text` | Columna regular | Causa del reporte ('SPAM', 'OFENSIVO', etc.). |
 

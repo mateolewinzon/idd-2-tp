@@ -45,7 +45,7 @@ WHERE partido_id = 'ARG-ESP-20300624'
 
 UPDATE comentarios_por_usuario
 SET estado_moderacion = 'OCULTO'
-WHERE usuario_id = 'U005'
+WHERE usuario_id = 'U000005'
   AND comentario_id = 52d2fa80-ec17-11f5-8123-0242ac120002;
 
 -- 4. Sacar el comentario revisado de la cola

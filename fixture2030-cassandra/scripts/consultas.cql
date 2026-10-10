@@ -23,7 +23,7 @@ LIMIT 20;
 -- Q2. Historial de un usuario
 SELECT comentario_id, partido_id, bloque_temporal, idioma, texto, estado_moderacion
 FROM comentarios_por_usuario
-WHERE usuario_id = 'U001'
+WHERE usuario_id = 'U000001'
 LIMIT 20;
 
 -- Q3. Cola de moderación de un estado y un día (tras crud.cql queda el REPORTADO)

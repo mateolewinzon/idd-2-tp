@@ -56,7 +56,7 @@ A continuación se formalizan los requerimientos de consulta que guían la arqui
 
 ### Pregunta 2 (Q2) — Historial de actividad de un usuario
 - **Descripción:** Permitir a un usuario consultar la lista de todos los comentarios que ha emitido a lo largo del torneo desde su perfil personal, ordenados desde el más reciente al más antiguo.
-- **Parámetros de entrada:** `usuario_id` (UUID/texto).
+- **Parámetros de entrada:** `usuario_id` (texto, `U` + 6 dígitos, ej. `U000001`).
 - **Orden de resultados:** Cronológico descendente.
 - **Justificación de acceso:** No puede resolverse filtrando la tabla de partidos por `usuario_id`, ya que obligaría a escanear todas las particiones del cluster. Requiere una tabla dedicada particionada exclusivamente por usuario.
 
