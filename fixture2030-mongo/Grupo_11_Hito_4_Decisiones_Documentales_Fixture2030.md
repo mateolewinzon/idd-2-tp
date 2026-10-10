@@ -50,7 +50,7 @@ a la implementación, pero sí a los argumentos que la citan (ver §3.1).
 
 ## 2. Diseño de las colecciones
 
-Dos colecciones en la base `fixture2030`.
+Tres colecciones en la base `fixture2030`: `equipos` y `jugadores` (este hito) y `usuarios` (ampliación, §2.3).
 
 ### 2.1. Colección `equipos`
 
@@ -100,6 +100,31 @@ Campos obligatorios: `_id`, `nombre`, `apellido`, `dorsal`, `posicion`,
 `fecha_nacimiento` se almacena como `Date` y no como cadena, para que las
 consultas por rango de edad y las agregaciones del ítem 4 puedan resolverse en el
 motor y no en la aplicación.
+
+### 2.3. Colección `usuarios`
+
+Ampliación posterior del módulo: el Hito 2 asigna Usuarios a MongoDB y el Hito 3
+lo define como el único subsistema CP, con el email único como restricción. La
+colección no se había implementado, aunque las sesiones de Redis y los
+comentarios de Cassandra ya referencian `usuario_id`.
+
+| Campo            | Tipo   | Regla                                                        |
+| ---------------- | ------ | ------------------------------------------------------------ |
+| `_id`            | string | `U` + 6 dígitos (ej. `U000001`). Mismo formato que `usuario_id` en Cassandra y Redis. |
+| `email`          | string | Único (`idx_usuarios_email_unico`), en minúsculas.           |
+| `nombre_usuario` | string | 2 a 40 caracteres.                                           |
+| `rol`            | enum   | `fan` o `moderador`.                                         |
+| `idioma`         | string | Código de 2 letras minúsculas (ej. `es`). Patrón abierto, no lista: la audiencia es global y una lista cerrada exigiría `collMod` por cada idioma nuevo. |
+| `pais`           | string | Código ISO de 2 letras mayúsculas (ej. `AR`).                |
+
+La carga (`07-carga-usuarios.js`) es idempotente por `upsert` sobre `_id` y carga
+6 usuarios de muestra (`U000001` a `U000005` y `U000099`, la sesión demo de
+Redis). Los usuarios que genera el millón de comentarios de Cassandra
+(`U000000` a `U099999`) no tienen perfil en esta carga. Los datos son
+ficticios: los emails usan el dominio reservado `example.com`.
+
+El particionamiento geográfico que el Hito 3 define para Usuarios no se
+demuestra en el laboratorio (un solo nodo, sin sharding).
 
 ---
 
@@ -336,7 +361,7 @@ El diseño se comprueba, no se declara. Los resultados están en `evidencia/`
 |---|---|---|
 | RF4 — 64 equipos | `04-verificar-integridad.js` | 64 |
 | RF5 — ≥ 1.000 jugadores | `04-verificar-integridad.js` | 1.664 |
-| RF7 — Validación de atributos críticos | `04-verificar-integridad.js` comprueba que ambas colecciones tengan validador activo | `validationAction: error` en las dos |
+| RF7 — Validación de atributos críticos | `04-verificar-integridad.js` comprueba que las tres colecciones tengan validador activo | `validationAction: error` en las tres |
 | RF8 — Carga idempotente | Segunda corrida de `cargar.sh` | `matched 1664, upserted 0, modified 0` |
 | RNF3 — Sin IDs duplicados | Agregación por nombre y por (equipo, dorsal) | 0 duplicados |
 | RNF3 — Sin jugadores huérfanos | `$nin` contra los `_id` de equipos | 0 huérfanos |
