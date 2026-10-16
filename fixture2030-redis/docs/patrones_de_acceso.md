@@ -83,7 +83,7 @@ Fuente de verdad: **Cassandra** (`comentarios_feed`).
 
 | Patrón | Quién | Entrada | Respuesta | Frecuencia | Temporal / fuente | Estructura y motivo |
 | ------ | ----- | ------- | --------- | ---------- | ----------------- | ------------------- |
-| **Leer feed** | Cualquier espectador | Id de partido de Cassandra (ej. `ARG-ESP-20300624`) + bloque temporal de 5 min | Página de 20 comentarios de esa ventana (tamaño de página fijado por este módulo; Cassandra Q1 solo define el cursor de paginación) | Muy alta | Copia temporal; la verdad está en Cassandra | **String** con JSON de la página. Misma ventana pedida por muchos clientes |
+| **Leer feed** | Cualquier espectador | Id de partido (ej. `P-002`, el mismo de Cassandra y Neo4j) + bloque temporal de 5 min | Página de 20 comentarios de esa ventana (tamaño de página fijado por este módulo; Cassandra Q1 solo define el cursor de paginación) | Muy alta | Copia temporal; la verdad está en Cassandra | **String** con JSON de la página. Misma ventana pedida por muchos clientes |
 | **Invalidar feed por moderación** | Moderador, al ocultar un comentario | Id de partido + bloque del comentario | El próximo `GET` no incluye el comentario oculto | Baja | Copia temporal | `DEL` de la ventana afectada, después de actualizar `estado_moderacion` en Cassandra |
 
 Un comentario nuevo **no** invalida la ventana: se acepta que un usuario no vea el

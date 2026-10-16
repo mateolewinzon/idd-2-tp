@@ -8,15 +8,15 @@ CONSISTENCY LOCAL_ONE;
 -- Q1. Feed de una ventana de 5 min, el más nuevo primero
 SELECT comentario_id, idioma, usuario_id, nombre_usuario, texto, estado_moderacion
 FROM comentarios_feed
-WHERE partido_id = 'ARG-ESP-20300624'
-  AND bloque_temporal = '2030-06-24 20:05:00+0000'
+WHERE partido_id = 'P-002'
+  AND bloque_temporal = '2030-06-09 20:05:00+0000'
 LIMIT 20;
 
 -- Q1. Página siguiente (cursor sobre comentario_id)
 SELECT comentario_id, idioma, usuario_id, nombre_usuario, texto, estado_moderacion
 FROM comentarios_feed
-WHERE partido_id = 'ARG-ESP-20300624'
-  AND bloque_temporal = '2030-06-24 20:05:00+0000'
+WHERE partido_id = 'P-002'
+  AND bloque_temporal = '2030-06-09 20:05:00+0000'
   AND comentario_id < ba894580-ec17-11f5-8123-0242ac120002
 LIMIT 20;
 
@@ -30,7 +30,7 @@ LIMIT 20;
 SELECT comentario_id, partido_id, bloque_temporal, idioma, usuario_id, texto, motivo_reporte
 FROM comentarios_moderacion
 WHERE estado_moderacion = 'REPORTADO'
-  AND fecha = '2030-06-24'
+  AND fecha = '2030-06-09'
 LIMIT 50;
 
 -- Q4. Likes de un comentario
@@ -43,11 +43,11 @@ CONSISTENCY LOCAL_QUORUM;
 
 SELECT comentario_id, bloque_temporal, idioma, usuario_id, nombre_usuario, texto, estado_moderacion
 FROM comentarios_historico
-WHERE partido_id = 'ARG-ESP-20300624';
+WHERE partido_id = 'P-002';
 
 -- Q6. Total de comentarios por partido
 CONSISTENCY LOCAL_ONE;
 
 SELECT metrica, valor
 FROM contadores_por_partido
-WHERE partido_id = 'ARG-ESP-20300624';
+WHERE partido_id = 'P-002';

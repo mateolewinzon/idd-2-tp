@@ -11,6 +11,6 @@ CONFIG GET maxmemory-policy
 ECHO "TTL de una clave por categoria"
 TTL sesion:SES-0001
 TTL cache:partido:P-001
-TTL cache:feed:ARG-ESP-20300624:20300624T2000
+TTL cache:feed:P-002:20300609T2000
 TTL cache:plantel:ARG
 TTL partido:P-001:visitas:2030-06-08

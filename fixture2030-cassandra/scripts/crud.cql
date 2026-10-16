@@ -19,28 +19,28 @@ WHERE comentario_id = 7a759300-ec16-11f5-8123-0242ac120002;
 -- 2. Totales por partido
 UPDATE contadores_por_partido
 SET valor = valor + 8
-WHERE partido_id = 'ARG-ESP-20300624' AND metrica = 'TOTAL_COMENTARIOS';
+WHERE partido_id = 'P-002' AND metrica = 'TOTAL_COMENTARIOS';
 
 UPDATE contadores_por_partido
 SET valor = valor + 3
-WHERE partido_id = 'ARG-ESP-20300624' AND metrica = 'COMENTARIOS_ES';
+WHERE partido_id = 'P-002' AND metrica = 'COMENTARIOS_ES';
 
 UPDATE contadores_por_partido
 SET valor = valor + 4
-WHERE partido_id = 'BRA-FRA-20300625' AND metrica = 'TOTAL_COMENTARIOS';
+WHERE partido_id = 'P-018' AND metrica = 'TOTAL_COMENTARIOS';
 
 -- 3. Moderación: ocultar el comentario de spam en las tres copias
 CONSISTENCY LOCAL_QUORUM;
 
 UPDATE comentarios_feed
 SET estado_moderacion = 'OCULTO'
-WHERE partido_id = 'ARG-ESP-20300624'
-  AND bloque_temporal = '2030-06-24 20:05:00+0000'
+WHERE partido_id = 'P-002'
+  AND bloque_temporal = '2030-06-09 20:05:00+0000'
   AND comentario_id = 52d2fa80-ec17-11f5-8123-0242ac120002;
 
 UPDATE comentarios_historico
 SET estado_moderacion = 'OCULTO'
-WHERE partido_id = 'ARG-ESP-20300624'
+WHERE partido_id = 'P-002'
   AND comentario_id = 52d2fa80-ec17-11f5-8123-0242ac120002;
 
 UPDATE comentarios_por_usuario
@@ -51,5 +51,5 @@ WHERE usuario_id = 'U000005'
 -- 4. Sacar el comentario revisado de la cola
 DELETE FROM comentarios_moderacion
 WHERE estado_moderacion = 'PENDIENTE'
-  AND fecha = '2030-06-24'
+  AND fecha = '2030-06-09'
   AND comentario_id = 52d2fa80-ec17-11f5-8123-0242ac120002;

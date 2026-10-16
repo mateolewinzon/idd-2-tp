@@ -33,7 +33,7 @@ docker compose up -d
 # 2. Crear el keyspace y las tablas del modelo tabular optimizado (esquema definitivo CQRS)
 docker compose exec -T cassandra /opt/cassandra/bin/cqlsh -u cassandra -p cassandra -f /scripts/esquema.cql
 
-# 3. Poblar la base con la muestra de 12 comentarios, 2 partidos y 5 usuarios
+# 3. Poblar la base con la muestra de 12 comentarios, 2 partidos (P-002 y P-018) y 5 usuarios
 docker compose exec -T cassandra /opt/cassandra/bin/cqlsh -u cassandra -p cassandra -f /scripts/carga_muestra.cql
 
 # 4. Aplicar likes, totales por partido, moderación y baja de la cola (los contadores suman en cada ejecución)
@@ -156,3 +156,4 @@ fixture2030-cassandra/
 - **`estructura.txt`**: Evidencia de la ejecución sin errores de las sentencias DDL.
 - **`prueba_carga.txt`**: Log consolidado del benchmark local donde se reportan las escrituras por segundo alcanzadas, latencias percentilares y limitaciones observadas del entorno host.
 - **`carga_millon.txt` y `verificacion_millon.txt`**: Demuestran que se importaron, sin omitir, y se volvieron a contar exactamente 1.000.000 de comentarios físicos diferentes.
+- **Pendiente:** el generador del millón (`generar_millon.py`) aún usa IDs de partido propios y su rango de usuarios; falta alinearlo a los `P-xxx` de `partidos.csv` y a los usuarios de MongoDB. La muestra ya está alineada.
