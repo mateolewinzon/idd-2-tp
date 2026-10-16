@@ -1,4 +1,4 @@
-Ejecutado: 2026-09-04 19:08:27 UTC
+Ejecutado: 2026-10-10 00:13:08 UTC
 
 === 04 — Verificacion de integridad =========================
 
@@ -9,12 +9,16 @@ RNF2 — Volumen minimo
           encontrados: 1664
   [OK  ] Mas de 1.500 jugadores, segun la cifra del escenario del Hito 4
           encontrados: 1664
+  [OK  ] 6 usuarios de muestra persistidos
+          encontrados: 6
 
 RNF3 — Identificadores sin duplicados
   [OK  ] Ningun nombre de seleccion repetido
           protegido por idx_equipos_nombre_unico
   [OK  ] Ningun dorsal repetido dentro de un mismo plantel
           protegido por idx_jugadores_equipo_dorsal_unico
+  [OK  ] Ningun email de usuario repetido
+          protegido por idx_usuarios_email_unico
 
 RNF3 — Relacion equipo-jugador valida en el 100% de los casos
   [OK  ] Ningun jugador huerfano (equipo._id inexistente)
@@ -37,8 +41,11 @@ Configuracion de las colecciones
           validationAction: error
   [OK  ] Coleccion "jugadores" con validador $jsonSchema activo
           validationAction: error
+  [OK  ] Coleccion "usuarios" con validador $jsonSchema activo
+          validationAction: error
   [info ] Indices en "equipos": _id_, idx_equipos_nombre_unico, idx_equipos_confederacion_ranking, idx_equipos_grupo
   [info ] Indices en "jugadores": _id_, idx_jugadores_equipo_dorsal_unico, idx_jugadores_equipo_posicion, idx_jugadores_apellido_nombre
+  [info ] Indices en "usuarios": _id_, idx_usuarios_email_unico
 
 -------------------------------------------------------------
   RESULTADO: todas las verificaciones pasaron.

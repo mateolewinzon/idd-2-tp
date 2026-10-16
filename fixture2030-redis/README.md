@@ -81,7 +81,7 @@ La carga crea 13 claves iniciales:
 | --- | ---: | --- | ---: |
 | Sesiones | 5 | `sesion:SES-0001` | 1.800 s |
 | Fichas de partidos | 2 | `cache:partido:P-001` | 3.600 s |
-| Ventanas cerradas del feed | 2 | `cache:feed:ARG-ESP-20300624:20300624T2000` | 300 s |
+| Ventanas cerradas del feed | 2 | `cache:feed:P-002:20300609T2000` | 300 s |
 | Planteles representativos | 2 | `cache:plantel:ARG` | 3.600 s |
 | Contadores de visitas | 2 | `partido:P-001:visitas:2030-06-08` | 604.800 s |
 
@@ -153,8 +153,8 @@ Comprobaciones esperadas:
   memoria”; el análisis está en `docs/memoria_y_escalabilidad.md` §5.
 - Redis Cluster distribuye slots, no implementa literalmente el consistent hashing
   propuesto en Hito 3; la revisión está en `docs/memoria_y_escalabilidad.md` §4.
-- Neo4j y Cassandra usan IDs distintos para los partidos de muestra. No se oculta esa
-  inconsistencia: está registrada en `docs/modelo_clave_valor.md` §5.
+- Neo4j, Cassandra y Redis usan los mismos IDs `P-xxx` para los partidos de muestra
+  (`docs/modelo_clave_valor.md` §5).
 
 ## 8. Estructura
 

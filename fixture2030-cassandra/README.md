@@ -24,25 +24,28 @@ Las decisiones de modelado, patrones de consulta, estrategia de particionamiento
 
 ## 2. Puesta en Marcha
 
-Para iniciar el ambiente y validar su funcionamiento, se utilizan los scripts envoltorios ubicados en `./scripts/` (o los comandos directos de Compose):
+Para iniciar el ambiente y validar su funcionamiento, se utilizan los scripts CQL ubicados en `./scripts/`, montados en el contenedor como `/scripts`:
 
 ```bash
-# 1. Levantar el servicio de Cassandra y aguardar a que el nodo esté operativo
-./scripts/levantarDocker.sh
+# 1. Levantar el servicio de Cassandra (esperar a que el nodo esté operativo, ver abajo)
+docker compose up -d
 
 # 2. Crear el keyspace y las tablas del modelo tabular optimizado (esquema definitivo CQRS)
-./scripts/estructura.sh
+docker compose exec -T cassandra /opt/cassandra/bin/cqlsh -u cassandra -p cassandra -f /scripts/esquema.cql
 
-# 3. Poblar la base con el set de datos sintéticos representativo
-./scripts/cargar.sh
+# 3. Poblar la base con la muestra de 12 comentarios, 2 partidos (P-002 y P-018) y 5 usuarios
+docker compose exec -T cassandra /opt/cassandra/bin/cqlsh -u cassandra -p cassandra -f /scripts/carga_muestra.cql
 
-# 4. Ejecutar las consultas de validación de los patrones de acceso (sin ALLOW FILTERING)
-./scripts/consultar.sh
+# 4. Aplicar likes, totales por partido, moderación y baja de la cola (los contadores suman en cada ejecución)
+docker compose exec -T cassandra /opt/cassandra/bin/cqlsh -u cassandra -p cassandra -f /scripts/crud.cql
 
-# 5. Ejecutar la prueba de estrés de escritura masiva
+# 5. Ejecutar las consultas de validación de los patrones de acceso (sin ALLOW FILTERING); requieren el paso 4
+docker compose exec -T cassandra /opt/cassandra/bin/cqlsh -u cassandra -p cassandra -f /scripts/consultas.cql
+
+# 6. Ejecutar la prueba de estrés de escritura masiva
 ./scripts/rendimiento.sh
 
-# 6. Dejar materializados y verificar exactamente 1.000.000 de comentarios únicos
+# 7. Dejar materializados y verificar exactamente 1.000.000 de comentarios únicos
 ./scripts/carga_millon.sh
 ```
 
@@ -106,7 +109,7 @@ La persistencia de los datos está ligada al directorio montado en la máquina h
 | **Detener contenedor** | `docker compose stop` | **No** (se conservan en el volumen del host). |
 | **Reiniciar servicio** | `docker compose restart` | **No**. |
 | **Destruir contenedor** | `docker compose down` | **No** (el directorio `~/docker/data/cassandra` persiste). |
-| **Borrado total explícito** | `docker compose down -v` + limpieza manual del host | **Sí** (requiere volver a ejecutar `estructura.sh` y `cargar.sh`). |
+| **Borrado total explícito** | `docker compose down -v` + limpieza manual del host | **Sí** (requiere volver a ejecutar `esquema.cql` y `carga_muestra.cql`). |
 
 ---
 
@@ -123,11 +126,11 @@ fixture2030-cassandra/
 │   ├── modelo_tabular.md            Definición tabular, tipos de datos, CQRS, TTL de 14d y claves primarias
 │   ├── decisiones_de_particionamiento.md Justificación del particionamiento temporal (5 min), matemática y consistencia
 │   └── rendimiento.md               Protocolo y reporte de la prueba de carga de 10.000 escrituras/seg
-├── scripts/                         Scripts envoltorios de automatización
-│   ├── levantarDocker.sh            Inicialización y comprobación de disponibilidad del nodo
-│   ├── estructura.sh                Aplicación del DDL (keyspace, tablas CQRS e índices)
-│   ├── cargar.sh                    Poblado de datos sintéticos sesgados
-│   ├── consultar.sh                 Ejecución de validación de patrones de acceso
+├── scripts/                         Scripts CQL y de automatización
+│   ├── esquema.cql                  DDL: keyspace y tablas CQRS
+│   ├── carga_muestra.cql            Muestra: 12 comentarios, 2 partidos, 5 usuarios
+│   ├── consultas.cql                Consultas de validación de los patrones de acceso
+│   ├── crud.cql                     Likes, totales, moderación y baja de la cola de moderación
 │   ├── generar_millon.py            Generador determinista de timeuuid y comentarios únicos
 │   ├── carga_millon.sh              Importación y verificación del millón físico exacto
 │   ├── stress-comentarios.yaml      Perfil de cassandra-stress para comentarios_feed
@@ -136,8 +139,8 @@ fixture2030-cassandra/
     ├── nodetool_status.txt          Captura de salida del estado del anillo y nodo activo
     ├── cql_version.txt              Salida de SHOW VERSION (fecha y versión de imagen latest)
     ├── estructura.txt               Salida de la creación del keyspace y esquemas tabulares
-    ├── consultas.txt                Logs con resultados de las queries representativas
     ├── ambiente.txt                 Recursos reales del host, Docker y JVM
+    ├── calentamiento.txt            Salida del calentamiento previo al benchmark
     ├── prueba_carga.txt             Salida íntegra del millón de operaciones
     ├── resumen_prueba.txt           Throughput, latencias, total y errores
     ├── tablestats.txt               Estado físico de comentarios_feed luego del flush
@@ -151,6 +154,6 @@ fixture2030-cassandra/
 - **`nodetool_status.txt`**: Comprueba que el nodo levantó correctamente, el rack/datacenter asignado y la carga de datos administrada.
 - **`cql_version.txt`**: Documenta la fecha exacta del test y las versiones de `cqlsh`, Apache Cassandra y del protocolo de transporte binario.
 - **`estructura.txt`**: Evidencia de la ejecución sin errores de las sentencias DDL.
-- **`consultas.txt`**: Registro de respuestas a los patrones de acceso definidos, demostrando que ninguna consulta requirió `ALLOW FILTERING`.
 - **`prueba_carga.txt`**: Log consolidado del benchmark local donde se reportan las escrituras por segundo alcanzadas, latencias percentilares y limitaciones observadas del entorno host.
 - **`carga_millon.txt` y `verificacion_millon.txt`**: Demuestran que se importaron, sin omitir, y se volvieron a contar exactamente 1.000.000 de comentarios físicos diferentes.
+- **Pendiente:** el generador del millón (`generar_millon.py`) aún usa IDs de partido propios y su rango de usuarios; falta alinearlo a los `P-xxx` de `partidos.csv` y a los usuarios de MongoDB. La muestra ya está alineada.

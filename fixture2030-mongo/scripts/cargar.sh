@@ -21,6 +21,7 @@ ejecutar() {
   ejecutar 01-setup-colecciones.js
   ejecutar 02-carga-equipos.js
   ejecutar 03-carga-jugadores.js
+  ejecutar 07-carga-usuarios.js
 } | tee -a evidencia/carga.txt
 
 echo "Salida agregada a evidencia/carga.txt"

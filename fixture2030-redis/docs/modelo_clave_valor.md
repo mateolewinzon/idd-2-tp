@@ -35,7 +35,7 @@ Los valores de TTL son **decisiones del grupo**, sin un criterio numérico exter
 | ----- | ---------- | ----------------------------------- | --- | ------------------ |
 | `sesion:<idSesion>`<br>ej. `sesion:SES-0001` | Hash | Crear, validar, renovar y cerrar sesión (§2.1) | 1800 s, renovado | **Redis** |
 | `cache:partido:<partido_id>`<br>ej. `cache:partido:P-001` | String (JSON) | Leer ficha / invalidar por gol (§2.2) | 3600 s | **Neo4j** |
-| `cache:feed:<partido_id>:<bloque>`<br>ej. `cache:feed:ARG-ESP-20300624:20300624T2000` | String (JSON) | Leer feed / invalidar por moderación (§2.3) | 5 s (ventana actual) · 300 s (ventana cerrada) | **Cassandra** |
+| `cache:feed:<partido_id>:<bloque>`<br>ej. `cache:feed:P-002:20300609T2000` | String (JSON) | Leer feed / invalidar por moderación (§2.3) | 5 s (ventana actual) · 300 s (ventana cerrada) | **Cassandra** |
 | `cache:plantel:<equipo_id>`<br>ej. `cache:plantel:ARG` | String (JSON) | Leer plantel / invalidar por alta o baja (§2.4) | 3600 s | **MongoDB** |
 | `partido:<partido_id>:visitas:<fecha>`<br>ej. `partido:P-001:visitas:2030-06-08` | String (entero) | Contar visita (§2.5) | 604800 s (7 días) | **Redis** |
 
@@ -54,13 +54,13 @@ la autenticación no forma parte de este módulo.
 
 | Campo | Contenido | Se escribe | Lo modifica la renovación |
 | ----- | --------- | ---------- | ------------------------- |
-| `usuario_id` | Id de usuario con el formato de Cassandra, ej. `U001` | Al crear | No |
-| `nombre_usuario` | Nombre visible (Cassandra lo desnormaliza para evitar lecturas extra) | Al crear | No |
-| `rol` | `fan` o `moderador` (Cassandra Q3 habla de moderadores) | Al crear | No |
-| `idioma` | `es`, `en`, `pt`, `fr`. Cassandra delega el filtro por idioma del feed a la aplicación; la sesión es de donde la aplicación lo toma | Al crear | No |
+| `usuario_id` | `_id` de la colección `usuarios` de MongoDB (`U` + 6 dígitos), ej. `U000001` | Al crear | No |
+| `nombre_usuario` | Nombre visible, copia del de `usuarios` (Cassandra también lo desnormaliza para evitar lecturas extra) | Al crear | No |
+| `rol` | `fan` o `moderador`, copia del de `usuarios` (Cassandra Q3 habla de moderadores) | Al crear | No |
+| `idioma` | Código de 2 letras (ej. `es`), copia del de `usuarios`. Cassandra delega el filtro por idioma del feed a la aplicación; la sesión es de donde la aplicación lo toma | Al crear | No |
 | `ultimo_acceso` | Fecha y hora UTC de la última acción, ej. `2030-06-13T20:15:00Z` | Al crear | **Sí** |
 | `acciones` | Cantidad de acciones del usuario en la sesión | Al crear (0) | **Sí** (`HINCRBY`) |
-| `ubicacion` | Ubicación del cliente al crear la sesión (ficticia) | Al crear | No |
+| `ubicacion` | Ubicación del cliente al crear la sesión (ficticia). En los datos de muestra coincide con el `pais` del usuario en `usuarios` | Al crear | No |
 | `dispositivo` | Dispositivo del cliente (ficticio) | Al crear | No |
 | `ip_publica` | IP del cliente (ficticia, rango de documentación) | Al crear | No |
 | `tipo_conexion` | Tipo de conexión, ej. `wifi`, `móvil` (ficticio) | Al crear | No |
@@ -101,21 +101,19 @@ fuente, no un contrato de otro módulo.
 
 ---
 
-## 5. Identificadores: una limitación conocida
+## 5. Identificadores
 
-Cada clave usa el ID de **su fuente**. Eso expone una inconsistencia entre módulos
-anteriores que este hito **no corrige**:
+Todas las claves usan los IDs canónicos de las demás fuentes:
 
-- Neo4j identifica partidos como `P-001`, `P-002`, … (127 partidos).
-- Cassandra identifica el partido con `'ARG-ESP-20300624'` y `'BRA-FRA-20300625'`.
-- En el grafo **no existe ningún partido ARG–ESP ni BRA–FRA**: los IDs de Cassandra no
-  corresponden a ningún nodo `Partido`.
+- Partidos: `P-001`, `P-002`, … (127 partidos de Neo4j). Cassandra usa los mismos en su
+  muestra (`P-002`, `P-018`), así que la ficha, el contador y el feed de un partido
+  comparten ID.
+- Equipos y jugadores: coinciden entre MongoDB y Neo4j (`ARG`, `ARG-10`) y se usan tal
+  cual en el plantel.
+- Usuarios: `U` + 6 dígitos, como en MongoDB.
 
-Consecuencia: la ficha y el contador de un mismo partido usan `P-xxx`, y el feed usa el
-ID de Cassandra. El mismo partido, si existiera en ambos, tendría dos nombres en Redis.
-Unificarlos exigiría tocar Neo4j o Cassandra, fuera del alcance de este módulo. Los IDs
-de equipo y jugador sí coinciden entre MongoDB y Neo4j (`ARG`, `ARG-10`) y se usan tal
-cual en el plantel.
+Los bloques horarios del feed en la muestra (`T2000`, `T1800`) son ficticios: la hora de
+inicio del partido no tiene fuente todavía.
 
 ---
 

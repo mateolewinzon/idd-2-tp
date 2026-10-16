@@ -9,6 +9,7 @@ const fixture = db.getSiblingDB("fixture2030");
 const CONFEDERACIONES = ["UEFA", "CONMEBOL", "CAF", "AFC", "CONCACAF", "OFC"];
 const POSICIONES = ["Arquero", "Defensor", "Mediocampista", "Delantero"];
 const PIES = ["Derecho", "Izquierdo", "Ambidiestro"];
+const ROLES = ["fan", "moderador"];
 
 // validationAction "error" rechaza la escritura invalida en lugar de solo
 // registrarla: es lo que convierte al esquema en garantia y no en advertencia.
@@ -98,6 +99,35 @@ const validadorJugadores = {
   },
 };
 
+const validadorUsuarios = {
+  $jsonSchema: {
+    bsonType: "object",
+    title: "Usuario de la plataforma del Fixture 2030",
+    required: ["_id", "email", "nombre_usuario", "rol", "idioma", "pais"],
+    additionalProperties: false,
+    properties: {
+      _id: {
+        bsonType: "string",
+        pattern: "^U[0-9]{6}$",
+        description: "U + 6 digitos. Mismo formato que usuario_id en Cassandra y Redis. Ej: U000001.",
+      },
+      email: {
+        bsonType: "string",
+        pattern: "^[a-z0-9._+-]+@[a-z0-9.-]+\\.[a-z]{2,}$",
+        description: "En minusculas, porque el indice unico distingue mayusculas.",
+      },
+      nombre_usuario: { bsonType: "string", minLength: 2, maxLength: 40 },
+      rol: { enum: ROLES },
+      idioma: {
+        bsonType: "string",
+        pattern: "^[a-z]{2}$",
+        description: "Codigo de 2 letras minusculas. Abierto a proposito: la audiencia es global.",
+      },
+      pais: { bsonType: "string", pattern: "^[A-Z]{2}$", description: "Codigo ISO de 2 letras." },
+    },
+  },
+};
+
 function asegurarColeccion(nombre, validador) {
   const opciones = {
     validator: validador,
@@ -154,6 +184,15 @@ const INDICES_JUGADORES = [
   },
 ];
 
+const INDICES_USUARIOS = [
+  {
+    clave: { email: 1 },
+    opciones: { name: "idx_usuarios_email_unico", unique: true },
+    // Integridad: H3 define el email unico como la restriccion que hace de
+    // Usuarios un subsistema CP.
+  },
+];
+
 function asegurarIndices(coleccion, definiciones) {
   definiciones.forEach((def) => {
     fixture.getCollection(coleccion).createIndex(def.clave, def.opciones);
@@ -169,11 +208,13 @@ print("");
 print("Colecciones y validadores:");
 asegurarColeccion("equipos", validadorEquipos);
 asegurarColeccion("jugadores", validadorJugadores);
+asegurarColeccion("usuarios", validadorUsuarios);
 
 print("");
 print("Indices:");
 asegurarIndices("equipos", INDICES_EQUIPOS);
 asegurarIndices("jugadores", INDICES_JUGADORES);
+asegurarIndices("usuarios", INDICES_USUARIOS);
 
 print("");
 print("Setup completo.");

@@ -33,6 +33,9 @@ verificar(
   `encontrados: ${totalJugadores}`,
 );
 
+const totalUsuarios = fixture.usuarios.countDocuments();
+verificar("6 usuarios de muestra persistidos", totalUsuarios === 6, `encontrados: ${totalUsuarios}`);
+
 print("");
 print("RNF3 — Identificadores sin duplicados");
 
@@ -64,6 +67,20 @@ verificar(
   dorsalesDuplicados.length === 0
     ? "protegido por idx_jugadores_equipo_dorsal_unico"
     : `${dorsalesDuplicados.length} colisiones`,
+);
+
+const emailsDuplicados = fixture.usuarios
+  .aggregate([
+    { $group: { _id: "$email", n: { $sum: 1 } } },
+    { $match: { n: { $gt: 1 } } },
+  ])
+  .toArray();
+verificar(
+  "Ningun email de usuario repetido",
+  emailsDuplicados.length === 0,
+  emailsDuplicados.length === 0
+    ? "protegido por idx_usuarios_email_unico"
+    : `repetidos: ${emailsDuplicados.map((d) => d._id).join(", ")}`,
 );
 
 print("");
@@ -190,7 +207,7 @@ verificar(
 print("");
 print("Configuracion de las colecciones");
 
-["equipos", "jugadores"].forEach((nombre) => {
+["equipos", "jugadores", "usuarios"].forEach((nombre) => {
   const info = fixture.getCollectionInfos({ name: nombre })[0];
   const tieneValidador = !!(info && info.options && info.options.validator);
   const accion = info && info.options ? info.options.validationAction : "—";
@@ -201,7 +218,7 @@ print("Configuracion de las colecciones");
   );
 });
 
-["equipos", "jugadores"].forEach((nombre) => {
+["equipos", "jugadores", "usuarios"].forEach((nombre) => {
   const indices = fixture
     .getCollection(nombre)
     .getIndexes()

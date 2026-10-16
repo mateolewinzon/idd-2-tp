@@ -119,7 +119,8 @@ determinista (ver sección 5).
 ├── Grupo_11_Hito_4_Decisiones_Documentales_Fixture2030.md
 │
 ├── datos/
-│   └── equipos.js                   Dataset fijo: las 64 selecciones
+│   ├── equipos.js                   Dataset fijo: las 64 selecciones
+│   └── usuarios.js                  Dataset fijo: 6 usuarios de muestra
 │
 ├── mongo/                           Scripts ejecutados dentro del contenedor
 │   ├── 01-setup-colecciones.js      Colecciones, $jsonSchema e índices
@@ -127,7 +128,8 @@ determinista (ver sección 5).
 │   ├── 03-carga-jugadores.js        Generación y carga de 1.664 jugadores
 │   ├── 04-verificar-integridad.js   Verificación RNF2 y RNF3 (solo lectura)
 │   ├── 05-operaciones-consultas.js  Operaciones 1 a 7 en BSON/JSON crudo (Punto 4)
-│   └── 06-analisis-rendimiento.js   Diagnóstico explain e indexación (Punto 5)
+│   ├── 06-analisis-rendimiento.js   Diagnóstico explain e indexación (Punto 5)
+│   └── 07-carga-usuarios.js         Carga idempotente de los usuarios de muestra
 │
 ├── scripts/                         Envoltorios ejecutables desde el host
 │   ├── levantar.sh
@@ -157,6 +159,7 @@ lectura) y `datos/` como `/datos`.
 | ----------- | ---------- | ---------------------------------------------- |
 | `equipos`   | 64         | Dataset fijo, versionado en `datos/equipos.js` |
 | `jugadores` | 1.664      | Generados: 26 por selección                    |
+| `usuarios`  | 6          | Dataset fijo, versionado en `datos/usuarios.js` |
 
 **Equipos.** Las 48 selecciones del Mundial 2026 (heredadas del seed original del
 grupo, grupos A a L) más 16 selecciones que completan las 64 del escenario

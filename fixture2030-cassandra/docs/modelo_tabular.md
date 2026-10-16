@@ -25,11 +25,11 @@ Diseñada para resolver **Q1**: la visualización paginada del feed durante el p
 
 | Nombre de Columna | Tipo de Dato Cassandra | Rol en la Clave Primaria | Descripción y Semántica |
 | :--- | :--- | :--- | :--- |
-| `partido_id` | `text` | **Partition Key (Componente 1)** | Identificador único del partido (ej. 'ARG-ESP-20300624'). |
+| `partido_id` | `text` | **Partition Key (Componente 1)** | Identificador único del partido (ej. 'P-002', id canónico de `partidos.csv` del grafo). |
 | `bloque_temporal` | `timestamp` | **Partition Key (Componente 2)** | Marca temporal truncada al inicio de la ventana de 5 minutos. |
 | `comentario_id` | `timeuuid` | **Clustering Column (DESC)** | Identificador único temporal; garantiza orden cronológico inverso y unicidad. |
 | `idioma` | `varchar` | Columna regular | Código de idioma del mensaje (ej. 'es', 'en', 'pt', 'fr', 'ar'). |
-| `usuario_id` | `text` | Columna regular | Identificador del autor en el subsistema de usuarios. |
+| `usuario_id` | `text` | Columna regular | `_id` del autor en la colección `usuarios` de MongoDB (`U` + 6 dígitos, ej. `U000001`). |
 | `nombre_usuario` | `text` | Columna regular | Nombre visible desnormalizado para evitar lookups en lectura. |
 | `texto` | `text` | Columna regular | Mensaje emitido por el usuario (máx. 280 caracteres). |
 | `estado_moderacion` | `text` | Columna regular | Estado de visualización: 'VISIBLE', 'OCULTO', 'PENDIENTE'. |
@@ -49,11 +49,11 @@ Diseñada para resolver **Q5**: consolidación permanente de la totalidad de com
 
 | Nombre de Columna | Tipo de Dato Cassandra | Rol en la Clave Primaria | Descripción y Semántica |
 | :--- | :--- | :--- | :--- |
-| `partido_id` | `text` | **Partition Key** | Identificador del partido (ej. 'ARG-ESP-20300624'). |
+| `partido_id` | `text` | **Partition Key** | Identificador del partido (ej. 'P-002', id canónico de `partidos.csv` del grafo). |
 | `comentario_id` | `timeuuid` | **Clustering Column (ASC)** | Cronología histórica de los eventos del partido desde el inicio. |
 | `bloque_temporal` | `timestamp` | Columna regular | Bloque temporal de origen para trazabilidad con el feed en vivo. |
 | `idioma` | `varchar` | Columna regular | Idioma del mensaje. |
-| `usuario_id` | `text` | Columna regular | Identificador del autor. |
+| `usuario_id` | `text` | Columna regular | `_id` del autor en `usuarios` (`U` + 6 dígitos). |
 | `nombre_usuario` | `text` | Columna regular | Nombre del autor. |
 | `texto` | `text` | Columna regular | Contenido del comentario. |
 | `estado_moderacion` | `text` | Columna regular | Estado final de moderación. |
@@ -73,7 +73,7 @@ Diseñada para resolver **Q2**: permite al usuario explorar cronológicamente to
 
 | Nombre de Columna | Tipo de Dato Cassandra | Rol en la Clave Primaria | Descripción y Semántica |
 | :--- | :--- | :--- | :--- |
-| `usuario_id` | `text` | **Partition Key** | Identificador del usuario que emite el comentario. |
+| `usuario_id` | `text` | **Partition Key** | `_id` del usuario que emite el comentario en `usuarios` (`U` + 6 dígitos). |
 | `comentario_id` | `timeuuid` | **Clustering Column (DESC)** | Identificador temporal; permite ordenar su historial personal. |
 | `partido_id` | `text` | Columna regular | Identificador del partido donde comentó. |
 | `bloque_temporal` | `timestamp` | Columna regular | Bloque temporal de origen. |
@@ -93,12 +93,12 @@ Diseñada para resolver **Q3**: cola de trabajo para los moderadores humanos o s
 | Nombre de Columna | Tipo de Dato Cassandra | Rol en la Clave Primaria | Descripción y Semántica |
 | :--- | :--- | :--- | :--- |
 | `estado_moderacion` | `text` | **Partition Key (Componente 1)** | Estado operativo a revisar: 'PENDIENTE', 'REPORTADO'. |
-| `fecha` | `date` | **Partition Key (Componente 2)** | Fecha calendario de emisión (ej. '2030-06-24'). |
+| `fecha` | `date` | **Partition Key (Componente 2)** | Fecha calendario de emisión (ej. '2030-06-09'). |
 | `comentario_id` | `timeuuid` | **Clustering Column (ASC)** | Orden de llegada a la cola de moderación (FIFO). |
 | `partido_id` | `text` | Columna regular | Partido al que pertenece el comentario. |
 | `bloque_temporal` | `timestamp` | Columna regular | Bloque temporal en la tabla de feed. |
 | `idioma` | `varchar` | Columna regular | Idioma del comentario. |
-| `usuario_id` | `text` | Columna regular | Identificador del autor reportado. |
+| `usuario_id` | `text` | Columna regular | `_id` del autor reportado en `usuarios` (`U` + 6 dígitos). |
 | `texto` | `text` | Columna regular | Texto sujeto a revisión. |
 | `motivo_reporte` | `text` | Columna regular | Causa del reporte ('SPAM', 'OFENSIVO', etc.). |
 
@@ -138,6 +138,8 @@ Diseñada para resolver **Q6**: provee la métrica total de comentarios emitidos
 ---
 
 ## 3. Identificadores, Inmutabilidad y Navegación de Datos
+
+La muestra (`carga_muestra.cql`) usa dos partidos reales de `partidos.csv`: `P-002` (ARG–JOR, 2030-06-09) y `P-018` (FRA–IRQ, 2030-06-13); los equipos salen de `alineaciones.csv`. La hora de los bloques de 5 min (20:00 y 18:00) es ficticia: no hay hora de inicio en la fuente. Pendiente: el generador del millón (`generar_millon.py`) sigue sin alinearse a los `P-xxx` ni al rango de usuarios de MongoDB.
 
 ### 3.1. Semántica y Derivación de `comentario_id` (TimeUUID)
 Se adoptó `timeuuid` como identificador fundamental de cada comentario. Esta elección técnica aporta ventajas decisivas:

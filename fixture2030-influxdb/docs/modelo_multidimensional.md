@@ -120,9 +120,9 @@ Para alinearse con la **Clase 9 oficial de la cátedra**, se adopta la imagen `i
 - CLI oficial `influxdb3` dentro del contenedor.
 
 ### 4.3 Manejo de Identificadores (Neo4j vs Cassandra)
-Se constata que el módulo de comentarios en Cassandra utilizó identificadores sintéticos de partido (ej. `'ARG-ESP-20300624'`), mientras que la fuente de verdad del grafo en Neo4j utiliza identificadores canónicos (`'P-001'`, `'P-002'`, etc.).
+La fuente de verdad del grafo en Neo4j usa identificadores canónicos de partido (`'P-001'`, `'P-002'`, etc.).
 - InfluxDB adopta de forma uniforme los **identificadores canónicos de Neo4j (`partido_id = 'P-xxx'`)** y los códigos de jugadores y equipos de Mongo/Neo4j (`'ARG-10'`, `'ARG'`).
-- La discrepancia con los IDs de Cassandra se documenta como limitación del subsistema de comentarios previo, manteniendo consistencia con lo documentado en Redis (`fixture2030-redis/docs/modelo_clave_valor.md §5`).
+- La muestra de Cassandra y las claves de Redis usan los mismos `P-xxx`, por lo que el `partido_id` es común a los módulos. Pendiente: el generador de carga masiva de Cassandra aún no está alineado.
 
 ### 4.4 Valores ficticios
 Todos los valores los produce el generador con una semilla fija y son ficticios; no modelan fútbol real. Por ejemplo, la posesión de cada equipo sale de un sorteo uniforme entre 40 y 60 (su promedio ronda 50 %), el odómetro de un titular llega a unos 24 km por partido y los usuarios conectados de una región llegan a unos 275.000. Sirven para ejercitar el modelo, las agregaciones y el volumen, no para sacar conclusiones deportivas.
