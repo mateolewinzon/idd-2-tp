@@ -19,8 +19,7 @@ Este hito no elige tecnología: la recibe. Las decisiones vinculantes son:
 en **MongoDB**, modelo documental. El criterio registrado fue: *"entidades de
 estado con atributos variables o semiestructurados; se recupera la entidad
 completa por ID en una sola lectura, sin joins"*. Se descartaron Neo4j —volumen
-bajo y relaciones simples no justifican un grafo— e IRIS —la herencia y
-composición del modelo de objetos no se aprovechan.
+bajo y relaciones simples no justifican un grafo.
 
 **Del Hito 3 (Secciones 1 a 3).** Para Equipos, Jugadores y Alineaciones:
 

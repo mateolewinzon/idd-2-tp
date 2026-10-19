@@ -123,8 +123,7 @@ entidad completa por ID en una sola lectura, sin
 joins. Un partido se lee y actualiza como unidad
 de estado, no se navega por relaciones.
 Esquema flexible.
-Neo4j (Grafo) / IRIS
-(Objetos)
+Neo4j (Grafo)
 Volumen bajo y relaciones simples o
 conocidas no justifican grafo; los
 partidos se recuperan por ID, no se
@@ -189,8 +188,7 @@ ingestión continua; compresión y
 agregaciones/downsampling nativos sobre
 cientos de miles de puntos por partido, con
 lectura mayormente analítica por intervalos.
-Cassandra / IRIS
-(Objetos)
+Cassandra
 Cassandra maneja el volumen pero
 obliga a implementar a mano la
 retención y agregación temporal;
@@ -203,13 +201,10 @@ serie temporal.
 semiestructurados. Esto nos permite recuperar toda la información de los perfiles (jugadores
 o usuarios) mediante un esquema flexible en una única lectura, sin la necesidad de realizar
 joins.
-- ​ Como alternativas, se evaluaron Neo4j (Grafos) e InterSystems IRIS (Objetos). La primera
-fue descartada porque, si bien estas entidades estan relacionadas, son relaciones muy
-simples, y tienen un volumen bajo, lo cual no justifica la complejidad de un grafo. Por el lado
-de IRIS, no se estarian aprovechando la herencia y composición que te brinda un esquema
-orientado a objetos, agregando complejidad sin ganancia al sistema. Decidimos aceptar la
-redundancia generada por la base documental a cambio de velocidad de lectura y
-flexibilidad.
+- ​ Como alternativa, se evaluó Neo4j (Grafos), pero se descartó porque, si bien estas
+entidades están relacionadas, son relaciones muy simples y tienen un volumen bajo, lo cual
+no justifica la complejidad de un grafo. Decidimos aceptar la redundancia generada por la
+base documental a cambio de velocidad de lectura y flexibilidad.
 2.  Neo4j para partidos y eventos
 - ​ Iterando sobre el Hito 1, el mayor valor para estas entidades reside en la navegación de las
 relaciones. El modelo de grafos nos permite recorrer relaciones semánticas (quien metió gol,
@@ -242,12 +237,10 @@ flexibilidad de búsqueda por otros atributos.
 - ​ Estas métricas consisten en mediciones espacial-temporales continuas y estrictamente
 ordenadas. Se elige este modelo por su motor de ingestión optimizado, compresión nativa
 de datos y funciones integradas de agregación y downsampling temporal.
-- ​ Se consideró utilizar Cassandra o un modelo de Objetos (IRIS). Las bases orientadas a
-objetos no aportan ventajas para analizar series de tiempo, y aunque Cassandra podría
-soportar el volumen de escritura, obligaría a implementar de forma manual toda la lógica de
-
-retención, purga y cálculo de intervalos temporales. El trade-off asumido es incorporar un
-motor de base de datos extra y muy especializado dentro de la arquitectura global.
+- ​ Se consideró utilizar Cassandra. Aunque podría soportar el volumen de escritura,
+obligaría a implementar de forma manual toda la lógica de retención, purga y cálculo de
+intervalos temporales. El trade-off asumido es incorporar un motor de base de datos extra
+y muy especializado dentro de la arquitectura global.
 
 # Sección 5: Mapa de persistencia y próximos interrogantes
 Mapa de persistencia
