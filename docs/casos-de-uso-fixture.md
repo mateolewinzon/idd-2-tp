@@ -3,6 +3,7 @@
 Recorrido incremental para la página del torneo: navegar el fixture, entender un partido y explorar el rendimiento de un jugador. Cada incremento suma una funcionalidad completa para mostrar en la demo.
 
 **Actor:** visitante, sin necesidad de iniciar sesión.  
+**Alcance:** solo el Mundial 2030, sin selección de otros torneos.  
 **Contexto de la demo:** los datos en vivo provienen del simulador de partidos.
 
 | # | Caso de uso | Flujo principal | Resultado |

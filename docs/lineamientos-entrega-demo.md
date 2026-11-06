@@ -6,6 +6,8 @@
 
 Fuente: [propuesta original en Claude](https://claude.ai/artifact/GwUECtpE3pcJYGB37AFXYX#366ba437-210a). Documento de trabajo actualizado con las decisiones de persistencia y los casos de uso de la demo. Los cambios técnicos descritos están pendientes de implementación salvo indicación expresa.
 
+**Alcance del modelo:** únicamente el Mundial 2030. No se modelan otros torneos ni se agregan entidades o filtros para seleccionarlos.
+
 ## Resumen
 
 Proponemos cerrar el entregable con tres bases (MongoDB, Redis e InfluxDB), Prometheus y Grafana para observabilidad, la API del Hito 10 adaptada y un módulo nuevo que simula partidos en vivo.
@@ -38,7 +40,7 @@ Cada base cubre un patrón de acceso que las funcionalidades necesitan y que las
 
 | Base | Qué guarda | Por qué este modelo |
 | --- | --- | --- |
-| MongoDB | Torneo, grupos, cruces, equipos, jugadores, partidos con eventos y alineaciones, y resúmenes estadísticos finales. | Entidades recuperadas por identificador (Hito 2). Un partido con sus eventos adentro se lee en una sola operación; la Clase 12 recomienda desnormalizar para la velocidad de lectura. |
+| MongoDB | Grupos, cruces, equipos, jugadores, partidos con eventos y alineaciones, y resúmenes estadísticos finales. | Entidades recuperadas por identificador (Hito 2). Un partido con sus eventos adentro se lee en una sola operación; la Clase 12 recomienda desnormalizar para la velocidad de lectura. |
 | Redis | Copias de lo que más se lee: partido en vivo, eventos, pelota, mapa de calor, fixture. | Caché con el patrón Cache-Aside y TTL por dato (Clase 8). Absorbe millones de lecturas iguales para que no lleguen a las fuentes. |
 | InfluxDB | Tracking de jugadores y pelota, evolución temporal de estadísticas, mapas de calor agregados y audiencia por región. | Series temporales con consulta por ventana, agregación, retención y downsampling (Clase 9, Hito 8). |
 
@@ -93,9 +95,9 @@ El histórico vive siempre en las bases de origen, nunca en Redis: la Clase 13 a
 
 Al terminar el partido, un proceso calcula y guarda el resumen del encuentro y un documento por jugador en `estadisticas_jugador_partido`. Los goles, asistencias y tarjetas se derivan de eventos de MongoDB; la distancia, velocidad máxima y otras medidas temporales se obtienen de Influx antes de que venza el tracking crudo.
 
-El proceso reemplaza los resultados mediante claves únicas y puede repetirse sin duplicar estadísticas. Los resúmenes se publican con estado de consolidación y versión común; si una fuente falta, quedan pendientes de reintento. No se marca una consolidación incompleta como definitiva. Las correcciones reprocesan el partido e invalidan las cachés relacionadas.
+El proceso reemplaza los resultados mediante claves únicas y puede repetirse sin duplicar estadísticas. Los resúmenes se publican con estado de consolidación; si una fuente falta, quedan pendientes de reintento. No se marca una consolidación incompleta como definitiva. Las correcciones reprocesan el partido e invalidan las cachés relacionadas.
 
-Una consulta de goles de un jugador puede contar sus eventos en MongoDB desde la primera implementación. Con los resúmenes disponibles, los totales de partidos finalizados se calculan desde `estadisticas_jugador_partido`, filtrando torneo y jugador. Para incluir un partido en vivo se agregan sus eventos por separado, sin volver a contar partidos ya consolidados.
+Una consulta de goles de un jugador puede contar sus eventos en MongoDB desde la primera implementación. Con los resúmenes disponibles, los totales de partidos finalizados se calculan desde `estadisticas_jugador_partido`, filtrando por jugador; todos los partidos pertenecen al Mundial 2030. Para incluir un partido en vivo se agregan sus eventos por separado, sin volver a contar partidos ya consolidados.
 
 Influx conserva las series para consultas por intervalo; el histórico de estadísticas finales no depende de que esas series sigan disponibles. El [modelo técnico de la demo](modelo-tecnico-demo.md) detalla el cierre, grupos, playoffs y mapas de calor.
 
@@ -169,9 +171,9 @@ La mayor parte reutiliza lo construido: se mantienen las bases existentes, se am
 ### MongoDB
 
 - Colección `partidos` con eventos y alineaciones adentro, cargada desde los CSV de `fixture2030-neo4j/import/`, con carga idempotente.
-- Índices para el fixture de un equipo (local o visitante, ordenado por fecha), eventos por jugador y resúmenes por torneo/jugador.
-- Colecciones `torneos`, `grupos` y `cruces` para clasificación y eliminatorias.
-- Resumen final en `partidos` y colección `estadisticas_jugador_partido` con clave única por torneo, partido y jugador.
+- Índices para el fixture de un equipo (local o visitante, ordenado por fecha), eventos por jugador y resúmenes por jugador.
+- Colecciones `grupos` y `cruces` para clasificación y eliminatorias.
+- Resumen final en `partidos` y colección `estadisticas_jugador_partido` con clave única por partido y jugador.
 - Proceso de cierre idempotente y reprocesable; invalidación de fixture, grupos, cruces y estadísticas relacionadas.
 - Reescribir el Hito 4 §5 sin “oplog”.
 
@@ -195,7 +197,7 @@ La mayor parte reutiliza lo construido: se mantienen las bases existentes, se am
 
 - Quitar los adaptadores de Cassandra y Neo4j, y las rutas de sesiones.
 - Pasar partidos y eventos al adaptador de MongoDB.
-- Endpoints nuevos: fixture, grupos y posiciones, playoffs, alineaciones, mapa de calor, pelota y estadísticas de jugador por partido y torneo.
+- Endpoints nuevos: fixture, grupos y posiciones, playoffs, alineaciones, mapa de calor, pelota y estadísticas de jugador por partido y acumuladas del Mundial 2030.
 - Completar las reglas y contratos definidos en el [modelo técnico de la demo](modelo-tecnico-demo.md).
 - Exponer `/metrics` para Prometheus y leer el país de origen de un encabezado.
 
