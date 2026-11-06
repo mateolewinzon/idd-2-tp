@@ -4,7 +4,7 @@
 **Propósito:** lineamiento de alcance, arquitectura y trabajo pendiente para la entrega final y la presentación de la demo del proyecto de Ingeniería de Datos II.  
 **Estado:** propuesta de trabajo; las decisiones pendientes se mantienen abiertas.
 
-Fuente: [propuesta original en Claude](https://claude.ai/artifact/GwUECtpE3pcJYGB37AFXYX#366ba437-210a). Este documento recupera el contenido del texto pegado y reorganiza su formato en Markdown; no constituye una validación técnica de las afirmaciones ni evidencia de que los cambios ya estén implementados.
+Fuente: [propuesta original en Claude](https://claude.ai/artifact/GwUECtpE3pcJYGB37AFXYX#366ba437-210a). Documento de trabajo actualizado con las decisiones de persistencia y los casos de uso de la demo. Los cambios técnicos descritos están pendientes de implementación salvo indicación expresa.
 
 ## Resumen
 
@@ -38,9 +38,9 @@ Cada base cubre un patrón de acceso que las funcionalidades necesitan y que las
 
 | Base | Qué guarda | Por qué este modelo |
 | --- | --- | --- |
-| MongoDB | Equipos, jugadores, partidos con sus eventos y alineaciones. | Entidades recuperadas por identificador (Hito 2). Un partido con sus eventos adentro se lee en una sola operación; la Clase 12 recomienda desnormalizar para la velocidad de lectura. |
+| MongoDB | Torneo, grupos, cruces, equipos, jugadores, partidos con eventos y alineaciones, y resúmenes estadísticos finales. | Entidades recuperadas por identificador (Hito 2). Un partido con sus eventos adentro se lee en una sola operación; la Clase 12 recomienda desnormalizar para la velocidad de lectura. |
 | Redis | Copias de lo que más se lee: partido en vivo, eventos, pelota, mapa de calor, fixture. | Caché con el patrón Cache-Aside y TTL por dato (Clase 8). Absorbe millones de lecturas iguales para que no lleguen a las fuentes. |
-| InfluxDB | Tracking de jugadores y pelota, estadísticas de partido, audiencia por región. | Series temporales con consulta por ventana, agregación, retención y downsampling (Clase 9, Hito 8). |
+| InfluxDB | Tracking de jugadores y pelota, evolución temporal de estadísticas, mapas de calor agregados y audiencia por región. | Series temporales con consulta por ventana, agregación, retención y downsampling (Clase 9, Hito 8). |
 
 ### Por qué no las otras
 
@@ -60,13 +60,13 @@ Cada funcionalidad tiene una fuente de verdad y una copia en Redis. La API lee p
 | --- | --- | --- | --- |
 | Eventos del partido | MongoDB: eventos dentro del documento del partido (tipo, minuto, jugador, equipo). | Sí, TTL corto en vivo; se invalida al llegar un evento. | `GET /partidos/{id}/eventos` (existe; cambia la fuente). |
 | Mapa de calor en vivo | Influx `tracking_jugador` (`x_m`, `y_m`), ventana reciente. | Sí, TTL de segundos. | `GET /partidos/{id}/mapa-calor`, por equipo o jugador. |
-| Mapa de calor histórico | Influx `fixture2030_resumen`: promedios por minuto. | Sí, TTL largo (partido terminado). | Mismo endpoint, con rango de tiempo. |
+| Mapa de calor histórico | Influx `fixture2030_resumen`: ocupación por celda de cancha y minuto; no promedio de coordenadas. | Sí, TTL largo (partido terminado). | Mismo endpoint, con rango de tiempo. |
 | Pelota en vivo | Influx `tracking_pelota`, último punto (uno por segundo). | Sí, TTL de 1 s. | `GET /partidos/{id}/pelota`. |
 | Fixture e histórico | MongoDB: partidos con fase, fecha, sede, equipos y resultado. | Sí, TTL largo; se invalida al terminar un partido. | `GET /fixture`, `GET /partidos/{id}`. |
-| Estadísticas de partido | Influx `estadisticas_partido` (posesión, tiros, pases) + conteo de eventos en MongoDB. | Sí. | `GET /partidos/{id}/estadisticas` (existe; se amplía). |
-| Estadísticas de jugador | MongoDB (ficha + goles, asistencias y tarjetas de los eventos) + Influx (distancia y velocidad máxima, patrón P2 del Hito 8). | Sí. | `GET /jugadores/{id}/estadisticas`. |
+| Estadísticas de partido | En vivo: Influx `estadisticas_partido` + eventos de MongoDB. Finalizado y consolidado: resumen final en MongoDB. | Sí. | `GET /partidos/{id}/estadisticas` (existe; se amplía). |
+| Estadísticas de jugador | En vivo: eventos de MongoDB + tracking de Influx. Finalizado y consolidado: `estadisticas_jugador_partido` en MongoDB. Totales del torneo: agregación de esos resúmenes. | Sí. | `GET /jugadores/{id}/estadisticas`. |
 
-Las estadísticas de jugador combinan dos fuentes en la API: es el patrón Aggregator de la Clase 12. Los valores exactos de TTL quedan para decidir en grupo.
+Las estadísticas en vivo combinan dos fuentes en la API (patrón Aggregator). Las estadísticas finales y los totales históricos se consultan en MongoDB, con Redis como caché. Los valores exactos de TTL quedan para decidir en grupo. Ver el [modelo técnico de la demo](modelo-tecnico-demo.md) para entidades, endpoints y reglas de consolidación.
 
 ### Camino en vivo
 
@@ -84,17 +84,20 @@ El histórico vive siempre en las bases de origen, nunca en Redis: la Clase 13 a
 | --- | --- | --- |
 | Fixture, partidos, eventos, equipos, jugadores | MongoDB | Sí, sin vencimiento. |
 | Tracking segundo a segundo (jugadores y pelota) | Influx `fixture2030_en_vivo` | 7 días (Hito 8). |
-| Tracking agregado por minuto, estadísticas de partido | Influx `fixture2030_resumen` | Sí, sin vencimiento. |
+| Evolución de estadísticas y ocupación por celda y minuto | Influx `fixture2030_resumen` | Sí, sin vencimiento configurado; validar consultas con la edición instalada. |
+| Resúmenes finales de partido y jugador por partido | MongoDB | Sí, sin vencimiento. |
 
-**Decidido:** el mapa de calor histórico se arma con los promedios por minuto (unos 90 puntos por jugador y partido). Consecuencia: la trayectoria segundo a segundo de la pelota de un partido viejo no se conserva; la pelota es solo una funcionalidad en vivo.
+**Decidido:** el mapa de calor histórico conserva ocupación por celda y minuto. Los promedios de coordenadas no preservan las zonas recorridas. La trayectoria segundo a segundo de la pelota no se conserva después del vencimiento del tracking; la pelota es una funcionalidad en vivo.
 
-### Decisión pendiente: resumen de partidos terminados
+### Decisión adoptada: consolidar estadísticas finales en MongoDB
 
-| Aspecto | A. Consolidar en MongoDB al terminar | B. Calcular desde Influx y cachear |
-| --- | --- | --- |
-| Cómo funciona | Al terminar el partido, un proceso escribe resultado y estadísticas finales en el documento del partido. | Cada consulta agrega desde `fixture2030_resumen`; Redis guarda el resultado con TTL largo. |
-| A favor | El histórico se lee en una operación por identificador. Separa el camino analítico del operacional (Clase 13). Sigue disponible si Influx cae. | Una sola fuente, nada que sincronizar. El endpoint de estadísticas ya existe. |
-| En contra | Proceso extra que tiene que ser idempotente y reprocesable (Clase 13). Copia que puede desfasarse si se corrige un dato en Influx. | Cada consulta que no está en Redis agrega en Influx. Si Influx cae y la caché venció, no hay respuesta. |
+Al terminar el partido, un proceso calcula y guarda el resumen del encuentro y un documento por jugador en `estadisticas_jugador_partido`. Los goles, asistencias y tarjetas se derivan de eventos de MongoDB; la distancia, velocidad máxima y otras medidas temporales se obtienen de Influx antes de que venza el tracking crudo.
+
+El proceso reemplaza los resultados mediante claves únicas y puede repetirse sin duplicar estadísticas. Los resúmenes se publican con estado de consolidación y versión común; si una fuente falta, quedan pendientes de reintento. No se marca una consolidación incompleta como definitiva. Las correcciones reprocesan el partido e invalidan las cachés relacionadas.
+
+Una consulta de goles de un jugador puede contar sus eventos en MongoDB desde la primera implementación. Con los resúmenes disponibles, los totales de partidos finalizados se calculan desde `estadisticas_jugador_partido`, filtrando torneo y jugador. Para incluir un partido en vivo se agregan sus eventos por separado, sin volver a contar partidos ya consolidados.
+
+Influx conserva las series para consultas por intervalo; el histórico de estadísticas finales no depende de que esas series sigan disponibles. El [modelo técnico de la demo](modelo-tecnico-demo.md) detalla el cierre, grupos, playoffs y mapas de calor.
 
 ## Distribución global, CAP y replicación
 
@@ -161,18 +164,22 @@ Origen sin login: sale de la IP. En la simulación, el generador de carga manda 
 
 ## Cambios concretos
 
-La mayor parte reutiliza lo construido: el modelo de Influx no cambia, MongoDB suma una colección y Redis cambia de claves.
+La mayor parte reutiliza lo construido: se mantienen las bases existentes, se amplía el modelo de MongoDB, se agrega la ocupación espacial histórica en Influx y Redis cambia de claves.
 
 ### MongoDB
 
 - Colección `partidos` con eventos y alineaciones adentro, cargada desde los CSV de `fixture2030-neo4j/import/`, con carga idempotente.
-- Índice para el fixture de un equipo (local o visitante, ordenado por fecha).
+- Índices para el fixture de un equipo (local o visitante, ordenado por fecha), eventos por jugador y resúmenes por torneo/jugador.
+- Colecciones `torneos`, `grupos` y `cruces` para clasificación y eliminatorias.
+- Resumen final en `partidos` y colección `estadisticas_jugador_partido` con clave única por torneo, partido y jugador.
+- Proceso de cierre idempotente y reprocesable; invalidación de fixture, grupos, cruces y estadísticas relacionadas.
 - Reescribir el Hito 4 §5 sin “oplog”.
 
 ### InfluxDB
 
 - Consulta del último punto de la pelota.
-- Consulta del mapa de calor por celdas, en vivo (crudo) e histórico (por minuto).
+- Consulta del mapa de calor por celdas, en vivo (crudo) e histórico (`ocupacion_jugador_minuto`: muestras por celda y minuto).
+- Materializar mapas de calor y estadísticas finales antes del vencimiento del crudo. El script actual de agregaciones no genera todavía la ocupación espacial histórica.
 - **Atención:** `generacion_puntos.py` lee los CSV de `fixture2030-neo4j/import/`. Si sacamos esa carpeta, hay que mover los CSV.
 
 ### Redis
@@ -188,7 +195,8 @@ La mayor parte reutiliza lo construido: el modelo de Influx no cambia, MongoDB s
 
 - Quitar los adaptadores de Cassandra y Neo4j, y las rutas de sesiones.
 - Pasar partidos y eventos al adaptador de MongoDB.
-- Endpoints nuevos: fixture, mapa de calor, pelota, estadísticas de jugador.
+- Endpoints nuevos: fixture, grupos y posiciones, playoffs, alineaciones, mapa de calor, pelota y estadísticas de jugador por partido y torneo.
+- Completar las reglas y contratos definidos en el [modelo técnico de la demo](modelo-tecnico-demo.md).
 - Exponer `/metrics` para Prometheus y leer el país de origen de un encabezado.
 
 ### Observabilidad
@@ -204,10 +212,10 @@ La mayor parte reutiliza lo construido: el modelo de Influx no cambia, MongoDB s
 
 ## Decisiones abiertas
 
-- Resumen de partidos terminados: opción A (consolidar en MongoDB) u opción B (calcular desde Influx).
 - ¿El simulador escribe a través de la API (un solo camino de escritura, validado y medido) o directo en las bases (más simple)?
 - TTL de cada clave de caché, en vivo y para partidos terminados.
-- Mapa de calor: tamaño de celda y cómo agruparlas en Influx con lo que muestra la Clase 9.
+- Validar e implementar la grilla propuesta de 5 × 5 m y la ocupación por minuto en la edición instalada de InfluxDB.
+- Cargar las reglas de clasificación y la asignación de cruces del dataset de la demo; no asumir reglamento oficial de 2030.
 - Verificar si InfluxDB 3 expone métricas para Prometheus y cuánto retiene Prometheus.
 - Cómo documentamos que cada usuario queda fijo a su región.
 - Estructura de carpetas de la entrega final (la Clase 14 menciona `/hito-13`).

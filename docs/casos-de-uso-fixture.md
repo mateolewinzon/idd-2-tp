@@ -28,3 +28,7 @@ El cuadro de playoffs funciona como otra entrada al mismo detalle de partido. El
 ## Relación con el alcance de la entrega
 
 Estos casos describen la experiencia funcional de la página. Los [lineamientos de la entrega](lineamientos-entrega-demo.md) mantienen el alcance acordado de solo API, sin frontend; implementar la página requiere ampliar ese alcance. Los casos sirven como guía de las funcionalidades que debe soportar la API y del recorrido de presentación.
+
+## Soporte técnico
+
+El [modelo técnico de la demo](modelo-tecnico-demo.md) define la persistencia, los endpoints y el trabajo pendiente para estos casos: grupos y playoffs en MongoDB, resúmenes estadísticos finales en MongoDB y mapas de calor por ocupación espacial en InfluxDB.
