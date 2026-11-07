@@ -176,5 +176,10 @@ asegurarIndices("equipos", INDICES_EQUIPOS);
 asegurarIndices("jugadores", INDICES_JUGADORES);
 
 print("");
+// Fixture: esquema compartido con el cargador Python.
+const validadorPartidos = JSON.parse(require("fs").readFileSync("/datos/partidos-validator.json", "utf8"));
+asegurarColeccion("partidos", validadorPartidos);
+fixture.partidos.createIndex({ fecha_hora: 1, _id: 1 }, { name: "idx_partidos_fecha_codigo" });
+
 print("Setup completo.");
 print("");

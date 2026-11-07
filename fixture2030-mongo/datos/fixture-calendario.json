@@ -1,0 +1,640 @@
+{
+  "descripcion": "Horarios simulados para la demo; no es calendario oficial.",
+  "partidos": {
+    "P-001": {
+      "fecha_hora": "2030-06-08T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-002": {
+      "fecha_hora": "2030-06-09T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-003": {
+      "fecha_hora": "2030-06-10T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-004": {
+      "fecha_hora": "2030-06-11T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-005": {
+      "fecha_hora": "2030-06-11T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-006": {
+      "fecha_hora": "2030-06-11T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-007": {
+      "fecha_hora": "2030-06-11T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-008": {
+      "fecha_hora": "2030-06-11T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-009": {
+      "fecha_hora": "2030-06-11T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-010": {
+      "fecha_hora": "2030-06-11T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-011": {
+      "fecha_hora": "2030-06-12T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-012": {
+      "fecha_hora": "2030-06-12T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-013": {
+      "fecha_hora": "2030-06-12T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-014": {
+      "fecha_hora": "2030-06-12T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-015": {
+      "fecha_hora": "2030-06-12T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-016": {
+      "fecha_hora": "2030-06-12T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-017": {
+      "fecha_hora": "2030-06-12T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-018": {
+      "fecha_hora": "2030-06-13T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-019": {
+      "fecha_hora": "2030-06-13T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-020": {
+      "fecha_hora": "2030-06-13T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-021": {
+      "fecha_hora": "2030-06-13T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-022": {
+      "fecha_hora": "2030-06-13T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-023": {
+      "fecha_hora": "2030-06-13T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-024": {
+      "fecha_hora": "2030-06-13T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-025": {
+      "fecha_hora": "2030-06-14T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-026": {
+      "fecha_hora": "2030-06-14T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-027": {
+      "fecha_hora": "2030-06-14T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-028": {
+      "fecha_hora": "2030-06-14T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-029": {
+      "fecha_hora": "2030-06-14T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-030": {
+      "fecha_hora": "2030-06-14T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-031": {
+      "fecha_hora": "2030-06-14T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-032": {
+      "fecha_hora": "2030-06-14T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-033": {
+      "fecha_hora": "2030-06-16T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-034": {
+      "fecha_hora": "2030-06-16T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-035": {
+      "fecha_hora": "2030-06-16T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-036": {
+      "fecha_hora": "2030-06-16T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-037": {
+      "fecha_hora": "2030-06-16T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-038": {
+      "fecha_hora": "2030-06-16T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-039": {
+      "fecha_hora": "2030-06-16T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-040": {
+      "fecha_hora": "2030-06-16T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-041": {
+      "fecha_hora": "2030-06-17T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-042": {
+      "fecha_hora": "2030-06-17T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-043": {
+      "fecha_hora": "2030-06-17T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-044": {
+      "fecha_hora": "2030-06-17T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-045": {
+      "fecha_hora": "2030-06-17T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-046": {
+      "fecha_hora": "2030-06-17T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-047": {
+      "fecha_hora": "2030-06-17T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-048": {
+      "fecha_hora": "2030-06-17T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-049": {
+      "fecha_hora": "2030-06-18T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-050": {
+      "fecha_hora": "2030-06-18T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-051": {
+      "fecha_hora": "2030-06-18T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-052": {
+      "fecha_hora": "2030-06-18T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-053": {
+      "fecha_hora": "2030-06-18T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-054": {
+      "fecha_hora": "2030-06-18T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-055": {
+      "fecha_hora": "2030-06-18T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-056": {
+      "fecha_hora": "2030-06-18T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-057": {
+      "fecha_hora": "2030-06-19T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-058": {
+      "fecha_hora": "2030-06-19T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-059": {
+      "fecha_hora": "2030-06-19T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-060": {
+      "fecha_hora": "2030-06-19T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-061": {
+      "fecha_hora": "2030-06-19T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-062": {
+      "fecha_hora": "2030-06-19T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-063": {
+      "fecha_hora": "2030-06-19T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-064": {
+      "fecha_hora": "2030-06-19T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-065": {
+      "fecha_hora": "2030-06-21T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-066": {
+      "fecha_hora": "2030-06-21T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-067": {
+      "fecha_hora": "2030-06-21T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-068": {
+      "fecha_hora": "2030-06-21T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-069": {
+      "fecha_hora": "2030-06-21T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-070": {
+      "fecha_hora": "2030-06-21T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-071": {
+      "fecha_hora": "2030-06-21T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-072": {
+      "fecha_hora": "2030-06-21T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-073": {
+      "fecha_hora": "2030-06-22T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-074": {
+      "fecha_hora": "2030-06-22T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-075": {
+      "fecha_hora": "2030-06-22T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-076": {
+      "fecha_hora": "2030-06-22T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-077": {
+      "fecha_hora": "2030-06-22T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-078": {
+      "fecha_hora": "2030-06-22T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-079": {
+      "fecha_hora": "2030-06-22T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-080": {
+      "fecha_hora": "2030-06-22T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-081": {
+      "fecha_hora": "2030-06-23T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-082": {
+      "fecha_hora": "2030-06-23T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-083": {
+      "fecha_hora": "2030-06-23T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-084": {
+      "fecha_hora": "2030-06-23T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-085": {
+      "fecha_hora": "2030-06-23T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-086": {
+      "fecha_hora": "2030-06-23T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-087": {
+      "fecha_hora": "2030-06-23T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-088": {
+      "fecha_hora": "2030-06-23T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-089": {
+      "fecha_hora": "2030-06-24T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-090": {
+      "fecha_hora": "2030-06-24T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-091": {
+      "fecha_hora": "2030-06-24T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-092": {
+      "fecha_hora": "2030-06-24T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-093": {
+      "fecha_hora": "2030-06-24T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-094": {
+      "fecha_hora": "2030-06-24T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-095": {
+      "fecha_hora": "2030-06-24T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-096": {
+      "fecha_hora": "2030-06-24T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-097": {
+      "fecha_hora": "2030-06-27T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-098": {
+      "fecha_hora": "2030-06-27T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-099": {
+      "fecha_hora": "2030-06-27T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-100": {
+      "fecha_hora": "2030-06-27T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-101": {
+      "fecha_hora": "2030-06-28T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-102": {
+      "fecha_hora": "2030-06-28T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-103": {
+      "fecha_hora": "2030-06-28T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-104": {
+      "fecha_hora": "2030-06-28T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-105": {
+      "fecha_hora": "2030-06-29T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-106": {
+      "fecha_hora": "2030-06-29T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-107": {
+      "fecha_hora": "2030-06-29T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-108": {
+      "fecha_hora": "2030-06-29T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-109": {
+      "fecha_hora": "2030-06-30T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-110": {
+      "fecha_hora": "2030-06-30T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-111": {
+      "fecha_hora": "2030-06-30T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-112": {
+      "fecha_hora": "2030-06-30T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-113": {
+      "fecha_hora": "2030-07-03T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-114": {
+      "fecha_hora": "2030-07-03T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-115": {
+      "fecha_hora": "2030-07-04T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-116": {
+      "fecha_hora": "2030-07-04T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-117": {
+      "fecha_hora": "2030-07-05T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-118": {
+      "fecha_hora": "2030-07-05T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-119": {
+      "fecha_hora": "2030-07-06T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-120": {
+      "fecha_hora": "2030-07-06T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-121": {
+      "fecha_hora": "2030-07-09T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-122": {
+      "fecha_hora": "2030-07-09T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-123": {
+      "fecha_hora": "2030-07-10T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-124": {
+      "fecha_hora": "2030-07-10T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-125": {
+      "fecha_hora": "2030-07-13T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-126": {
+      "fecha_hora": "2030-07-14T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    },
+    "P-127": {
+      "fecha_hora": "2030-07-21T18:00:00Z",
+      "estado": "proximo",
+      "resultado": null
+    }
+  }
+}

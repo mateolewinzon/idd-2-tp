@@ -1,0 +1,21 @@
+{
+  "descripcion": "Escenario simulado con los tres estados; aplicar con --reiniciar-escenario.",
+  "partidos": {
+    "P-001": {
+      "estado": "finalizado",
+      "resultado": {
+        "goles_local": 2,
+        "goles_visitante": 1,
+        "penales": null
+      }
+    },
+    "P-002": {
+      "estado": "en_vivo",
+      "resultado": {
+        "goles_local": 1,
+        "goles_visitante": 0,
+        "penales": null
+      }
+    }
+  }
+}

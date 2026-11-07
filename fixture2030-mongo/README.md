@@ -237,3 +237,45 @@ generados, no reales. Los equipos, confederaciones, rankings y directores
 técnicos sí corresponden a datos reales o verosímiles, pero la clasificación al
 Mundial 2030 todavía no ocurrió: los 64 participantes son una hipótesis de
 trabajo.
+
+## Seed del fixture Mundial 2030 (requerimiento 1)
+
+Se incorpora `partidos`, con validador compartido en `datos/partidos-validator.json`
+e índice `(fecha_hora, _id)`. Los 127 partidos se reconstruyen desde los CSV de
+`../fixture2030-neo4j/import/` sin necesitar Neo4j. `datos/fixture-calendario.json`
+aporta horarios simulados UTC y estados iniciales. El escenario separado
+`datos/fixture-escenario-demo.json` agrega un finalizado, uno en vivo y el resto
+próximos; no es un simulador en ejecución.
+
+Desde esta carpeta, usar el Python del entorno del backend (incluye PyMongo y Redis):
+
+```bash
+export FIXTURE_PYTHON=/ruta/al/idd-2-backend/.venv/bin/python
+export MONGO_URI=mongodb://localhost:27017
+export MONGO_DATABASE=fixture2030
+export REDIS_HOST=localhost REDIS_PORT=6380 REDIS_DB=0
+# Si corresponde, exportar las credenciales; el cargador no lee .env.
+"$FIXTURE_PYTHON" scripts/cargar_fixture.py --solo-validar
+"$FIXTURE_PYTHON" scripts/cargar_fixture.py
+# Repetir la carga preserva marcadores y no duplica partidos.
+"$FIXTURE_PYTHON" scripts/cargar_fixture.py --reiniciar-escenario \
+  --escenario datos/fixture-escenario-demo.json
+# Volver al calendario completo con todos próximos:
+"$FIXTURE_PYTHON" scripts/cargar_fixture.py --reiniciar-escenario
+```
+
+El cargador valida todo antes de escribir, crea/actualiza el schema y el índice,
+hace upserts sin borrados e invalida `fixture:v1:todos` en Redis. Una escritura
+parcial produce salida de error y también intenta invalidar. Si Redis falla,
+advierte por stderr; el TTL de la API limita la antigüedad. Los conteos informan
+insertados, actualizados y rechazados; una carga rechazada no informa éxito.
+`actualizado_en` cambia en cada recarga, por lo que un registro idéntico puede
+contar como actualizado. El modo `--solo-validar` solo necesita Python estándar.
+
+La carga histórica `scripts/cargar.sh` sigue cargando equipos y jugadores. Ejecutar
+el cargador del fixture después para completar el nuevo incremento. Los scripts
+se mantienen separados porque el nuevo requiere el entorno Python del backend.
+
+Validación sin motores: `python3 -m unittest discover -s tests -v`. Las pruebas de
+integración y su entorno aislado están en `idd-2-backend/tests/integration/test_fixture_live.py`
+y la guía `idd-2-backend/docs/fixture.md`.

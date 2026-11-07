@@ -1,0 +1,178 @@
+{
+  "$and": [
+    {
+      "$jsonSchema": {
+        "bsonType": "object",
+        "required": [
+          "_id",
+          "fecha_hora",
+          "fase",
+          "grupo",
+          "local",
+          "visitante",
+          "sede",
+          "estado",
+          "resultado",
+          "actualizado_en"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "_id": {
+            "bsonType": "string",
+            "pattern": "^P-[0-9]{3}$"
+          },
+          "fecha_hora": {
+            "bsonType": "date"
+          },
+          "fase": {
+            "bsonType": "string",
+            "minLength": 1
+          },
+          "grupo": {
+            "bsonType": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[A-P]$"
+          },
+          "local": {
+            "bsonType": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "codigo",
+              "nombre"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "codigo": {
+                "bsonType": "string",
+                "pattern": "^[A-Z]{3}$"
+              },
+              "nombre": {
+                "bsonType": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "visitante": {
+            "bsonType": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "codigo",
+              "nombre"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "codigo": {
+                "bsonType": "string",
+                "pattern": "^[A-Z]{3}$"
+              },
+              "nombre": {
+                "bsonType": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "sede": {
+            "bsonType": "object",
+            "required": [
+              "codigo",
+              "nombre",
+              "ciudad"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "codigo": {
+                "bsonType": "string",
+                "minLength": 1
+              },
+              "nombre": {
+                "bsonType": "string",
+                "minLength": 1
+              },
+              "ciudad": {
+                "bsonType": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "estado": {
+            "enum": [
+              "proximo",
+              "en_vivo",
+              "finalizado"
+            ]
+          },
+          "resultado": {
+            "bsonType": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "goles_local",
+              "goles_visitante"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "goles_local": {
+                "bsonType": "int",
+                "minimum": 0
+              },
+              "goles_visitante": {
+                "bsonType": "int",
+                "minimum": 0
+              },
+              "penales": {
+                "bsonType": [
+                  "object",
+                  "null"
+                ],
+                "required": [
+                  "goles_local",
+                  "goles_visitante"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "goles_local": {
+                    "bsonType": "int",
+                    "minimum": 0
+                  },
+                  "goles_visitante": {
+                    "bsonType": "int",
+                    "minimum": 0
+                  }
+                }
+              }
+            }
+          },
+          "actualizado_en": {
+            "bsonType": "date"
+          }
+        }
+      }
+    },
+    {
+      "$or": [
+        {
+          "estado": "proximo",
+          "resultado": null
+        },
+        {
+          "estado": {
+            "$in": [
+              "en_vivo",
+              "finalizado"
+            ]
+          },
+          "resultado": {
+            "$type": "object"
+          }
+        }
+      ]
+    }
+  ]
+}
