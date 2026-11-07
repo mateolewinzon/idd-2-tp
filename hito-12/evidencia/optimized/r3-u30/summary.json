@@ -1,0 +1,46 @@
+{
+  "window_start_ms": 1794091770718,
+  "window_end_ms": 1794091830718,
+  "window_seconds": 60,
+  "samples": 1770,
+  "successful": 1770,
+  "errors": 0,
+  "error_types": {},
+  "error_rate": 0.0,
+  "throughput_success_per_second": 29.5,
+  "latency_ms": {
+    "min": 2,
+    "mean": 10.263276836158193,
+    "p50": 9,
+    "p95": 21,
+    "p99": 36,
+    "max": 40
+  },
+  "all_phases": {
+    "recorded_attempts": 1914,
+    "successful": 1914,
+    "errors": 0
+  },
+  "adapters": {
+    "cache_hits": 1760,
+    "cache_misses": 10,
+    "cache_hit_ratio": 0.9943502824858758,
+    "operations": {
+      "MongoDB.list_fixture": {
+        "count": 10,
+        "errors": 0,
+        "avg_ms": 8.9
+      },
+      "Redis.get_cache": {
+        "count": 1770,
+        "errors": 0,
+        "avg_ms": 2.5390395480225987
+      },
+      "Redis.set_cache": {
+        "count": 10,
+        "errors": 0,
+        "avg_ms": 4.78
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "source": "backend-source.tar.gz",
+  "check": "Seed validado desde extracción nueva sin .env ni acceso a las bases",
+  "result": {
+    "validados": 127,
+    "rechazados": 0
+  }
+}

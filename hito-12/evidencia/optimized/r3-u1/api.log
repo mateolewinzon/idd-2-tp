@@ -1,0 +1,265 @@
+INFO:     Started server process [62637]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:58000 (Press CTRL+C to quit)
+2026-11-07 19:46:19,429 INFO fixture2030.adapters request_id=95272113-c581-44b2-ad90-da101351752f dependency=Redis operation=get_cache result=ok duration_ms=5.9
+2026-11-07 19:46:19,429 INFO app.services.fixture_service fixture_cache=miss
+2026-11-07 19:46:19,442 INFO fixture2030.adapters request_id=95272113-c581-44b2-ad90-da101351752f dependency=MongoDB operation=list_fixture result=ok duration_ms=12.8
+2026-11-07 19:46:19,444 INFO fixture2030.adapters request_id=95272113-c581-44b2-ad90-da101351752f dependency=Redis operation=set_cache result=ok duration_ms=1.1
+2026-11-07 19:46:19,444 INFO fixture2030.access request_id=95272113-c581-44b2-ad90-da101351752f method=GET path=/fixture status=200 duration_ms=22.3
+2026-11-07 19:46:19,448 INFO fixture2030.adapters request_id=4bf93bb3-a489-42ad-8e23-985b82aa9bd0 dependency=Redis operation=get_cache result=ok duration_ms=1.0
+2026-11-07 19:46:19,449 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:19,449 INFO fixture2030.access request_id=4bf93bb3-a489-42ad-8e23-985b82aa9bd0 method=GET path=/fixture status=200 duration_ms=1.8
+2026-11-07 19:46:19,456 INFO fixture2030.adapters request_id=7949e819-7e74-46c3-9406-5b20d93c2ad3 dependency=Redis operation=get_cache result=ok duration_ms=0.7
+2026-11-07 19:46:19,456 INFO app.services.fixture_service fixture_cache=miss
+2026-11-07 19:46:19,459 INFO fixture2030.adapters request_id=7949e819-7e74-46c3-9406-5b20d93c2ad3 dependency=MongoDB operation=list_fixture result=ok duration_ms=3.1
+2026-11-07 19:46:19,461 INFO fixture2030.adapters request_id=7949e819-7e74-46c3-9406-5b20d93c2ad3 dependency=Redis operation=set_cache result=ok duration_ms=1.6
+2026-11-07 19:46:19,461 INFO fixture2030.access request_id=7949e819-7e74-46c3-9406-5b20d93c2ad3 method=GET path=/fixture status=200 duration_ms=6.4
+2026-11-07 19:46:20,476 INFO fixture2030.adapters request_id=68f6cfbb-bf42-488e-8cd6-b24957d9309c dependency=Redis operation=get_cache result=ok duration_ms=2.4
+2026-11-07 19:46:20,478 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:20,479 INFO fixture2030.access request_id=68f6cfbb-bf42-488e-8cd6-b24957d9309c method=GET path=/fixture status=200 duration_ms=5.9
+2026-11-07 19:46:21,489 INFO fixture2030.adapters request_id=0c48f879-ef65-4901-8a5f-8427931308ef dependency=Redis operation=get_cache result=ok duration_ms=1.5
+2026-11-07 19:46:21,490 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:21,491 INFO fixture2030.access request_id=0c48f879-ef65-4901-8a5f-8427931308ef method=GET path=/fixture status=200 duration_ms=3.8
+2026-11-07 19:46:22,500 INFO fixture2030.adapters request_id=a5db686d-bff6-4b57-a6ec-02fa819ac7ba dependency=Redis operation=get_cache result=ok duration_ms=3.8
+2026-11-07 19:46:22,504 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:22,505 INFO fixture2030.access request_id=a5db686d-bff6-4b57-a6ec-02fa819ac7ba method=GET path=/fixture status=200 duration_ms=9.0
+2026-11-07 19:46:23,518 INFO fixture2030.adapters request_id=801de686-e479-42d3-9370-a84186f44fe1 dependency=Redis operation=get_cache result=ok duration_ms=3.3
+2026-11-07 19:46:23,519 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:23,521 INFO fixture2030.access request_id=801de686-e479-42d3-9370-a84186f44fe1 method=GET path=/fixture status=200 duration_ms=7.2
+2026-11-07 19:46:24,534 INFO fixture2030.adapters request_id=151b6275-7f0f-41b2-b65b-3c5c71362473 dependency=Redis operation=get_cache result=ok duration_ms=2.3
+2026-11-07 19:46:24,536 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:24,537 INFO fixture2030.access request_id=151b6275-7f0f-41b2-b65b-3c5c71362473 method=GET path=/fixture status=200 duration_ms=5.1
+2026-11-07 19:46:25,549 INFO fixture2030.adapters request_id=2335e6f0-8360-441c-855a-aeb21f6ff228 dependency=Redis operation=get_cache result=ok duration_ms=4.0
+2026-11-07 19:46:25,551 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:25,552 INFO fixture2030.access request_id=2335e6f0-8360-441c-855a-aeb21f6ff228 method=GET path=/fixture status=200 duration_ms=7.9
+2026-11-07 19:46:26,564 INFO fixture2030.adapters request_id=1d93368f-bc1a-4690-a7ee-abf33eb5c032 dependency=Redis operation=get_cache result=ok duration_ms=3.4
+2026-11-07 19:46:26,566 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:26,568 INFO fixture2030.access request_id=1d93368f-bc1a-4690-a7ee-abf33eb5c032 method=GET path=/fixture status=200 duration_ms=8.2
+2026-11-07 19:46:27,584 INFO fixture2030.adapters request_id=e62b688b-b870-4c81-86bf-aac6df53dba4 dependency=Redis operation=get_cache result=ok duration_ms=3.8
+2026-11-07 19:46:27,585 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:27,587 INFO fixture2030.access request_id=e62b688b-b870-4c81-86bf-aac6df53dba4 method=GET path=/fixture status=200 duration_ms=8.1
+2026-11-07 19:46:28,598 INFO fixture2030.adapters request_id=66811c4c-f5b4-410b-9037-5bcad4a186c3 dependency=Redis operation=get_cache result=ok duration_ms=3.2
+2026-11-07 19:46:28,599 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:28,600 INFO fixture2030.access request_id=66811c4c-f5b4-410b-9037-5bcad4a186c3 method=GET path=/fixture status=200 duration_ms=6.0
+2026-11-07 19:46:31,707 INFO fixture2030.adapters request_id=2f06c8a2-aba8-4a75-b5c4-c564c2b4d601 dependency=Redis operation=get_cache result=ok duration_ms=3.0
+2026-11-07 19:46:31,708 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:31,708 INFO fixture2030.access request_id=2f06c8a2-aba8-4a75-b5c4-c564c2b4d601 method=GET path=/fixture status=200 duration_ms=4.8
+2026-11-07 19:46:32,750 INFO fixture2030.adapters request_id=2f8744fc-8082-4cba-bc6f-399bc0d6531c dependency=Redis operation=get_cache result=ok duration_ms=3.0
+2026-11-07 19:46:32,752 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:32,754 INFO fixture2030.access request_id=2f8744fc-8082-4cba-bc6f-399bc0d6531c method=GET path=/fixture status=200 duration_ms=7.4
+2026-11-07 19:46:33,771 INFO fixture2030.adapters request_id=337e72b5-9c5a-464a-ab9a-25ad9054d957 dependency=Redis operation=get_cache result=ok duration_ms=2.7
+2026-11-07 19:46:33,772 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:33,774 INFO fixture2030.access request_id=337e72b5-9c5a-464a-ab9a-25ad9054d957 method=GET path=/fixture status=200 duration_ms=6.0
+2026-11-07 19:46:34,786 INFO fixture2030.adapters request_id=ef9023b2-67ab-4bfb-93f3-38a0d6af74e3 dependency=Redis operation=get_cache result=ok duration_ms=1.8
+2026-11-07 19:46:34,786 INFO app.services.fixture_service fixture_cache=miss
+2026-11-07 19:46:34,798 INFO fixture2030.adapters request_id=ef9023b2-67ab-4bfb-93f3-38a0d6af74e3 dependency=MongoDB operation=list_fixture result=ok duration_ms=11.1
+2026-11-07 19:46:34,802 INFO fixture2030.adapters request_id=ef9023b2-67ab-4bfb-93f3-38a0d6af74e3 dependency=Redis operation=set_cache result=ok duration_ms=2.1
+2026-11-07 19:46:34,803 INFO fixture2030.access request_id=ef9023b2-67ab-4bfb-93f3-38a0d6af74e3 method=GET path=/fixture status=200 duration_ms=19.4
+2026-11-07 19:46:35,818 INFO fixture2030.adapters request_id=1fb40c6f-0df5-417e-85ef-cee13e057701 dependency=Redis operation=get_cache result=ok duration_ms=3.0
+2026-11-07 19:46:35,819 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:35,821 INFO fixture2030.access request_id=1fb40c6f-0df5-417e-85ef-cee13e057701 method=GET path=/fixture status=200 duration_ms=5.9
+2026-11-07 19:46:36,838 INFO fixture2030.adapters request_id=d8955cd8-a863-4abd-9c97-1b90a3745c78 dependency=Redis operation=get_cache result=ok duration_ms=2.9
+2026-11-07 19:46:36,838 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:36,839 INFO fixture2030.access request_id=d8955cd8-a863-4abd-9c97-1b90a3745c78 method=GET path=/fixture status=200 duration_ms=5.1
+2026-11-07 19:46:37,862 INFO fixture2030.adapters request_id=cb3c00cc-a04e-4f0c-998f-c90df1f81e57 dependency=Redis operation=get_cache result=ok duration_ms=6.9
+2026-11-07 19:46:37,863 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:37,865 INFO fixture2030.access request_id=cb3c00cc-a04e-4f0c-998f-c90df1f81e57 method=GET path=/fixture status=200 duration_ms=10.1
+2026-11-07 19:46:38,881 INFO fixture2030.adapters request_id=05ad4c49-be7e-4a2c-bfd2-f34451e03497 dependency=Redis operation=get_cache result=ok duration_ms=2.5
+2026-11-07 19:46:38,882 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:38,884 INFO fixture2030.access request_id=05ad4c49-be7e-4a2c-bfd2-f34451e03497 method=GET path=/fixture status=200 duration_ms=6.5
+2026-11-07 19:46:39,900 INFO fixture2030.adapters request_id=1d18194c-a563-4a24-9481-47285d39d60a dependency=Redis operation=get_cache result=ok duration_ms=2.6
+2026-11-07 19:46:39,901 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:39,903 INFO fixture2030.access request_id=1d18194c-a563-4a24-9481-47285d39d60a method=GET path=/fixture status=200 duration_ms=5.7
+2026-11-07 19:46:40,914 INFO fixture2030.adapters request_id=4d08d74b-e04d-4bbe-894b-d1e146a8473b dependency=Redis operation=get_cache result=ok duration_ms=2.7
+2026-11-07 19:46:40,916 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:40,917 INFO fixture2030.access request_id=4d08d74b-e04d-4bbe-894b-d1e146a8473b method=GET path=/fixture status=200 duration_ms=6.0
+2026-11-07 19:46:41,933 INFO fixture2030.adapters request_id=87c1d660-663e-4159-9695-298f665abdaa dependency=Redis operation=get_cache result=ok duration_ms=2.9
+2026-11-07 19:46:41,935 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:41,936 INFO fixture2030.access request_id=87c1d660-663e-4159-9695-298f665abdaa method=GET path=/fixture status=200 duration_ms=6.5
+2026-11-07 19:46:42,956 INFO fixture2030.adapters request_id=a6089314-c0e5-4370-b42c-644c83923be2 dependency=Redis operation=get_cache result=ok duration_ms=3.2
+2026-11-07 19:46:42,957 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:42,958 INFO fixture2030.access request_id=a6089314-c0e5-4370-b42c-644c83923be2 method=GET path=/fixture status=200 duration_ms=6.6
+2026-11-07 19:46:43,967 INFO fixture2030.adapters request_id=a71ebbf5-65f5-4375-97cf-4e5eebffba66 dependency=Redis operation=get_cache result=ok duration_ms=2.7
+2026-11-07 19:46:43,969 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:43,971 INFO fixture2030.access request_id=a71ebbf5-65f5-4375-97cf-4e5eebffba66 method=GET path=/fixture status=200 duration_ms=6.3
+2026-11-07 19:46:44,983 INFO fixture2030.adapters request_id=3ff3d15b-a6bb-4918-8b0c-6461ba75dfd0 dependency=Redis operation=get_cache result=ok duration_ms=2.6
+2026-11-07 19:46:44,985 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:44,986 INFO fixture2030.access request_id=3ff3d15b-a6bb-4918-8b0c-6461ba75dfd0 method=GET path=/fixture status=200 duration_ms=5.8
+2026-11-07 19:46:46,003 INFO fixture2030.adapters request_id=aa0a9e3e-1fed-4ad0-9a23-d4be8e4190ec dependency=Redis operation=get_cache result=ok duration_ms=3.2
+2026-11-07 19:46:46,004 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:46,006 INFO fixture2030.access request_id=aa0a9e3e-1fed-4ad0-9a23-d4be8e4190ec method=GET path=/fixture status=200 duration_ms=6.5
+2026-11-07 19:46:47,017 INFO fixture2030.adapters request_id=ef1007d1-69ea-4ca0-b873-6956781fad67 dependency=Redis operation=get_cache result=ok duration_ms=2.7
+2026-11-07 19:46:47,017 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:47,018 INFO fixture2030.access request_id=ef1007d1-69ea-4ca0-b873-6956781fad67 method=GET path=/fixture status=200 duration_ms=4.2
+2026-11-07 19:46:48,047 INFO fixture2030.adapters request_id=8033df6c-4832-46fb-8ba3-883706a880ab dependency=Redis operation=get_cache result=ok duration_ms=5.7
+2026-11-07 19:46:48,048 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:48,050 INFO fixture2030.access request_id=8033df6c-4832-46fb-8ba3-883706a880ab method=GET path=/fixture status=200 duration_ms=10.3
+2026-11-07 19:46:49,074 INFO fixture2030.adapters request_id=cdbe7e73-af24-4f02-bb17-8fc14ab06308 dependency=Redis operation=get_cache result=ok duration_ms=2.6
+2026-11-07 19:46:49,075 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:49,076 INFO fixture2030.access request_id=cdbe7e73-af24-4f02-bb17-8fc14ab06308 method=GET path=/fixture status=200 duration_ms=5.3
+2026-11-07 19:46:50,087 INFO fixture2030.adapters request_id=ad9f739a-4fed-4d7b-a244-15c62cdb7a79 dependency=Redis operation=get_cache result=ok duration_ms=1.5
+2026-11-07 19:46:50,088 INFO app.services.fixture_service fixture_cache=miss
+2026-11-07 19:46:50,098 INFO fixture2030.adapters request_id=ad9f739a-4fed-4d7b-a244-15c62cdb7a79 dependency=MongoDB operation=list_fixture result=ok duration_ms=10.0
+2026-11-07 19:46:50,102 INFO fixture2030.adapters request_id=ad9f739a-4fed-4d7b-a244-15c62cdb7a79 dependency=Redis operation=set_cache result=ok duration_ms=2.2
+2026-11-07 19:46:50,104 INFO fixture2030.access request_id=ad9f739a-4fed-4d7b-a244-15c62cdb7a79 method=GET path=/fixture status=200 duration_ms=18.4
+2026-11-07 19:46:51,113 INFO fixture2030.adapters request_id=436060ee-af0a-4c62-a623-3dc02cc308e9 dependency=Redis operation=get_cache result=ok duration_ms=3.7
+2026-11-07 19:46:51,115 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:51,116 INFO fixture2030.access request_id=436060ee-af0a-4c62-a623-3dc02cc308e9 method=GET path=/fixture status=200 duration_ms=7.4
+2026-11-07 19:46:52,126 INFO fixture2030.adapters request_id=d1375ba7-8e04-4f55-b054-0c3e760f2dba dependency=Redis operation=get_cache result=ok duration_ms=2.2
+2026-11-07 19:46:52,128 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:52,129 INFO fixture2030.access request_id=d1375ba7-8e04-4f55-b054-0c3e760f2dba method=GET path=/fixture status=200 duration_ms=5.4
+2026-11-07 19:46:53,143 INFO fixture2030.adapters request_id=4a35d0c4-14ac-4114-ab0b-984079601f22 dependency=Redis operation=get_cache result=ok duration_ms=2.7
+2026-11-07 19:46:53,144 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:53,146 INFO fixture2030.access request_id=4a35d0c4-14ac-4114-ab0b-984079601f22 method=GET path=/fixture status=200 duration_ms=6.7
+2026-11-07 19:46:54,155 INFO fixture2030.adapters request_id=322f1bbd-3f15-4f6b-bef0-3f8d72df9a36 dependency=Redis operation=get_cache result=ok duration_ms=1.8
+2026-11-07 19:46:54,157 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:54,158 INFO fixture2030.access request_id=322f1bbd-3f15-4f6b-bef0-3f8d72df9a36 method=GET path=/fixture status=200 duration_ms=5.3
+2026-11-07 19:46:55,171 INFO fixture2030.adapters request_id=5ad4925f-2512-4f50-a47e-936712cdc4f0 dependency=Redis operation=get_cache result=ok duration_ms=2.2
+2026-11-07 19:46:55,172 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:55,173 INFO fixture2030.access request_id=5ad4925f-2512-4f50-a47e-936712cdc4f0 method=GET path=/fixture status=200 duration_ms=4.7
+2026-11-07 19:46:56,184 INFO fixture2030.adapters request_id=8ac20454-6cdf-4eab-b608-272d90a185b4 dependency=Redis operation=get_cache result=ok duration_ms=2.9
+2026-11-07 19:46:56,185 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:56,186 INFO fixture2030.access request_id=8ac20454-6cdf-4eab-b608-272d90a185b4 method=GET path=/fixture status=200 duration_ms=5.6
+2026-11-07 19:46:57,212 INFO fixture2030.adapters request_id=03ca7ab9-b7cc-4a89-b2bb-7c16ee60fc89 dependency=Redis operation=get_cache result=ok duration_ms=2.9
+2026-11-07 19:46:57,214 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:57,215 INFO fixture2030.access request_id=03ca7ab9-b7cc-4a89-b2bb-7c16ee60fc89 method=GET path=/fixture status=200 duration_ms=7.3
+2026-11-07 19:46:58,245 INFO fixture2030.adapters request_id=c7bd9ea8-2bb0-414f-8727-1bbd48d78bbf dependency=Redis operation=get_cache result=ok duration_ms=3.7
+2026-11-07 19:46:58,247 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:58,249 INFO fixture2030.access request_id=c7bd9ea8-2bb0-414f-8727-1bbd48d78bbf method=GET path=/fixture status=200 duration_ms=8.6
+2026-11-07 19:46:59,265 INFO fixture2030.adapters request_id=536f3fe0-e403-4d3f-963f-79774e0b3654 dependency=Redis operation=get_cache result=ok duration_ms=1.9
+2026-11-07 19:46:59,266 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:46:59,268 INFO fixture2030.access request_id=536f3fe0-e403-4d3f-963f-79774e0b3654 method=GET path=/fixture status=200 duration_ms=5.0
+2026-11-07 19:47:00,284 INFO fixture2030.adapters request_id=adc3df4c-076a-401f-8c97-74c2a1f52965 dependency=Redis operation=get_cache result=ok duration_ms=2.7
+2026-11-07 19:47:00,285 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:00,286 INFO fixture2030.access request_id=adc3df4c-076a-401f-8c97-74c2a1f52965 method=GET path=/fixture status=200 duration_ms=5.5
+2026-11-07 19:47:01,302 INFO fixture2030.adapters request_id=ce0c5974-2d08-4146-aaa7-0c56c97a8a0a dependency=Redis operation=get_cache result=ok duration_ms=1.8
+2026-11-07 19:47:01,302 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:01,303 INFO fixture2030.access request_id=ce0c5974-2d08-4146-aaa7-0c56c97a8a0a method=GET path=/fixture status=200 duration_ms=3.9
+2026-11-07 19:47:02,319 INFO fixture2030.adapters request_id=63d1979b-6481-4a01-8266-1285f764bc29 dependency=Redis operation=get_cache result=ok duration_ms=2.8
+2026-11-07 19:47:02,320 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:02,321 INFO fixture2030.access request_id=63d1979b-6481-4a01-8266-1285f764bc29 method=GET path=/fixture status=200 duration_ms=5.8
+2026-11-07 19:47:03,333 INFO fixture2030.adapters request_id=0ad75fe4-64ec-4dcb-8915-f80066e01601 dependency=Redis operation=get_cache result=ok duration_ms=2.7
+2026-11-07 19:47:03,334 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:03,337 INFO fixture2030.access request_id=0ad75fe4-64ec-4dcb-8915-f80066e01601 method=GET path=/fixture status=200 duration_ms=7.0
+2026-11-07 19:47:04,347 INFO fixture2030.adapters request_id=78f7cdf9-f21a-4a5b-a0e6-6196b9c3288c dependency=Redis operation=get_cache result=ok duration_ms=1.2
+2026-11-07 19:47:04,347 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:04,348 INFO fixture2030.access request_id=78f7cdf9-f21a-4a5b-a0e6-6196b9c3288c method=GET path=/fixture status=200 duration_ms=3.4
+2026-11-07 19:47:05,362 INFO fixture2030.adapters request_id=b7860c6d-5375-4b50-9829-2a86b7348450 dependency=Redis operation=get_cache result=ok duration_ms=1.9
+2026-11-07 19:47:05,363 INFO app.services.fixture_service fixture_cache=miss
+2026-11-07 19:47:05,373 INFO fixture2030.adapters request_id=b7860c6d-5375-4b50-9829-2a86b7348450 dependency=MongoDB operation=list_fixture result=ok duration_ms=10.1
+2026-11-07 19:47:05,376 INFO fixture2030.adapters request_id=b7860c6d-5375-4b50-9829-2a86b7348450 dependency=Redis operation=set_cache result=ok duration_ms=2.0
+2026-11-07 19:47:05,377 INFO fixture2030.access request_id=b7860c6d-5375-4b50-9829-2a86b7348450 method=GET path=/fixture status=200 duration_ms=16.8
+2026-11-07 19:47:06,395 INFO fixture2030.adapters request_id=bc0b1996-0932-4610-b6b6-2ad20421f54c dependency=Redis operation=get_cache result=ok duration_ms=2.3
+2026-11-07 19:47:06,396 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:06,397 INFO fixture2030.access request_id=bc0b1996-0932-4610-b6b6-2ad20421f54c method=GET path=/fixture status=200 duration_ms=5.1
+2026-11-07 19:47:07,405 INFO fixture2030.adapters request_id=fb2f2fff-2907-4820-a972-b2e4ba958f4b dependency=Redis operation=get_cache result=ok duration_ms=4.0
+2026-11-07 19:47:07,406 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:07,407 INFO fixture2030.access request_id=fb2f2fff-2907-4820-a972-b2e4ba958f4b method=GET path=/fixture status=200 duration_ms=6.3
+2026-11-07 19:47:08,423 INFO fixture2030.adapters request_id=879aa907-4e19-496c-97e8-8f69853ae7c7 dependency=Redis operation=get_cache result=ok duration_ms=2.8
+2026-11-07 19:47:08,425 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:08,426 INFO fixture2030.access request_id=879aa907-4e19-496c-97e8-8f69853ae7c7 method=GET path=/fixture status=200 duration_ms=6.3
+2026-11-07 19:47:09,435 INFO fixture2030.adapters request_id=5952b751-03f1-4c52-bb81-f09eda5147cd dependency=Redis operation=get_cache result=ok duration_ms=3.8
+2026-11-07 19:47:09,437 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:09,438 INFO fixture2030.access request_id=5952b751-03f1-4c52-bb81-f09eda5147cd method=GET path=/fixture status=200 duration_ms=7.4
+2026-11-07 19:47:10,451 INFO fixture2030.adapters request_id=c7814b4d-7eb6-4e95-99d9-3afb71080642 dependency=Redis operation=get_cache result=ok duration_ms=3.3
+2026-11-07 19:47:10,453 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:10,454 INFO fixture2030.access request_id=c7814b4d-7eb6-4e95-99d9-3afb71080642 method=GET path=/fixture status=200 duration_ms=7.6
+2026-11-07 19:47:11,465 INFO fixture2030.adapters request_id=68fe3bc3-64bd-4553-b592-365de54efa14 dependency=Redis operation=get_cache result=ok duration_ms=2.6
+2026-11-07 19:47:11,467 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:11,468 INFO fixture2030.access request_id=68fe3bc3-64bd-4553-b592-365de54efa14 method=GET path=/fixture status=200 duration_ms=5.9
+2026-11-07 19:47:12,482 INFO fixture2030.adapters request_id=3434b5a6-765f-4725-8ead-63ca192bda27 dependency=Redis operation=get_cache result=ok duration_ms=2.3
+2026-11-07 19:47:12,483 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:12,486 INFO fixture2030.access request_id=3434b5a6-765f-4725-8ead-63ca192bda27 method=GET path=/fixture status=200 duration_ms=6.6
+2026-11-07 19:47:13,508 INFO fixture2030.adapters request_id=17ebff1c-bce1-478f-8bb0-0895547eb3f1 dependency=Redis operation=get_cache result=ok duration_ms=2.2
+2026-11-07 19:47:13,509 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:13,510 INFO fixture2030.access request_id=17ebff1c-bce1-478f-8bb0-0895547eb3f1 method=GET path=/fixture status=200 duration_ms=4.8
+2026-11-07 19:47:14,519 INFO fixture2030.adapters request_id=92e447c9-bc47-4304-acd7-2ba38d41a314 dependency=Redis operation=get_cache result=ok duration_ms=1.9
+2026-11-07 19:47:14,520 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:14,521 INFO fixture2030.access request_id=92e447c9-bc47-4304-acd7-2ba38d41a314 method=GET path=/fixture status=200 duration_ms=4.2
+2026-11-07 19:47:15,532 INFO fixture2030.adapters request_id=a2d188be-2b66-42e1-ba32-c0a013f5a61d dependency=Redis operation=get_cache result=ok duration_ms=3.9
+2026-11-07 19:47:15,534 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:15,536 INFO fixture2030.access request_id=a2d188be-2b66-42e1-ba32-c0a013f5a61d method=GET path=/fixture status=200 duration_ms=7.8
+2026-11-07 19:47:16,553 INFO fixture2030.adapters request_id=0796c747-1099-4efa-b584-86ee8874da2e dependency=Redis operation=get_cache result=ok duration_ms=3.7
+2026-11-07 19:47:16,554 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:16,555 INFO fixture2030.access request_id=0796c747-1099-4efa-b584-86ee8874da2e method=GET path=/fixture status=200 duration_ms=6.8
+2026-11-07 19:47:17,569 INFO fixture2030.adapters request_id=de294977-8de7-4953-b431-72173998b35e dependency=Redis operation=get_cache result=ok duration_ms=2.0
+2026-11-07 19:47:17,571 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:17,572 INFO fixture2030.access request_id=de294977-8de7-4953-b431-72173998b35e method=GET path=/fixture status=200 duration_ms=5.0
+2026-11-07 19:47:18,586 INFO fixture2030.adapters request_id=e58176f8-d3f1-47ac-b1e1-2d1a993d6476 dependency=Redis operation=get_cache result=ok duration_ms=2.8
+2026-11-07 19:47:18,587 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:18,589 INFO fixture2030.access request_id=e58176f8-d3f1-47ac-b1e1-2d1a993d6476 method=GET path=/fixture status=200 duration_ms=6.2
+2026-11-07 19:47:19,603 INFO fixture2030.adapters request_id=3062d928-4e7b-43bc-b33e-1e6d1f2052ef dependency=Redis operation=get_cache result=ok duration_ms=3.3
+2026-11-07 19:47:19,605 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:19,607 INFO fixture2030.access request_id=3062d928-4e7b-43bc-b33e-1e6d1f2052ef method=GET path=/fixture status=200 duration_ms=7.6
+2026-11-07 19:47:20,617 INFO fixture2030.adapters request_id=7d2f940c-1a75-4406-aa93-9e2efa7438e2 dependency=Redis operation=get_cache result=ok duration_ms=2.2
+2026-11-07 19:47:20,617 INFO app.services.fixture_service fixture_cache=miss
+2026-11-07 19:47:20,626 INFO fixture2030.adapters request_id=7d2f940c-1a75-4406-aa93-9e2efa7438e2 dependency=MongoDB operation=list_fixture result=ok duration_ms=9.5
+2026-11-07 19:47:20,631 INFO fixture2030.adapters request_id=7d2f940c-1a75-4406-aa93-9e2efa7438e2 dependency=Redis operation=set_cache result=ok duration_ms=2.9
+2026-11-07 19:47:20,633 INFO fixture2030.access request_id=7d2f940c-1a75-4406-aa93-9e2efa7438e2 method=GET path=/fixture status=200 duration_ms=19.2
+2026-11-07 19:47:21,648 INFO fixture2030.adapters request_id=788f7375-329f-4be9-9400-43248c90af61 dependency=Redis operation=get_cache result=ok duration_ms=2.6
+2026-11-07 19:47:21,649 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:21,650 INFO fixture2030.access request_id=788f7375-329f-4be9-9400-43248c90af61 method=GET path=/fixture status=200 duration_ms=5.2
+2026-11-07 19:47:22,668 INFO fixture2030.adapters request_id=5146a633-b734-4efb-83af-e39b3cc1fe35 dependency=Redis operation=get_cache result=ok duration_ms=3.3
+2026-11-07 19:47:22,712 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:22,713 INFO fixture2030.access request_id=5146a633-b734-4efb-83af-e39b3cc1fe35 method=GET path=/fixture status=200 duration_ms=48.8
+2026-11-07 19:47:23,730 INFO fixture2030.adapters request_id=1e51b0bc-c85b-4125-b3c2-6482208dd29b dependency=Redis operation=get_cache result=ok duration_ms=2.4
+2026-11-07 19:47:23,732 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:23,733 INFO fixture2030.access request_id=1e51b0bc-c85b-4125-b3c2-6482208dd29b method=GET path=/fixture status=200 duration_ms=5.8
+2026-11-07 19:47:24,749 INFO fixture2030.adapters request_id=848da704-a26b-4353-bd0e-460eda979936 dependency=Redis operation=get_cache result=ok duration_ms=2.3
+2026-11-07 19:47:24,750 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:24,751 INFO fixture2030.access request_id=848da704-a26b-4353-bd0e-460eda979936 method=GET path=/fixture status=200 duration_ms=5.3
+2026-11-07 19:47:25,760 INFO fixture2030.adapters request_id=ce3e3dc7-b8fd-4fb9-8f62-09a2d674a3f1 dependency=Redis operation=get_cache result=ok duration_ms=3.2
+2026-11-07 19:47:25,760 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:25,761 INFO fixture2030.access request_id=ce3e3dc7-b8fd-4fb9-8f62-09a2d674a3f1 method=GET path=/fixture status=200 duration_ms=4.7
+2026-11-07 19:47:26,780 INFO fixture2030.adapters request_id=75f688ea-13d8-4c72-9918-49d328db5aca dependency=Redis operation=get_cache result=ok duration_ms=3.7
+2026-11-07 19:47:26,781 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:26,783 INFO fixture2030.access request_id=75f688ea-13d8-4c72-9918-49d328db5aca method=GET path=/fixture status=200 duration_ms=7.8
+2026-11-07 19:47:27,799 INFO fixture2030.adapters request_id=4ebbee5b-6986-49ea-8aa4-54514a4e5516 dependency=Redis operation=get_cache result=ok duration_ms=3.3
+2026-11-07 19:47:27,800 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:27,802 INFO fixture2030.access request_id=4ebbee5b-6986-49ea-8aa4-54514a4e5516 method=GET path=/fixture status=200 duration_ms=7.1
+2026-11-07 19:47:28,810 INFO fixture2030.adapters request_id=d66a6ce7-f981-4b75-ab46-0cc25afe3574 dependency=Redis operation=get_cache result=ok duration_ms=2.5
+2026-11-07 19:47:28,812 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:28,813 INFO fixture2030.access request_id=d66a6ce7-f981-4b75-ab46-0cc25afe3574 method=GET path=/fixture status=200 duration_ms=6.2
+2026-11-07 19:47:29,829 INFO fixture2030.adapters request_id=f64490ac-ce58-4da5-9e5e-9e5b38b6287b dependency=Redis operation=get_cache result=ok duration_ms=1.5
+2026-11-07 19:47:29,830 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:29,831 INFO fixture2030.access request_id=f64490ac-ce58-4da5-9e5e-9e5b38b6287b method=GET path=/fixture status=200 duration_ms=3.7
+2026-11-07 19:47:30,845 INFO fixture2030.adapters request_id=63c1aecc-cd1d-4ed9-b94c-436d4ef02a56 dependency=Redis operation=get_cache result=ok duration_ms=3.1
+2026-11-07 19:47:30,846 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:30,848 INFO fixture2030.access request_id=63c1aecc-cd1d-4ed9-b94c-436d4ef02a56 method=GET path=/fixture status=200 duration_ms=7.0
+2026-11-07 19:47:31,872 INFO fixture2030.adapters request_id=2a83f3de-1f4c-457c-9013-3dd743a90b6a dependency=Redis operation=get_cache result=ok duration_ms=2.0
+2026-11-07 19:47:31,873 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:31,874 INFO fixture2030.access request_id=2a83f3de-1f4c-457c-9013-3dd743a90b6a method=GET path=/fixture status=200 duration_ms=4.3
+2026-11-07 19:47:32,896 INFO fixture2030.adapters request_id=0ea6218f-43e4-42dd-8d43-1d3f1143c02c dependency=Redis operation=get_cache result=ok duration_ms=4.6
+2026-11-07 19:47:32,898 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:32,899 INFO fixture2030.access request_id=0ea6218f-43e4-42dd-8d43-1d3f1143c02c method=GET path=/fixture status=200 duration_ms=8.7
+2026-11-07 19:47:33,913 INFO fixture2030.adapters request_id=22f2da8b-e81f-47dd-bc0d-5fb9170a5e3c dependency=Redis operation=get_cache result=ok duration_ms=3.1
+2026-11-07 19:47:33,914 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:33,916 INFO fixture2030.access request_id=22f2da8b-e81f-47dd-bc0d-5fb9170a5e3c method=GET path=/fixture status=200 duration_ms=6.4
+2026-11-07 19:47:34,935 INFO fixture2030.adapters request_id=58bc3884-4202-4ab6-bec9-cf33652b45e5 dependency=Redis operation=get_cache result=ok duration_ms=6.1
+2026-11-07 19:47:34,936 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:34,937 INFO fixture2030.access request_id=58bc3884-4202-4ab6-bec9-cf33652b45e5 method=GET path=/fixture status=200 duration_ms=8.7
+2026-11-07 19:47:35,952 INFO fixture2030.adapters request_id=954bbcf4-9cf5-453e-87d3-ab74ee489b99 dependency=Redis operation=get_cache result=ok duration_ms=2.2
+2026-11-07 19:47:35,953 INFO app.services.fixture_service fixture_cache=miss
+2026-11-07 19:47:35,964 INFO fixture2030.adapters request_id=954bbcf4-9cf5-453e-87d3-ab74ee489b99 dependency=MongoDB operation=list_fixture result=ok duration_ms=10.9
+2026-11-07 19:47:35,969 INFO fixture2030.adapters request_id=954bbcf4-9cf5-453e-87d3-ab74ee489b99 dependency=Redis operation=set_cache result=ok duration_ms=3.4
+2026-11-07 19:47:35,971 INFO fixture2030.access request_id=954bbcf4-9cf5-453e-87d3-ab74ee489b99 method=GET path=/fixture status=200 duration_ms=20.8
+2026-11-07 19:47:36,985 INFO fixture2030.adapters request_id=77954c26-ceae-422e-b54e-caa11e05bf40 dependency=Redis operation=get_cache result=ok duration_ms=3.0
+2026-11-07 19:47:36,987 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:36,989 INFO fixture2030.access request_id=77954c26-ceae-422e-b54e-caa11e05bf40 method=GET path=/fixture status=200 duration_ms=7.2
+2026-11-07 19:47:38,008 INFO fixture2030.adapters request_id=f4f1fe83-b12b-499b-9e8d-32b6c627c702 dependency=Redis operation=get_cache result=ok duration_ms=6.0
+2026-11-07 19:47:38,009 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:38,012 INFO fixture2030.access request_id=f4f1fe83-b12b-499b-9e8d-32b6c627c702 method=GET path=/fixture status=200 duration_ms=10.5
+2026-11-07 19:47:39,022 INFO fixture2030.adapters request_id=b3ff97ee-38ec-4c5f-9675-0318611cb843 dependency=Redis operation=get_cache result=ok duration_ms=2.3
+2026-11-07 19:47:39,023 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:39,024 INFO fixture2030.access request_id=b3ff97ee-38ec-4c5f-9675-0318611cb843 method=GET path=/fixture status=200 duration_ms=4.9
+2026-11-07 19:47:40,031 INFO fixture2030.adapters request_id=96b25a57-db19-4566-b9bc-d5f5d7b5ee0c dependency=Redis operation=get_cache result=ok duration_ms=1.9
+2026-11-07 19:47:40,032 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:40,033 INFO fixture2030.access request_id=96b25a57-db19-4566-b9bc-d5f5d7b5ee0c method=GET path=/fixture status=200 duration_ms=3.9
+2026-11-07 19:47:41,927 INFO fixture2030.adapters request_id=d68e3db3-215a-4f1f-9fac-012148438b33 dependency=Redis operation=get_cache result=ok duration_ms=2.1
+2026-11-07 19:47:41,928 INFO app.services.fixture_service fixture_cache=hit
+2026-11-07 19:47:41,930 INFO fixture2030.access request_id=d68e3db3-215a-4f1f-9fac-012148438b33 method=GET path=/fixture status=200 duration_ms=5.4
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [62637]

@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "scenario": "Control negativo, NO es carga contra el backend ni fallo del sistema medido",
+  "http_status": 200,
+  "responses": 43,
+  "incorrect_bodies_rejected": 43
+}

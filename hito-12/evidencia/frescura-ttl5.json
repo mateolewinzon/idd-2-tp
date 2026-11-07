@@ -1,0 +1,126 @@
+{
+  "ttl_seconds": 5,
+  "pttl_before_update_ms": 4994,
+  "expiry_observed_seconds": 5.06064329110086,
+  "invalidation_observed_seconds": 0.013030541595071554,
+  "corrupt_cache_rebuilt": true,
+  "observations": [
+    {
+      "elapsed_seconds": 0.003131499979645014,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 0.20784083288162947,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 0.41625308291986585,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 0.6251232498325408,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 0.8348980410955846,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 1.0392052079550922,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 1.2473141658119857,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 1.4571077078580856,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 1.6657788748852909,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 1.879024166148156,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 2.092352165840566,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 2.3008969160728157,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 2.507898208219558,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 2.7196729579009116,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 2.9316431251354516,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 3.144315583165735,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 3.3551592910662293,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 3.565449624788016,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 3.773451750166714,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 3.987607375252992,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 4.200555833056569,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 4.411534416023642,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 4.6238513751886785,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 4.838769541122019,
+      "goles_local": 2
+    },
+    {
+      "elapsed_seconds": 5.06064329110086,
+      "goles_local": 3
+    }
+  ],
+  "restored": {
+    "insertados": 0,
+    "actualizados": 127,
+    "rechazados": 0
+  },
+  "integrity": {
+    "ok": true,
+    "count": 127,
+    "states": {
+      "finalizado": 1,
+      "en_vivo": 1,
+      "proximo": 125
+    },
+    "source_sha256": "0c05e3d6c1ec72881b83b9d86c08411957804993d44672f415bcd48c074da18d",
+    "response_sha256": "36b8e41cb1efa2f87289ec42cc4e70890fc3702eeda186af6b1d1988b1352ecc",
+    "response_bytes": 27265
+  }
+}

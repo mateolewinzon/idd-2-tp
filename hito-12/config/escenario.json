@@ -1,0 +1,18 @@
+{
+  "profiles": [1, 10, 30],
+  "repetitions": 3,
+  "warmup_seconds": 10,
+  "ramp_seconds": 10,
+  "hold_seconds": 60,
+  "think_ms": 1000,
+  "timeout_ms": 10000,
+  "resource_interval_seconds": 5,
+  "error_rate_abort": 0.1,
+  "error_window_seconds": 30,
+  "api_port": 58000,
+  "mongo_port": 57017,
+  "redis_port": 56379,
+  "database": "fixture2030_hito12",
+  "baseline_ttl": 5,
+  "optimized_ttl": 15
+}

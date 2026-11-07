@@ -1,0 +1,16 @@
+WARNING: package sun.awt.X11 not in java.desktop
+WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+Creating summariser <summary>
+Created the tree successfully using /Users/mateolewinzon/uade/ingenieria-de-datos-2/tp/hito-12/carga/fixture.jmx
+Starting standalone test @ 2026 Nov 7 19:25:11 ART (1794090311789)
+Waiting for possible Shutdown/StopTestNow/HeapDump/ThreadDump message on port 4445
+summary +     19 in 00:00:19 =    1.0/s Avg:    23 Min:     5 Max:   229 Err:     0 (0.00%) Active: 1 Started: 1 Finished: 0
+summary +     29 in 00:00:30 =    1.0/s Avg:    13 Min:     5 Max:    47 Err:     0 (0.00%) Active: 1 Started: 1 Finished: 0
+summary =     48 in 00:00:48 =    1.0/s Avg:    17 Min:     5 Max:   229 Err:     0 (0.00%)
+summary +     21 in 00:00:21 =    1.0/s Avg:    10 Min:     4 Max:    24 Err:     0 (0.00%) Active: 0 Started: 1 Finished: 1
+summary =     69 in 00:01:10 =    1.0/s Avg:    15 Min:     4 Max:   229 Err:     0 (0.00%)
+Tidying up ...    @ 2026 Nov 7 19:26:21 ART (1794090381463)
+... end of run

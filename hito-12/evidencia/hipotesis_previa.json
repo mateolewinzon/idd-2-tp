@@ -1,0 +1,12 @@
+{
+  "recorded_at": "2026-11-07T22:33:20.556309+00:00",
+  "status": "Hipótesis registrada antes de ejecutar la variante optimizada",
+  "observation": {
+    "run": "baseline/r1-u1",
+    "mongo_queries": 12,
+    "window_seconds": 60
+  },
+  "hypothesis": "Aumentar TTL de 5 a 15 s reduce reconstrucciones y consultas repetidas sobre una clave caliente; comprobar latencia/errores/recursos sin prometer mejora simultánea.",
+  "scope": "Consulta previa al partido; TTL15 sólo en laboratorio. No cambiar el TTL global de seguimiento en vivo.",
+  "tradeoff": "Mayor antigüedad posible si se omite/falla invalidación; comprobar retraso con ambos TTL fuera de la carga."
+}

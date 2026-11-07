@@ -1,0 +1,6 @@
+# Imágenes observadas durante la medición (arm64).
+services:
+  mongo:
+    image: mongo@sha256:b6421fd6d1c5ded6377b397d8983e2f82e2100dc5123332dcfda2065a472be5b
+  redis:
+    image: redis@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499

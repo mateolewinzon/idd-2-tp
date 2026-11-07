@@ -1,0 +1,210 @@
+{
+  "reload": {
+    "insertados": 0,
+    "actualizados": 127,
+    "rechazados": 0
+  },
+  "unchanged": true,
+  "source_sha256": "0c05e3d6c1ec72881b83b9d86c08411957804993d44672f415bcd48c074da18d",
+  "records": 127,
+  "states": {
+    "finalizado": 1,
+    "en_vivo": 1,
+    "proximo": 125
+  },
+  "mongo_version": "7.0.40",
+  "redis_version": "7.4.11",
+  "indexes": [
+    {
+      "v": 2,
+      "key": {
+        "_id": 1
+      },
+      "name": "_id_"
+    },
+    {
+      "v": 2,
+      "key": {
+        "fecha_hora": 1,
+        "_id": 1
+      },
+      "name": "idx_partidos_fecha_codigo"
+    }
+  ],
+  "explain": {
+    "explainVersion": "1",
+    "queryPlanner": {
+      "namespace": "fixture2030_hito12.partidos",
+      "indexFilterSet": false,
+      "parsedQuery": {},
+      "queryHash": "8C52F8C8",
+      "planCacheKey": "8C52F8C8",
+      "optimizationTimeMillis": 0,
+      "maxIndexedOrSolutionsReached": false,
+      "maxIndexedAndSolutionsReached": false,
+      "maxScansToExplodeReached": false,
+      "winningPlan": {
+        "stage": "PROJECTION_SIMPLE",
+        "transformBy": {
+          "_id": 1,
+          "fecha_hora": 1,
+          "fase": 1,
+          "grupo": 1,
+          "local": 1,
+          "visitante": 1,
+          "estado": 1,
+          "resultado": 1
+        },
+        "inputStage": {
+          "stage": "FETCH",
+          "inputStage": {
+            "stage": "IXSCAN",
+            "keyPattern": {
+              "fecha_hora": 1,
+              "_id": 1
+            },
+            "indexName": "idx_partidos_fecha_codigo",
+            "isMultiKey": false,
+            "multiKeyPaths": {
+              "fecha_hora": [],
+              "_id": []
+            },
+            "isUnique": false,
+            "isSparse": false,
+            "isPartial": false,
+            "indexVersion": 2,
+            "direction": "forward",
+            "indexBounds": {
+              "fecha_hora": [
+                "[MinKey, MaxKey]"
+              ],
+              "_id": [
+                "[MinKey, MaxKey]"
+              ]
+            }
+          }
+        }
+      },
+      "rejectedPlans": []
+    },
+    "executionStats": {
+      "executionSuccess": true,
+      "nReturned": 127,
+      "executionTimeMillis": 3,
+      "totalKeysExamined": 127,
+      "totalDocsExamined": 127,
+      "executionStages": {
+        "stage": "PROJECTION_SIMPLE",
+        "nReturned": 127,
+        "executionTimeMillisEstimate": 0,
+        "works": 128,
+        "advanced": 127,
+        "needTime": 0,
+        "needYield": 0,
+        "saveState": 0,
+        "restoreState": 0,
+        "isEOF": 1,
+        "transformBy": {
+          "_id": 1,
+          "fecha_hora": 1,
+          "fase": 1,
+          "grupo": 1,
+          "local": 1,
+          "visitante": 1,
+          "estado": 1,
+          "resultado": 1
+        },
+        "inputStage": {
+          "stage": "FETCH",
+          "nReturned": 127,
+          "executionTimeMillisEstimate": 0,
+          "works": 128,
+          "advanced": 127,
+          "needTime": 0,
+          "needYield": 0,
+          "saveState": 0,
+          "restoreState": 0,
+          "isEOF": 1,
+          "docsExamined": 127,
+          "alreadyHasObj": 0,
+          "inputStage": {
+            "stage": "IXSCAN",
+            "nReturned": 127,
+            "executionTimeMillisEstimate": 0,
+            "works": 128,
+            "advanced": 127,
+            "needTime": 0,
+            "needYield": 0,
+            "saveState": 0,
+            "restoreState": 0,
+            "isEOF": 1,
+            "keyPattern": {
+              "fecha_hora": 1,
+              "_id": 1
+            },
+            "indexName": "idx_partidos_fecha_codigo",
+            "isMultiKey": false,
+            "multiKeyPaths": {
+              "fecha_hora": [],
+              "_id": []
+            },
+            "isUnique": false,
+            "isSparse": false,
+            "isPartial": false,
+            "indexVersion": 2,
+            "direction": "forward",
+            "indexBounds": {
+              "fecha_hora": [
+                "[MinKey, MaxKey]"
+              ],
+              "_id": [
+                "[MinKey, MaxKey]"
+              ]
+            },
+            "keysExamined": 127,
+            "seeks": 1,
+            "dupsTested": 0,
+            "dupsDropped": 0
+          }
+        }
+      }
+    },
+    "command": {
+      "find": "partidos",
+      "filter": {},
+      "projection": {
+        "_id": 1,
+        "fecha_hora": 1,
+        "fase": 1,
+        "grupo": 1,
+        "local": 1,
+        "visitante": 1,
+        "estado": 1,
+        "resultado": 1
+      },
+      "sort": {
+        "fecha_hora": 1,
+        "_id": 1
+      },
+      "$db": "fixture2030_hito12"
+    },
+    "serverInfo": {
+      "host": "d911d8940439",
+      "port": 27017,
+      "version": "7.0.40",
+      "gitVersion": "37741b538c02da076d1e34d66113ac0230d4523a"
+    },
+    "serverParameters": {
+      "internalQueryFacetBufferSizeBytes": 104857600,
+      "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+      "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+      "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+      "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+      "internalQueryProhibitBlockingMergeOnMongoS": 0,
+      "internalQueryMaxAddToSetBytes": 104857600,
+      "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+      "internalQueryFrameworkControl": "forceClassicEngine"
+    },
+    "ok": 1.0
+  }
+}

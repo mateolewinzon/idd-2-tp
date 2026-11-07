@@ -1,0 +1,73 @@
+2026-11-07 19:46:30,174 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2026-11-07 19:46:30,181 INFO o.a.j.JMeter: Loading user properties from: /private/tmp/apache-jmeter-5.6.3/bin/user.properties
+2026-11-07 19:46:30,182 INFO o.a.j.JMeter: Loading system properties from: /private/tmp/apache-jmeter-5.6.3/bin/system.properties
+2026-11-07 19:46:30,182 INFO o.a.j.JMeter: Setting JMeter property: users=1
+2026-11-07 19:46:30,182 INFO o.a.j.JMeter: Setting JMeter property: ramp=10
+2026-11-07 19:46:30,182 INFO o.a.j.JMeter: Setting JMeter property: duration=70
+2026-11-07 19:46:30,182 INFO o.a.j.JMeter: Setting JMeter property: think=1000
+2026-11-07 19:46:30,182 INFO o.a.j.JMeter: Setting JMeter property: timeout=10000
+2026-11-07 19:46:30,182 INFO o.a.j.JMeter: Setting JMeter property: port=58000
+2026-11-07 19:46:30,182 INFO o.a.j.JMeter: Setting JMeter property: expected_sha=36b8e41cb1efa2f87289ec42cc4e70890fc3702eeda186af6b1d1988b1352ecc
+2026-11-07 19:46:30,182 INFO o.a.j.JMeter: Setting JMeter property: phasefile=/Users/mateolewinzon/uade/ingenieria-de-datos-2/tp/hito-12/evidencia/optimized/r3-u1/origin.txt
+2026-11-07 19:46:30,182 INFO o.a.j.JMeter: Setting JMeter property: httpclient4.retrycount=0
+2026-11-07 19:46:30,182 INFO o.a.j.JMeter: Setting JMeter property: jmeter.save.saveservice.autoflush=true
+2026-11-07 19:46:30,182 INFO o.a.j.JMeter: Setting JMeter property: jmeter.save.saveservice.assertion_results_failure_message=true
+2026-11-07 19:46:30,182 INFO o.a.j.JMeter: Setting JMeter property: jmeter.save.saveservice.timestamp_format=ms
+2026-11-07 19:46:30,184 INFO o.a.j.JMeter: Copyright (c) 1998-2024 The Apache Software Foundation
+2026-11-07 19:46:30,184 INFO o.a.j.JMeter: Version 5.6.3
+2026-11-07 19:46:30,184 INFO o.a.j.JMeter: java.version=21.0.13
+2026-11-07 19:46:30,184 INFO o.a.j.JMeter: java.vm.name=OpenJDK 64-Bit Server VM
+2026-11-07 19:46:30,184 INFO o.a.j.JMeter: os.name=Mac OS X
+2026-11-07 19:46:30,184 INFO o.a.j.JMeter: os.arch=aarch64
+2026-11-07 19:46:30,184 INFO o.a.j.JMeter: os.version=26.5.2
+2026-11-07 19:46:30,184 INFO o.a.j.JMeter: file.encoding=UTF-8
+2026-11-07 19:46:30,184 INFO o.a.j.JMeter: java.awt.headless=true
+2026-11-07 19:46:30,184 INFO o.a.j.JMeter: Max memory     =536870912
+2026-11-07 19:46:30,184 INFO o.a.j.JMeter: Available Processors =10
+2026-11-07 19:46:30,187 INFO o.a.j.JMeter: Default Locale=English (EN)
+2026-11-07 19:46:30,187 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2026-11-07 19:46:30,187 INFO o.a.j.JMeter: JMeterHome=/private/tmp/apache-jmeter-5.6.3
+2026-11-07 19:46:30,187 INFO o.a.j.JMeter: user.dir  =/Users/mateolewinzon/uade/ingenieria-de-datos-2/tp
+2026-11-07 19:46:30,187 INFO o.a.j.JMeter: PWD       =/Users/mateolewinzon/uade/ingenieria-de-datos-2/tp
+2026-11-07 19:46:30,205 INFO o.a.j.JMeter: IP: 192.168.1.19 Name: POMELOAR0567 FullName: 192.168.1.19
+2026-11-07 19:46:30,211 INFO o.a.j.s.FileServer: Default base='/Users/mateolewinzon/uade/ingenieria-de-datos-2/tp'
+2026-11-07 19:46:30,211 INFO o.a.j.s.FileServer: Set new base='/Users/mateolewinzon/uade/ingenieria-de-datos-2/tp/hito-12/carga'
+2026-11-07 19:46:30,267 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
+2026-11-07 19:46:30,278 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
+2026-11-07 19:46:30,280 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
+2026-11-07 19:46:30,281 INFO o.a.j.s.SaveService: Loading file: /Users/mateolewinzon/uade/ingenieria-de-datos-2/tp/hito-12/carga/fixture.jmx
+2026-11-07 19:46:30,311 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/html is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-11-07 19:46:30,311 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xhtml+xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-11-07 19:46:30,311 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-11-07 19:46:30,311 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-11-07 19:46:30,311 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
+2026-11-07 19:46:30,311 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
+2026-11-07 19:46:30,316 INFO o.a.j.JMeter: Creating summariser <summary>
+2026-11-07 19:46:30,323 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2026-11-07 19:46:30,323 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2026-11-07 19:46:30,323 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2026-11-07 19:46:30,324 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must contain the string: '.functions.'
+2026-11-07 19:46:30,324 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must not contain the string: '.gui.'
+2026-11-07 19:46:30,425 INFO o.a.j.JMeter: Running test (1794091590425)
+2026-11-07 19:46:30,431 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : Lectores
+2026-11-07 19:46:30,431 INFO o.a.j.e.StandardJMeterEngine: Starting 1 threads for group Lectores.
+2026-11-07 19:46:30,431 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2026-11-07 19:46:30,431 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=1 ramp-up=10 delayedStart=false
+2026-11-07 19:46:30,432 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2026-11-07 19:46:30,432 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2026-11-07 19:46:30,433 INFO o.a.j.t.JMeterThread: Thread started: Lectores 1-1
+2026-11-07 19:46:30,433 INFO o.a.j.s.SampleResult: Note: Sample TimeStamps are START times
+2026-11-07 19:46:30,433 INFO o.a.j.s.SampleResult: sampleresult.default.encoding is set to UTF-8
+2026-11-07 19:46:30,433 INFO o.a.j.s.SampleResult: sampleresult.useNanoTime=true
+2026-11-07 19:46:30,433 INFO o.a.j.s.SampleResult: sampleresult.nanoThreadSleep=5000
+2026-11-07 19:46:30,627 INFO o.a.j.r.Summariser: summary +      1 in 00:00:00 =    5.0/s Avg:   193 Min:   193 Max:   193 Err:     0 (0.00%) Active: 1 Started: 1 Finished: 0
+2026-11-07 19:46:31,655 INFO o.a.j.p.h.s.HTTPHCAbstractImpl: Local host = POMELOAR0567
+2026-11-07 19:46:31,660 INFO o.a.j.p.h.s.HTTPHC4Impl: HTTP request retry count = 0
+2026-11-07 19:47:00,290 INFO o.a.j.r.Summariser: summary +     29 in 00:00:30 =    1.0/s Avg:    10 Min:     6 Max:    22 Err:     0 (0.00%) Active: 1 Started: 1 Finished: 0
+2026-11-07 19:47:00,291 INFO o.a.j.r.Summariser: summary =     30 in 00:00:30 =    1.0/s Avg:    16 Min:     6 Max:   193 Err:     0 (0.00%)
+2026-11-07 19:47:30,852 INFO o.a.j.r.Summariser: summary +     30 in 00:00:31 =    1.0/s Avg:    10 Min:     5 Max:    52 Err:     0 (0.00%) Active: 1 Started: 1 Finished: 0
+2026-11-07 19:47:30,855 INFO o.a.j.r.Summariser: summary =     60 in 00:01:00 =    1.0/s Avg:    13 Min:     5 Max:   193 Err:     0 (0.00%)
+2026-11-07 19:47:40,035 INFO o.a.j.t.JMeterThread: Thread finished: Lectores 1-1
+2026-11-07 19:47:40,039 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2026-11-07 19:47:40,046 INFO o.a.j.r.Summariser: summary +      9 in 00:00:09 =    1.0/s Avg:    11 Min:     6 Max:    23 Err:     0 (0.00%) Active: 0 Started: 1 Finished: 1
+2026-11-07 19:47:40,046 INFO o.a.j.r.Summariser: summary =     69 in 00:01:10 =    1.0/s Avg:    13 Min:     5 Max:   193 Err:     0 (0.00%)

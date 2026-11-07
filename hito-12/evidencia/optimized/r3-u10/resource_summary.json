@@ -1,0 +1,42 @@
+{
+  "mongo_cpu_percent": {
+    "samples": 10,
+    "mean": 0.9440000000000001,
+    "max": 3.08
+  },
+  "mongo_memory_percent_of_limit": {
+    "samples": 10,
+    "mean": 25.745,
+    "max": 26.08
+  },
+  "redis_cpu_percent": {
+    "samples": 10,
+    "mean": 0.926,
+    "max": 1.07
+  },
+  "redis_memory_percent_of_limit": {
+    "samples": 10,
+    "mean": 8.16,
+    "max": 8.36
+  },
+  "api_cpu_percent_ps_average": {
+    "samples": 10,
+    "mean": 1.6,
+    "max": 3.5
+  },
+  "api_rss_mib": {
+    "samples": 10,
+    "mean": 63.95625,
+    "max": 84.375
+  },
+  "java_cpu_percent_ps_average": {
+    "samples": 9,
+    "mean": 2.2666666666666666,
+    "max": 11.9
+  },
+  "java_rss_mib": {
+    "samples": 9,
+    "mean": 86.19791666666667,
+    "max": 104.46875
+  }
+}

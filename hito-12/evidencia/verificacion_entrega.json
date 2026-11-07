@@ -1,0 +1,17 @@
+{
+  "ok": true,
+  "runs": 18,
+  "profiles": [
+    1,
+    10,
+    30
+  ],
+  "repetitions": 3,
+  "measured_requests": 14468,
+  "recorded_attempts_all_phases": 15707,
+  "measured_errors": 0,
+  "source_snapshot_verified": true,
+  "same_experiment_code_and_jmx": true,
+  "all_integrity_checks_passed": true,
+  "hypothesis_before_optimization": true
+}
